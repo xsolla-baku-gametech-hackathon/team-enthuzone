@@ -29,3 +29,4 @@ try {
       console.error(`   👉 ${issue.path.join(".")}: ${issue.message}`);
     });
   }
+  console.error("\nPlease check your discord-bot/.env file and fill in all required credentials.\n");
