@@ -49,3 +49,6 @@ npm run dev
 ### 2. Discord Channel ID
 1. Discord-un özündə **Settings** ➔ **Advanced** ➔ **Developer Mode** aktiv edin.
 2. Oyunçuların rəy yazacağı mətn kanalının üzərinə sağ klik edib **"Copy Channel ID"** seçin (`DISCORD_CHANNEL_ID`).
+
+### 3. Dashboard Source ID və Webhook Token
+1. Platformada Dashboard-a daxil olun (`http://localhost:3000`).
