@@ -18,3 +18,4 @@ function normalize(type, target) {
   const roman = {
     i: 1,
     ii: 2,
+    iii: 3,
