@@ -310,3 +310,25 @@ export function WorkspaceDashboard({
                     <span className="text-faint">
                       Created {new Date(w.createdAt).toLocaleDateString()}
                     </span>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPreviewWorkspace(w);
+                      }}
+                      className="font-medium text-accent hover:underline flex items-center gap-1"
+                    >
+                      Play preview ↗
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {detail && (
+            <>
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-3">
+                <nav
+                  aria-label="Workspace sections"
+                  className="flex max-w-full gap-1 overflow-x-auto"
+                >
