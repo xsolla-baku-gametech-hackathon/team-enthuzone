@@ -6,3 +6,4 @@ function normalize(type, target) {
     crash: "bug",
     lag: "performance",
     usability: "ux",
+  };
