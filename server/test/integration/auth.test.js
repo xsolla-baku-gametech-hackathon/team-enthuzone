@@ -93,4 +93,16 @@ test('disabled users and suspended organizations cannot login or reuse JWTs', as
   await context.userRepository.update(created.body.user.id, { status: 'DISABLED' });
   await request(context.app).post('/api/auth/login').send({
     email: registration.email, password: registration.password,
-  }).expect(401);
+  }).expect(401);
+  await request(context.app).get('/api/auth/me').set(header).expect(401);
+
+  await context.userRepository.update(created.body.user.id, { status: 'ACTIVE' });
+  await context.organizationRepository.update(created.body.organization.id, { status: 'SUSPENDED' });
+  await request(context.app).post('/api/auth/login').send({
+    email: registration.email, password: registration.password,
+  }).expect(401);
+  await request(context.app).get('/api/auth/me').set(header).expect(401);
+});
+
+test('/me accepts a valid token and never exposes passwordHash', async () => {
+  const context = testContext();
