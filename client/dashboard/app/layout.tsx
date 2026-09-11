@@ -18,3 +18,13 @@ export const metadata: Metadata = {
   description:
     "Correlated player feedback and gameplay telemetry for issue triage.",
 };
+
+export default async function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  const theme =
+    (await cookies()).get("theme")?.value === "light" ? "light" : "dark";
+  return (
+    <html
+      lang="en"
+      data-theme={theme}
