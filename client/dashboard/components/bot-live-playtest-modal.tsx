@@ -881,3 +881,28 @@ export function BotLivePlaytestModal({
                   >
                     <RotateCcw size={14} />
                     Reset Playfield
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Right Column: AI Telemetry Feed, Neural Logs & Diagnostics */}
+          <div className="flex flex-col gap-4">
+            {/* Live Metrics Cards */}
+            <div className="grid grid-cols-3 gap-2">
+              <div className="glass rounded-xl p-3 border border-line">
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-muted">Current Score</div>
+                <div className="text-xl font-bold text-accent mt-0.5">{score}</div>
+                <div className="text-[10px] text-faint">Best: {highScore}</div>
+              </div>
+              <div className="glass rounded-xl p-3 border border-line">
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-muted">Decision Latency</div>
+                <div className="text-xl font-bold text-text mt-0.5">14<span className="text-xs text-muted">ms</span></div>
+                <div className="text-[10px] text-accent">60 FPS Loop</div>
+              </div>
+              <div className="glass rounded-xl p-3 border border-line">
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-muted">AI Confidence</div>
+                <div className="text-xl font-bold text-low mt-0.5">99.4%</div>
+                <div className="text-[10px] text-muted">Path Solved</div>
+              </div>
