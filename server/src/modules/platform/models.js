@@ -30,3 +30,11 @@ const Connection = model(
 );
 const Feedback = model(
   "PlatformFeedback",
+  {
+    workspaceId: { type: String, index: true },
+    sourceId: String,
+    externalId: String,
+    author: String,
+    text: String,
+    candidate: mongoose.Schema.Types.Mixed,
+    clusterId: String,
