@@ -121,3 +121,7 @@ button:disabled {
   background:
     radial-gradient(
       ellipse at 15% 20%,
+      color-mix(in srgb, var(--accent) 13%, transparent),
+      transparent 55%
+    ),
+    var(--canvas);
