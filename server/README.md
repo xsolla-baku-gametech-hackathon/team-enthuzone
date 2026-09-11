@@ -130,4 +130,26 @@ GET /api/feedback?gameId=darkfront&source=STEAM&limit=50&offset=0
 
 ## Telemetry
 
-Create one telemetry event:
+Create one telemetry event:
+
+```bash
+curl -X POST "http://localhost:3000/api/telemetry" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "gameId":"darkfront",
+    "playerId":"player_123",
+    "sessionId":"session_456",
+    "eventType":"GAMEPLAY",
+    "eventName":"boss_failed",
+    "buildVersion":"1.8.0",
+    "timestamp":"2026-09-10T12:31:00Z",
+    "properties":{"bossId":"boss_4","phase":2,"custom":{"value":42}}
+  }'
+```
+
+Batch collection accepts up to 1000 events:
+
+```text
+POST /api/telemetry/batch
+{ "events": [...] }
+```
