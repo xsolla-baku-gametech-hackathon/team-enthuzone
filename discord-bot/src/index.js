@@ -175,3 +175,4 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
 });
 
 // 7. Graceful Shutdown
+for (const signal of ["SIGTERM", "SIGINT"]) {
