@@ -82,3 +82,4 @@ function createApp() {
     console.error(
       JSON.stringify({
         event: "request_failed",
+        path: req.path,
