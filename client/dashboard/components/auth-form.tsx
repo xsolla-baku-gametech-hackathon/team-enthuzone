@@ -64,3 +64,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
         return "Please enter a valid email address";
       }
       if (trimmed.length > limits.max) {
+        return `Email must not exceed ${limits.max} characters`;
+      }
+    }
+
+    if (key === "password") {
+      if (!value) return "Password is required";
+      if (register && value.length < 12) {
+        return "Password must contain at least 12 characters";
+      }
+      if (value.length > limits.max) {
+        return `Password must contain at most ${limits.max} characters`;
+      }
+    }
+
+    if (key === "confirm" && register) {
+      if (!value) return "Please confirm your password";
+      if (value !== currentData.password) {
+        return "Passwords must match";
+      }
+    }
+
+    if (key === "name") {
