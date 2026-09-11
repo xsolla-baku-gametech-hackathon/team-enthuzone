@@ -22,3 +22,9 @@ export function Topbar() {
               setError((e as Error).message);
             }
           }}
+        >
+          Sign out
+        </button>
+      </div>
+      {error && (
+        <p role="alert" className="text-sm text-critical">
