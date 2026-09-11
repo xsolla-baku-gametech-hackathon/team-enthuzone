@@ -71,3 +71,17 @@ export function Sidebar() {
             <RadioTower size={20} strokeWidth={2.4} />
           </span>
           <div>
+            <div className="text-sm font-bold text-ink tracking-tight">
+              Player Issue
+            </div>
+            <div className="text-xs text-muted">Intelligence</div>
+          </div>
+        </div>
+
+        <nav
+          className="flex-1 space-y-1.5 overflow-y-auto px-3 py-5"
+          aria-label="Primary navigation"
+        >
+          {nav.map(({ href, label, icon: Icon }) => {
+            const active =
+              href === "/" ? pathname === "/" : pathname.startsWith(href);
