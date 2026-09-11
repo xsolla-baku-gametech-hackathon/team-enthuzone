@@ -80,4 +80,11 @@ class AuthService {
     return { userId: user.id, organizationId: organization.id, role: user.role };
   }
 
-  async getCurrentUser(auth) {
+  async getCurrentUser(auth) {
+    const user = await this.userService.findById(auth.userId);
+    const organization = user && await this.organizationService.findById(user.organizationId);
+    if (!user || user.status !== 'ACTIVE' || !organization || organization.status !== 'ACTIVE') {
+      throw new UnauthorizedError('Invalid or expired access token');
+    }
+    return { user: publicUser(user), organization: publicOrganization(organization) };
+  }
