@@ -21,3 +21,4 @@ const schema = {
     summary: { type: "string" },
     authenticity: {
       type: "string",
+      enum: ["AI Approved", "Needs Review", "Likely Spam"],
