@@ -31,4 +31,7 @@ const env = Object.freeze({
   httpBodyLimit: parsed.HTTP_BODY_LIMIT,
   jwtSecret: parsed.JWT_SECRET || 'development-only-secret-change-me-now',
   jwtExpiresIn: parsed.JWT_EXPIRES_IN,
-  passwordHashRounds: parsed.PASSWORD_HASH_ROUNDS,
+  passwordHashRounds: parsed.PASSWORD_HASH_ROUNDS,
+});
+
+module.exports = { env, environmentSchema };
