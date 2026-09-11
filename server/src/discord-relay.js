@@ -49,3 +49,20 @@ async function relay(message) {
       }
     } catch {}
     await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
+  }
+  console.error(
+    JSON.stringify({ event: "discord_relay_failed", messageId: message.id }),
+  );
+}
+let queue = Promise.resolve();
+bot.on("messageCreate", (message) => {
+  if (
+    message.author.bot ||
+    message.channelId !== config.DISCORD_CHANNEL_ID ||
+    !message.content.trim()
+  )
+    return;
+  queue = queue
+    .then(() => relay(message))
+    .catch(() =>
+      console.error(JSON.stringify({ event: "discord_queue_failed" })),
