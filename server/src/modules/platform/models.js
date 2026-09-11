@@ -38,3 +38,11 @@ const Feedback = model(
     text: String,
     candidate: mongoose.Schema.Types.Mixed,
     clusterId: String,
+    analysisStatus: { type: String, default: "pending" },
+  },
+  [
+    [
+      { sourceId: 1, externalId: 1 },
+      {
+        unique: true,
+        partialFilterExpression: { externalId: { $type: "string" } },
