@@ -156,3 +156,4 @@ bot.on("error", (err) => {
 });
 
 // 6. Login
+bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
