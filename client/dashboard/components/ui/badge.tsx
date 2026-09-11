@@ -17,4 +17,7 @@ const statusTone: Record<IssueStatus, string> = {
 export function PriorityBadge({ priority }: { priority: Priority }) {
   return <span className={`inline-flex rounded-full px-2 py-1 text-xs font-bold tracking-wide ${priorityTone[priority]}`}>{priority}</span>;
 }
-
+
+export function StatusBadge({ status }: { status: IssueStatus }) {
+  return <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${statusTone[status]}`}>{status.toLowerCase()}</span>;
+}
