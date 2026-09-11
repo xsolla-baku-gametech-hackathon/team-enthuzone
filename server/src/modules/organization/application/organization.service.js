@@ -11,4 +11,9 @@ class OrganizationService {
     let slug = baseSlug;
 
     for (let suffix = 1; suffix <= 100; suffix += 1) {
-      if (!(await this.organizationRepository.existsBySlug(slug, transaction))) {
+      if (!(await this.organizationRepository.existsBySlug(slug, transaction))) {
+        return this.organizationRepository.create(createOrganization({ name, slug }), transaction);
+      }
+      slug = `${baseSlug}-${suffix + 1}`;
+    }
+
