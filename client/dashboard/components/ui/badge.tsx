@@ -7,4 +7,7 @@ const priorityTone: Record<Priority, string> = {
   LOW: "bg-low-surface text-low",
 };
 
-const statusTone: Record<IssueStatus, string> = {
+const statusTone: Record<IssueStatus, string> = {
+  OPEN: "bg-info-surface text-info",
+  INVESTIGATING: "bg-high-surface text-high",
+  VALIDATING: "bg-medium-surface text-medium",
