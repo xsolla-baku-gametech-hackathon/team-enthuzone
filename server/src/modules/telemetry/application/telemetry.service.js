@@ -17,4 +17,7 @@ class TelemetryService {
     return this.telemetryRepository.findAll({
       ...filters,
       gameId: filters.gameId?.toLowerCase(),
-      eventName: filters.eventName?.toLowerCase(),
+      eventName: filters.eventName?.toLowerCase(),
+    });
+  }
+
