@@ -28,3 +28,4 @@ function normalize(type, target) {
     x: 10,
   };
   return {
+    type: aliases[t] || t,
