@@ -22,3 +22,5 @@ const schema = {
     authenticity: {
       type: "string",
       enum: ["AI Approved", "Needs Review", "Likely Spam"],
+    },
+    severity: { type: "number" },
