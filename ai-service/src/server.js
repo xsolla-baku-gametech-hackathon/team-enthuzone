@@ -45,3 +45,5 @@ function createApp() {
     } catch (e) {
       console.error(
         JSON.stringify({
+          event: "analysis_failed",
+          code: e.message?.startsWith("GEMINI_")
