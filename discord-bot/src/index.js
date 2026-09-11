@@ -167,3 +167,4 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
     console.error("   2. Botunuzu seçin və sol menyudan 'Bot' bölməsinə keçin.");
     console.error("   3. Aşağı sürüşdürün, 'Privileged Gateway Intents' başlığı altında:");
     console.error("      👉 'Message Content Intent' düyməsini AKTİV (ON) edin.");
+    console.error("   4. 'Save Changes' düyməsinə basıb yadda saxlayın və botu yenidən başladın.\n");
