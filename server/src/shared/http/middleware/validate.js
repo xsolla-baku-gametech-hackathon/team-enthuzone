@@ -9,4 +9,15 @@ function validate(schema, target = 'body') {
 
     if (target === 'query') {
       Object.defineProperty(req, 'query', {
-        value: result.data,
+        value: result.data,
+        configurable: true,
+        writable: true,
+      });
+    } else {
+      req[target] = result.data;
+    }
+    return next();
+  };
+}
+
+module.exports = { validate };
