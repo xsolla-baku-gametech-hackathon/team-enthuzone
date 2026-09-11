@@ -33,3 +33,4 @@ function normalize(type, target) {
       /\blevel (i{1,3}|iv|v|vi{1,3}|ix|x)\b/g,
       (_, n) => `level ${roman[n]}`,
     ),
+  };
