@@ -9,4 +9,16 @@ const feedbackMongoSchema = new mongoose.Schema({
   createdAt: { type: String, required: true },
   receivedAt: { type: String, required: true },
   metadata: { type: mongoose.Schema.Types.Mixed, default: {} },
-}, {
+}, {
+  collection: 'feedbacks',
+  versionKey: false,
+});
+
+feedbackMongoSchema.index({ gameId: 1, createdAt: -1 });
+feedbackMongoSchema.index({ gameId: 1, source: 1, createdAt: -1 });
+feedbackMongoSchema.index({ receivedAt: -1 });
+
+const FeedbackMongoModel = mongoose.models.Feedback
+  || mongoose.model('Feedback', feedbackMongoSchema);
+
+module.exports = { FeedbackMongoModel };
