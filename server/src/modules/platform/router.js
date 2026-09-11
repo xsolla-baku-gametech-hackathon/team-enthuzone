@@ -800,3 +800,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       })),
     });
   });
+  router.use((error, req, res, next) => {
+    if (error instanceof z.ZodError)
+      return res
+        .status(400)
+        .json({
+          error: { message: "Invalid input", details: error.flatten() },
+        });
+    next(error);
+  });
+  return router;
+}
+module.exports = { createPlatformRouter, rateLimit, hash };
