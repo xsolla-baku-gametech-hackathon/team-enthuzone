@@ -241,3 +241,26 @@ export function AuthForm({ register = false }: { register?: boolean }) {
             const err = validateField(key, val);
             setFieldErrors((prev) => {
               const next = { ...prev };
+              if (!err) delete next[key];
+              else next[key] = err;
+              return next;
+            });
+          }}
+          autoComplete={
+            key === "password"
+              ? register
+                ? "new-password"
+                : "current-password"
+              : key === "email"
+              ? "email"
+              : "off"
+          }
+        />
+        {fieldError && (
+          <p className="flex items-center gap-1.5 text-xs text-critical font-normal mt-0.5">
+            <AlertCircle size={13} className="shrink-0" />
+            <span>{fieldError}</span>
+          </p>
+        )}
+      </label>
+    );
