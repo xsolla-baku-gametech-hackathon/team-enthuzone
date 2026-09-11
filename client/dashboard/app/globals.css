@@ -54,3 +54,7 @@ html[data-theme="light"] {
   --info-surface: #e3eef9;
 }
 .glass {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 45px
+    color-mix(in srgb, var(--surface-sunken) 30%, transparent);
