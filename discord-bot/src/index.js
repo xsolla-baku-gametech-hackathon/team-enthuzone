@@ -101,3 +101,4 @@ async function relay(message) {
 let queue = Promise.resolve();
 
 bot.on("messageCreate", (message) => {
+  // Ignore bot messages, system messages, messages in other channels, or empty content
