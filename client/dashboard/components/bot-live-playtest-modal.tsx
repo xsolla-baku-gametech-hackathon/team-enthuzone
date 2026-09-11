@@ -709,3 +709,28 @@ export function BotLivePlaytestModal({
                       🤖 {cursorAction}
                     </div>
                   </div>
+                )}
+
+                {/* Game Over Screen */}
+                {isGameOver && (
+                  <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-canvas/90 backdrop-blur-sm p-6 text-center animate-fade-in">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-critical/20 text-critical ring-1 ring-critical/40 mb-3">
+                      <ShieldAlert size={32} />
+                    </div>
+                    <h3 className="text-xl font-bold text-text">Session Concluded</h3>
+                    <p className="text-xs text-muted mt-1 max-w-xs">
+                      The AI agent completed this playthrough run. Telemetry event batch recorded with final performance indicators.
+                    </p>
+                    <div className="mt-4 flex items-center gap-6 rounded-xl bg-surface p-3 border border-line">
+                      <div>
+                        <div className="text-xs text-muted">Final Score</div>
+                        <div className="text-lg font-bold text-accent">{score}</div>
+                      </div>
+                      <div className="h-8 w-px bg-line" />
+                      <div>
+                        <div className="text-xs text-muted">Moves</div>
+                        <div className="text-lg font-bold text-text">{movesCount}</div>
+                      </div>
+                      <div className="h-8 w-px bg-line" />
+                      <div>
+                        <div className="text-xs text-muted">Level</div>
