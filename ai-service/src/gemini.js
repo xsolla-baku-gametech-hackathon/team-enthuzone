@@ -19,3 +19,5 @@ const schema = {
     sentiment: { type: "string", enum: ["Positive", "Neutral", "Negative"] },
     confidence: { type: "number" },
     summary: { type: "string" },
+    authenticity: {
+      type: "string",
