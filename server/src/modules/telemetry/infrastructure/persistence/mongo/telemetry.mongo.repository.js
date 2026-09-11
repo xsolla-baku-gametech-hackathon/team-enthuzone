@@ -18,4 +18,15 @@ class MongoTelemetryRepository {
         upsert: true,
       },
     })), { ordered: false });
-    return events.map((event) => structuredClone(event));
+    return events.map((event) => structuredClone(event));
+  }
+
+  async findAll(filters = {}) {
+    const query = {};
+    if (filters.gameId) query.gameId = filters.gameId;
+    if (filters.buildVersion) query.buildVersion = filters.buildVersion;
+    if (filters.playerId) query.playerId = filters.playerId;
+    if (filters.sessionId) query.sessionId = filters.sessionId;
+    if (filters.eventName) query.eventName = filters.eventName;
+    for (const [key, value] of Object.entries(filters.propertyFilters || {})) {
+      query[`properties.${key}`] = value;
