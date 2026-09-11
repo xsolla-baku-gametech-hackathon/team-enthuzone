@@ -8,3 +8,4 @@ function createApp() {
   if ((process.env.AI_INTERNAL_TOKEN || "").length < 32)
     throw new Error("AI_INTERNAL_TOKEN must contain at least 32 characters");
   const app = express();
+  app.disable("x-powered-by");
