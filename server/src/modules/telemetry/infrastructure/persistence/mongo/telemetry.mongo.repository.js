@@ -29,4 +29,14 @@ class MongoTelemetryRepository {
     if (filters.sessionId) query.sessionId = filters.sessionId;
     if (filters.eventName) query.eventName = filters.eventName;
     for (const [key, value] of Object.entries(filters.propertyFilters || {})) {
-      query[`properties.${key}`] = value;
+      query[`properties.${key}`] = value;
+    }
+    return TelemetryMongoModel.find(query)
+      .sort({ timestamp: -1 })
+      .skip(filters.offset || 0)
+      .limit(filters.limit || 50)
+      .lean();
+  }
+}
+
+module.exports = { MongoTelemetryRepository };
