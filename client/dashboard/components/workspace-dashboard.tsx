@@ -890,3 +890,25 @@ export function WorkspaceDashboard({
       )}
       {secret && (
         <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-canvas/90 p-4 backdrop-blur-sm"
+          onClick={() => setSecret(null)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setSecret(null);
+          }}
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="secret-modal-title"
+            className="glass w-full max-w-xl rounded-2xl p-6 sm:p-7 shadow-2xl border border-accent/40 max-h-[92vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between border-b border-line pb-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/15 text-accent">
+                  {secret.type === "telemetry" ? (
+                    <Activity size={22} />
+                  ) : secret.type === "discord" ? (
+                    <RadioTower size={22} />
+                  ) : (
+                    <Check size={22} />
