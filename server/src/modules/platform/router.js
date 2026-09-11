@@ -98,3 +98,15 @@ async function analyzeFeedback(feedback) {
           analysisStatus: "complete",
         },
       },
+    );
+  } catch (e) {
+    await Feedback.updateOne(
+      { id: feedback.id },
+      { $set: { analysisStatus: "failed" } },
+    );
+    console.error(
+      JSON.stringify({
+        event: "feedback_analysis_failed",
+        feedbackId: feedback.id,
+        code: "AI_UNAVAILABLE",
+      }),
