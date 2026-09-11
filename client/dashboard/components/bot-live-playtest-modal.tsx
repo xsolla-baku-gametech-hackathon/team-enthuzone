@@ -439,3 +439,27 @@ export function BotLivePlaytestModal({
       ctx.moveTo(i * cellSize, 0);
       ctx.lineTo(i * cellSize, height);
       ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, i * cellSize);
+      ctx.lineTo(width, i * cellSize);
+      ctx.stroke();
+    }
+
+    // Draw Obstacles (Level 3 / 5)
+    obstacles.forEach((obs) => {
+      ctx.fillStyle = "#e45b5b";
+      ctx.shadowColor = "rgba(228, 91, 91, 0.6)";
+      ctx.shadowBlur = 8;
+      ctx.fillRect(obs.x * cellSize + 2, obs.y * cellSize + 2, cellSize - 4, cellSize - 4);
+      ctx.shadowBlur = 0;
+
+      // Hazard stripe pattern
+      ctx.fillStyle = "#2d1215";
+      ctx.fillRect(obs.x * cellSize + 6, obs.y * cellSize + 6, cellSize - 12, cellSize - 12);
+    });
+
+    // Draw Food (Pulsing glowing orb)
+    const foodX = food.x * cellSize + cellSize / 2;
+    const foodY = food.y * cellSize + cellSize / 2;
+    const foodRadius = cellSize * 0.38;
