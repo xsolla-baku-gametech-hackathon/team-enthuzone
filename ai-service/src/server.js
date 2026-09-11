@@ -36,3 +36,4 @@ function createApp() {
           .default([]),
       })
       .parse(req.body);
+    try {
