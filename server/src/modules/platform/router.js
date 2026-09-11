@@ -223,3 +223,16 @@ async function refreshRecommendations(workspaceId) {
 }
 function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
   const router = Router();
+  router.use(rateLimit());
+  async function owned(req) {
+    const w = await Workspace.findOne({
+      id: req.params.id,
+      orgId: req.auth.organizationId,
+    });
+    if (!w) throw new AppError("Workspace not found", 404);
+    return w;
+  }
+  router.post("/ingest/discord/:sourceId", async (req, res) => {
+    const c = await Connection.findOne({
+      id: req.params.sourceId,
+      type: "discord",
