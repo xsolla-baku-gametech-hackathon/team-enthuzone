@@ -127,3 +127,4 @@ bot.once("clientReady", async () => {
   console.log(`🤖 [Discord Bot Ready]: Logged in as ${bot.user.tag}`);
 
   const guilds = bot.guilds.cache.map((g) => `"${g.name}"`);
+  if (guilds.length === 0) {
