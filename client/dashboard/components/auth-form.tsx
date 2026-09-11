@@ -596,3 +596,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
               {busy
                 ? "Please wait…"
                 : register
+                ? step === 4
+                  ? "Create account"
+                  : "Continue"
+                : "Sign in"}
+              <ArrowRight size={17} />
+            </button>
+          </div>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-muted">
+          {register ? "Already have an account?" : "New to the platform?"}{" "}
+          <Link
+            className="text-accent hover:underline"
+            href={register ? "/login" : "/register"}
+          >
+            {register ? "Sign in" : "Create an account"}
+          </Link>
+        </p>
+      </section>
+    </div>
+  );
+}
