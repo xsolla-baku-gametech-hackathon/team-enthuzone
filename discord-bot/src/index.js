@@ -73,3 +73,4 @@ async function relay(message) {
           await message.react("🎮");
         } catch {}
         return;
+      }
