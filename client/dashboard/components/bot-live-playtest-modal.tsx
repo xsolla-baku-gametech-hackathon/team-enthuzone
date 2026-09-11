@@ -316,3 +316,28 @@ export function BotLivePlaytestModal({
     },
     []
   );
+
+  // Core Game Loop
+  useEffect(() => {
+    if (!isPlaying || isGameOver || mode !== "snake") return;
+
+    // Base interval adjusted by speed: 180ms / speed
+    const intervalMs = Math.max(45, Math.floor(170 / speed));
+
+    const interval = setInterval(() => {
+      const currentSnake = snakeRef.current;
+      const currentDir = directionRef.current;
+      const currentFood = foodRef.current;
+      const currentObs = obstaclesRef.current;
+      const head = currentSnake[0];
+
+      let nextDir = currentDir;
+
+      // AI Decision Step
+      if (isAiActiveRef.current) {
+        nextDir = findAiNextDirection(currentSnake, currentFood, currentObs, currentDir);
+        if (nextDir !== currentDir || Math.random() < 0.25) {
+          triggerAiCursorAction(nextDir, head);
+        }
+        setDirection(nextDir);
+      }
