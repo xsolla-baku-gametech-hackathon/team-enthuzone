@@ -67,3 +67,4 @@ function createApp() {
   app.post("/internal/ai/correlate", (req, res) => {
     const input = z
       .object({
+        issue: z.object({ type: z.string(), target: z.string() }),
