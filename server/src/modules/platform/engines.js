@@ -46,3 +46,15 @@ function aggregate(events) {
   for (const [key, t] of Object.entries(targets)) {
     const sessions = [...t.sessions.values()];
     const n = sessions.length;
+    targets[key] = {
+      sessions: n,
+      dropoff:
+        (100 * sessions.filter((s) => s.quit && !s.completed).length) / n,
+      avg_attempts: sessions.reduce((v, s) => v + s.attempts, 0) / n,
+      completion_rate: (100 * sessions.filter((s) => s.completed).length) / n,
+      avg_session: sessions.reduce((v, s) => v + s.duration, 0) / n / 60,
+    };
+  }
+  return { targets, uniquePlayers: users.size, eventCount: events.length };
+}
+module.exports = { priority, aggregate };
