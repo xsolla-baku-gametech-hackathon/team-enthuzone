@@ -51,3 +51,4 @@ function createApp() {
             : "INVALID_AI_OUTPUT",
         }),
       );
+      res.json({
