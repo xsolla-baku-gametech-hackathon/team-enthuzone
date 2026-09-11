@@ -32,4 +32,7 @@ export interface Issue {
 export interface FeedbackItem {
   id: string;
   source: FeedbackSource;
-  excerpt: string;
+  excerpt: string;
+  sentiment: "NEGATIVE" | "MIXED" | "POSITIVE";
+  build: string;
+  createdAt: string;
