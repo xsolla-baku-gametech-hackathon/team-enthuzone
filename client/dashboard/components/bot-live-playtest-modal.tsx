@@ -243,3 +243,28 @@ export function BotLivePlaytestModal({
 
         for (const d of dirs) {
           const nx = curr.pt.x + d.dx;
+          const ny = curr.pt.y + d.dy;
+          const key = `${nx},${ny}`;
+          if (nx >= 0 && nx < GRID_SIZE && ny >= 0 && ny < GRID_SIZE && !blocked.has(key) && !visited.has(key)) {
+            visited.add(key);
+            queue.push({ pt: { x: nx, y: ny }, firstDir: curr.firstDir });
+          }
+        }
+      }
+
+      // Fallback: If no direct path to food, pick the move that maximizes open space (longest survival)
+      let bestDir: Direction = currentDir;
+      let maxSpace = -1;
+
+      for (const m of validMoves) {
+        const nx = head.x + m.dx;
+        const ny = head.y + m.dy;
+        const key = `${nx},${ny}`;
+        if (nx >= 0 && nx < GRID_SIZE && ny >= 0 && ny < GRID_SIZE && !blocked.has(key)) {
+          // Count open neighbours
+          let space = 0;
+          for (const check of dirs) {
+            const cx = nx + check.dx;
+            const cy = ny + check.dy;
+            if (cx >= 0 && cx < GRID_SIZE && cy >= 0 && cy < GRID_SIZE && !blocked.has(`${cx},${cy}`)) {
+              space++;
