@@ -25,3 +25,4 @@ function normalize(type, target) {
     vii: 7,
     viii: 8,
     ix: 9,
+    x: 10,
