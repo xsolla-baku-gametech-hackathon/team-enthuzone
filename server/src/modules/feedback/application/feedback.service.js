@@ -14,4 +14,7 @@ class FeedbackService {
   }
 
   async list(filters = {}) {
-    const normalizedFilters = {
+    const normalizedFilters = {
+      ...filters,
+      gameId: filters.gameId?.toLowerCase(),
+    };
