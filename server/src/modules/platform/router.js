@@ -461,3 +461,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
     async (req, res) => {
       await owned(req);
       await Connection.deleteOne({
+        id: req.params.connectionId,
+        workspaceId: req.params.id,
+      });
+      res.status(204).end();
+    },
+  );
+  router.post("/workspaces/:id/telemetry/mock", async (req, res) => {
+    await owned(req);
+    const workspaceId = req.params.id;
+    const mockEvents = [];
+
+    const addSession = (target, playerId, sessionId, attempts, completed, quit, duration) => {
+      mockEvents.push({
