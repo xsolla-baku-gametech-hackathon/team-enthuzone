@@ -72,3 +72,4 @@ async function relay(message) {
           // Add a subtle reaction so players know their review was registered
           await message.react("🎮");
         } catch {}
+        return;
