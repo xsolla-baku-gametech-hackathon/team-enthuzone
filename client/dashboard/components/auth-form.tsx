@@ -419,3 +419,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                 </>
               )}
             </>
+          )}
+
+          {register && step === 1 && (
+            <>
+              {field("name", "First name", "text", true)}
+              {field("surname", "Surname", "text", true)}
+              {field("organizationName", "Organization name", "text", true)}
+            </>
+          )}
+
+          {register && step === 2 && (
+            <label className="grid gap-2 text-sm font-medium">
+              <div className="flex items-center justify-between">
+                <span>Country / city</span>
+                <span className="text-xs text-muted">
+                  {data.location.length}/200
+                </span>
+              </div>
+              <input
+                className={`field transition-colors ${
+                  fieldErrors.location
+                    ? "!border-critical ring-1 !ring-critical/40 focus:!border-critical"
