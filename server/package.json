@@ -7,4 +7,6 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "test": "node --test",
+    "test": "node --test",
+    "discord": "node src/discord-relay.js",
+    "dev:local": "node src/dev-local.js"
