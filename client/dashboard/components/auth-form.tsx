@@ -552,3 +552,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                 <span>Remember me</span>
               </label>
               <button
+                type="button"
+                className="text-accent hover:underline"
+                onClick={async () => {
+                  try {
+                    await request("/session/forgot-password", {
+                      email: data.email,
+                    });
+                  } catch (e) {
+                    setError((e as Error).message);
+                  }
+                }}
+              >
+                Forgot password?
+              </button>
+            </div>
+          )}
+
+          {error && (
+            <p
+              role="alert"
+              className="flex items-center gap-2 rounded-lg bg-critical-surface p-3 text-sm text-critical border border-critical/30"
+            >
