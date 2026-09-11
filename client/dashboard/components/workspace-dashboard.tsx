@@ -957,3 +957,25 @@ export function WorkspaceDashboard({
                         onClick={() => {
                           navigator.clipboard.writeText(secret.key);
                           setNotice("API Key copied!");
+                          setTimeout(() => setNotice(""), 3000);
+                        }}
+                      >
+                        <Copy size={15} />
+                        Copy Key
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* 2. Endpoint URL */}
+                  <div>
+                    <label className="text-xs font-semibold uppercase tracking-wider text-muted mb-1.5 block">
+                      Ingestion Endpoint URL (HTTP POST)
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <code className="flex-1 font-mono text-xs bg-surface-sunken border border-line rounded-lg p-3 break-all text-text select-all">
+                        {typeof window !== "undefined"
+                          ? `${window.location.origin}/api/platform/ingest/telemetry`
+                          : "http://127.0.0.1:4000/api/platform/ingest/telemetry"}
+                      </code>
+                      <button
+                        type="button"
