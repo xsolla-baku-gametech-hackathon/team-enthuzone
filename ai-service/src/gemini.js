@@ -107,3 +107,4 @@ async function recommend(issue, evidence) {
       type: "object",
       properties: {
         recommendations: {
+          type: "array",
