@@ -16,4 +16,7 @@ const environmentSchema = z.object({
   if (value.NODE_ENV === 'production' && !value.JWT_SECRET) {
     context.addIssue({ code: z.ZodIssueCode.custom, path: ['JWT_SECRET'], message: 'JWT_SECRET is required in production' });
   }
-});
+});
+
+const parsed = environmentSchema.parse(process.env);
+
