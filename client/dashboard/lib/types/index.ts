@@ -30,4 +30,6 @@ export interface Issue {
 }
 
 export interface FeedbackItem {
-  id: string;
+  id: string;
+  source: FeedbackSource;
+  excerpt: string;
