@@ -35,3 +35,4 @@ function createApp() {
           .max(100)
           .default([]),
       })
+      .parse(req.body);
