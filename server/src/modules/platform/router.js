@@ -675,3 +675,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       const testRuns = 10;
       let botDeaths = 0;
       let botCompleted = 0;
+
+      const isDifficultyOrCrash = [
+        "difficulty",
+        "bug",
+        "crash",
+        "performance",
+      ].includes((issue.type || "").toLowerCase());
+      const isHighDropoff =
+        targetMetrics.dropoff >= 30 || targetMetrics.avg_attempts >= 4;
+
+      for (let r = 1; r <= testRuns; r++) {
+        const sessId = `ai-bot-run-${Date.now()}-${r}`;
