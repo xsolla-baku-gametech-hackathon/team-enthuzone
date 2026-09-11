@@ -485,3 +485,26 @@ export function AuthForm({ register = false }: { register?: boolean }) {
             <label className="grid gap-2 text-sm font-medium">
               <div className="flex items-center justify-between">
                 <span>What is your business about?</span>
+                <span className="text-xs text-muted">
+                  {data.businessDescription.length}/2000
+                </span>
+              </div>
+              <textarea
+                className={`field min-h-32 transition-colors ${
+                  fieldErrors.businessDescription
+                    ? "!border-critical ring-1 !ring-critical/40 focus:!border-critical"
+                    : ""
+                }`}
+                maxLength={2000}
+                value={data.businessDescription}
+                onChange={(e) =>
+                  handleFieldChange("businessDescription", e.target.value)
+                }
+                onBlur={() => {
+                  const err = validateField(
+                    "businessDescription",
+                    data.businessDescription
+                  );
+                  setFieldErrors((prev) => {
+                    const next = { ...prev };
+                    if (!err) delete next.businessDescription;
