@@ -573,3 +573,17 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
     await Evidence.updateOne({ workspaceId }, { $set: { metrics } }, { upsert: true });
 
     await refreshRecommendations(workspaceId);
+
+    res.json({
+      success: true,
+      injectedEvents: mockEvents.length,
+      metrics,
+    });
+  });
+  router.post("/workspaces/:id/feedback", async (req, res) => {
+    await owned(req);
+    const input = z
+      .object({
+        author: z.string().min(1).max(150),
+        text: z.string().trim().min(1).max(6000),
+      })
