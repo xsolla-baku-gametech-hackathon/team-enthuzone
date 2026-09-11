@@ -104,3 +104,4 @@ async function recommend(issue, evidence) {
       evidence,
     }),
     {
+      type: "object",
