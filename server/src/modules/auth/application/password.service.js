@@ -9,4 +9,9 @@ class PasswordService {
     return bcrypt.hash(password, this.rounds);
   }
 
-  compare(password, passwordHash) {
+  compare(password, passwordHash) {
+    return bcrypt.compare(password, passwordHash);
+  }
+}
+
+module.exports = { PasswordService };
