@@ -86,3 +86,4 @@ function createApp() {
         code: err instanceof z.ZodError ? "VALIDATION" : "AI_UNAVAILABLE",
       }),
     );
+    res
