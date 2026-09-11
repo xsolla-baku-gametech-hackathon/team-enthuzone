@@ -180,3 +180,21 @@ test(
     assert.equal(d.connections[0].keyHash, undefined);
 
     // 5. Test AI Bot Scenario Verification
+    const { body: botRes } = await client
+      .post(
+        `/api/platform/workspaces/${w.id}/issues/${d.issues[0].id}/verify-bot`,
+      )
+      .expect(200);
+    assert.equal(botRes.success, true);
+    assert(botRes.aiVerification.status === "APPROVED" || botRes.aiVerification.status === "REJECTED");
+
+    // 6. Test Mock Telemetry Generation
+    const { body: mockRes } = await client
+      .post(`/api/platform/workspaces/${w.id}/telemetry/mock`)
+      .expect(200);
+    assert.equal(mockRes.success, true);
+    assert(mockRes.injectedEvents >= 50);
+    assert(mockRes.metrics.targets["level 5"].dropoff > 0);
+
+    await client
+      .post(
