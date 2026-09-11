@@ -511,3 +511,25 @@ export function WorkspaceDashboard({
                                 action(async () => {
                                   const res = await request<{
                                     success: boolean;
+                                    aiVerification: { status: string; summary: string };
+                                  }>(
+                                    `/platform/workspaces/${selected}/issues/${i.id}/verify-bot`,
+                                    {},
+                                    "POST",
+                                  );
+                                  setNotice(
+                                    res.aiVerification.status === "APPROVED"
+                                      ? "AI Bot test completed: Issue Confirmed! (Badge added)"
+                                      : "AI Bot test completed: Could not reproduce issue.",
+                                  );
+                                  setTimeout(() => setNotice(""), 4500);
+                                  await reload();
+                                })
+                              }
+                            >
+                              <Bot size={14} className="text-accent" />
+                              {i.aiVerification ? "Re-test with AI Bot" : "Verify with AI Bot"}
+                            </button>
+                            <button
+                              disabled={busy}
+                              className="secondary"
