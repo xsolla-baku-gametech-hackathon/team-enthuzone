@@ -637,3 +637,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
     try {
       const result = await aiCall("recommend", {
         issue: {
+          type: issue.type,
+          target: issue.target,
+          summary: issue.summary,
+        },
+        evidence: metrics,
+      });
+      issue.recommendations = result.recommendations;
+      issue.recommendationStatus = "complete";
+      await issue.save();
+      res.json(issue);
+    } catch {
+      throw new AppError("AI recommendations unavailable. Please retry.", 503);
+    }
