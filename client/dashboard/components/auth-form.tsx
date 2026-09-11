@@ -286,3 +286,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
         await request("/session/register", {
           email: data.email.trim(),
           password: data.password,
+          name: data.name.trim(),
+          organizationName: data.organizationName.trim(),
+        });
+        await request(
+          "/platform/profile",
+          {
+            surname: data.surname.trim(),
+            location: data.location.trim(),
+            businessDescription: data.businessDescription.trim(),
+          },
+          "PUT"
+        );
+      } else {
+        await request("/session/login", {
+          email: data.email.trim(),
+          password: data.password,
+          remember: data.remember,
+        });
+      }
+      router.push("/");
+      router.refresh();
+    } catch (e) {
