@@ -25,3 +25,5 @@ const schema = {
     },
     severity: { type: "number" },
   },
+  required: [
+    "type",
