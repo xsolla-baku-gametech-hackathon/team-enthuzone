@@ -68,3 +68,4 @@ function createApp() {
     const input = z
       .object({
         issue: z.object({ type: z.string(), target: z.string() }),
+        metrics: z.object({ targets: z.record(z.any()).optional() }),
