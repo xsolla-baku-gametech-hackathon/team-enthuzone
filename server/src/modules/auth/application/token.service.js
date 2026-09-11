@@ -14,4 +14,20 @@ class TokenService {
       expiresIn: this.expiresIn,
     });
   }
-
+
+  verify(token) {
+    try {
+      const payload = jwt.verify(token, this.secret);
+      if (typeof payload.sub !== 'string'
+        || typeof payload.organizationId !== 'string'
+        || !USER_ROLES.includes(payload.role)) {
+        throw new Error('Invalid token payload');
+      }
+      return payload;
+    } catch (_error) {
+      throw new UnauthorizedError('Invalid or expired access token');
+    }
+  }
+}
+
+module.exports = { TokenService };
