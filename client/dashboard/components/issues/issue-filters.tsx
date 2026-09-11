@@ -9,4 +9,8 @@ const controls = [
   { key: "category", label: "Category", values: ["ALL", "GAMEPLAY_BALANCE", "ECONOMY", "MATCHMAKING", "ONBOARDING", "AUDIO"] },
   { key: "priority", label: "Priority", values: ["ALL", "CRITICAL", "HIGH", "MEDIUM", "LOW"] },
   { key: "status", label: "Status", values: ["ALL", "OPEN", "INVESTIGATING", "VALIDATING", "RESOLVED"] },
-  { key: "build", label: "Build", values: ["ALL", "1.8.0", "1.7.9"] },
+  { key: "build", label: "Build", values: ["ALL", "1.8.0", "1.7.9"] },
+  { key: "sort", label: "Sort by", values: ["priorityScore", "feedbackGrowth", "confidence"] },
+];
+
+export function IssueFilters() {
