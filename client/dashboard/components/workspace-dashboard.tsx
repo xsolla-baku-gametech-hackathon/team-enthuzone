@@ -867,3 +867,26 @@ export function WorkspaceDashboard({
                 <>
                   <h2 className="text-xl font-semibold">Build comparison</h2>
                   {!detail.builds.length && (
+                    <p className="text-muted">
+                      Send telemetry with a build identifier to compare
+                      releases.
+                    </p>
+                  )}
+                  <div className="grid gap-4 xl:grid-cols-2">
+                    {detail.builds.map((b) => (
+                      <section key={b.build} className="glass rounded-xl p-5">
+                        <h3 className="mb-4 font-mono font-semibold">
+                          {b.build}
+                        </h3>
+                        <MetricsView metrics={b} />
+                      </section>
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          )}
+        </>
+      )}
+      {secret && (
+        <div
