@@ -8,4 +8,5 @@ export function Button({ variant = "neutral", className = "", ...props }: Props)
     neutral: "bg-surface-raised text-ink hover:bg-line",
     danger: "bg-critical text-ink hover:bg-critical-surface",
   };
-  return <button className={`inline-flex min-h-9 items-center justify-center gap-2 rounded-control px-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${tones[variant]} ${className}`} {...props} />;
+  return <button className={`inline-flex min-h-9 items-center justify-center gap-2 rounded-control px-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${tones[variant]} ${className}`} {...props} />;
+}
