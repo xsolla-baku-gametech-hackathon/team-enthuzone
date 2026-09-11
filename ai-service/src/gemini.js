@@ -114,3 +114,5 @@ async function recommend(issue, evidence) {
       },
       required: ["recommendations"],
     },
+  );
+  return z
