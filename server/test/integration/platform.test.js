@@ -107,3 +107,21 @@ test(
       eventType: "quit",
       duration: 120,
       build: "v1",
+    };
+    await request(app)
+      .post("/api/platform/ingest/telemetry")
+      .send({ events: [event] })
+      .expect(401);
+    await request(app)
+      .post("/api/platform/ingest/telemetry")
+      .set("x-api-key", c.key)
+      .send({ events: [event] })
+      .expect(202);
+    const duplicate = await request(app)
+      .post("/api/platform/ingest/telemetry")
+      .set("x-api-key", c.key)
+      .send({ events: [event] })
+      .expect(202);
+    assert.equal(duplicate.body.duplicates, 1);
+
+    // 1. Test Toggle Connection Pause
