@@ -587,3 +587,27 @@ export function BotLivePlaytestModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
+        <div className="flex items-center justify-between border-b border-line px-5 py-3.5 bg-surface/90">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/20 text-accent ring-1 ring-accent/30">
+              <Bot size={22} className="animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-bold text-text">
+                  AI Autonomous Playtest Environment
+                </h2>
+                <span className="flex items-center gap-1.5 rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-semibold text-accent ring-1 ring-accent/30">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
+                  LIVE AUTOPILOT ACTIVE
+                </span>
+              </div>
+              <p className="text-xs text-muted">
+                Bot Target: <span className="font-semibold text-text">{botName}</span> | Model: BFS Heuristic Agent v2.4
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {gameUrl && (
+              <div className="flex rounded-lg bg-surface-sunken p-0.5 border border-line text-xs font-semibold">
