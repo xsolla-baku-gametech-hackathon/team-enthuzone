@@ -45,4 +45,16 @@ test('registration creates an organization and OWNER with a password hash', asyn
   assert.ok(response.body.accessToken);
   assert.match(storedUser.passwordHash, /^\$2/);
   assert.notEqual(storedUser.passwordHash, registration.password);
-  assert.equal(JSON.stringify(response.body).includes('passwordHash'), false);
+  assert.equal(JSON.stringify(response.body).includes('passwordHash'), false);
+  assert.equal((await context.organizationRepository.findAll()).length, 1);
+});
+
+test('registration rejects duplicate email and invalid requests', async () => {
+  const context = testContext();
+  await register(context);
+  const duplicate = await request(context.app).post('/api/auth/register').send({
+    ...registration,
+    organizationName: 'Another Studio',
+    email: 'JOHN@DARKFRONT.COM',
+  }).expect(409);
+  assert.equal(duplicate.body.error.code, 'CONFLICT');
