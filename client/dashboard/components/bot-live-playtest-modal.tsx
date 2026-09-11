@@ -758,3 +758,27 @@ export function BotLivePlaytestModal({
                   src={gameUrl}
                   className="h-full w-full border-0"
                   sandbox="allow-scripts allow-pointer-lock"
+                  referrerPolicy="no-referrer"
+                />
+                {/* Simulated Overlay Cursor for Iframe Mode */}
+                <div
+                  className="pointer-events-none absolute z-30 transition-all duration-200"
+                  style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px` }}
+                >
+                  <svg
+                    width="26"
+                    height="26"
+                    viewBox="0 0 24 24"
+                    fill="#35b8a5"
+                    stroke="#ffffff"
+                    strokeWidth="1.5"
+                    className="drop-shadow-[0_0_8px_rgba(53,184,165,0.8)]"
+                  >
+                    <path d="M4 3L11 20L14 13L21 10L4 3Z" strokeLinejoin="round" />
+                  </svg>
+                  <div className="absolute left-6 top-2 rounded bg-canvas/90 px-1.5 py-0.5 text-[10px] font-mono text-accent">
+                    🤖 AI Simulating Inputs
+                  </div>
+                </div>
+              </div>
+            )}
