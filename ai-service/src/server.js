@@ -29,3 +29,4 @@ function createApp() {
   app.post("/internal/ai/analyze-feedback", async (req, res) => {
     const { text, existing } = z
       .object({
+        text: z.string().min(1).max(6000),
