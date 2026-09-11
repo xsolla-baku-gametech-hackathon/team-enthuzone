@@ -10,3 +10,4 @@ function normalize(type, target) {
   const clean = (s) =>
     s
       .toLowerCase()
+      .normalize("NFKC")
