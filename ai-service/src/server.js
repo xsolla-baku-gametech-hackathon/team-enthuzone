@@ -76,3 +76,4 @@ function createApp() {
   app.post("/internal/ai/recommend", async (req, res) => {
     res.json({
       recommendations: await recommend(req.body.issue, req.body.evidence),
+    });
