@@ -9,4 +9,11 @@ function publicUser(user) {
 
 function publicOrganization(organization) {
   return { id: organization.id, name: organization.name, slug: organization.slug };
-}
+}
+
+class AuthService {
+  constructor({ organizationService, userService, passwordService, tokenService, transactionManager }) {
+    Object.assign(this, { organizationService, userService, passwordService, tokenService, transactionManager });
+  }
+
+  async register(input) {
