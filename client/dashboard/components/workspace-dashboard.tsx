@@ -64,3 +64,26 @@ export function WorkspaceDashboard({
       if (id)
         setDetail(await request<WorkspaceDetail>(`/platform/workspaces/${id}`));
     },
+    [selected],
+  );
+  useEffect(() => {
+    let active = true;
+    request<Workspace[]>("/platform/workspaces")
+      .then(async (rows) => {
+        if (!active) return;
+        setWorkspaces(rows);
+        const saved = localStorage.getItem("workspace");
+        const id = rows.find((w) => w.id === saved)?.id || rows[0]?.id || "";
+        setSelected(id);
+        if (id) {
+          const d = await request<WorkspaceDetail>(
+            `/platform/workspaces/${id}`,
+          );
+          if (active) setDetail(d);
+        }
+      })
+      .catch((e) => {
+        if (active) setError(e.message);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
