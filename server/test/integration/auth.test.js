@@ -81,4 +81,16 @@ test('login succeeds and unknown email and wrong password share a generic error'
   ]) {
     const failed = await request(context.app).post('/api/auth/login').send(credentials).expect(401);
     assert.equal(failed.body.error.code, 'INVALID_CREDENTIALS');
-    assert.equal(failed.body.error.message, 'Invalid email or password');
+    assert.equal(failed.body.error.message, 'Invalid email or password');
+  }
+});
+
+test('disabled users and suspended organizations cannot login or reuse JWTs', async () => {
+  const context = testContext();
+  const created = await register(context);
+  const header = { Authorization: `Bearer ${created.body.accessToken}` };
+
+  await context.userRepository.update(created.body.user.id, { status: 'DISABLED' });
+  await request(context.app).post('/api/auth/login').send({
+    email: registration.email, password: registration.password,
+  }).expect(401);
