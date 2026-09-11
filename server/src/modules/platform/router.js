@@ -311,3 +311,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
             $setOnInsert: {
               ...e,
               workspaceId: c.workspaceId,
+              connectionId: c.id,
+            },
+          },
+          upsert: true,
+        },
+      })),
+    );
+    res
+      .status(202)
+      .json({
+        accepted: result.upsertedCount,
+        duplicates: input.events.length - result.upsertedCount,
+      });
