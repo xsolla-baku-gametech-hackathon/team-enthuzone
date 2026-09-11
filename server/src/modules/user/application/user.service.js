@@ -15,4 +15,7 @@ class UserService {
 
   createOwner(input, transaction) {
     return this.userRepository.create(createUser({ ...input, role: 'OWNER' }), transaction);
-  }
+  }
+}
+
+module.exports = { UserService };
