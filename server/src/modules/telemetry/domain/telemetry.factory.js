@@ -5,4 +5,12 @@ function toTelemetryEvent(input) {
   return {
     ...input,
     id: input.id || createId('tel'),
-    gameId: input.gameId.trim().toLowerCase(),
+    gameId: input.gameId.trim().toLowerCase(),
+    eventName: input.eventName.trim().toLowerCase(),
+    timestamp: input.timestamp || receivedAt,
+    receivedAt,
+    properties: structuredClone(input.properties || {}),
+  };
+}
+
+module.exports = { toTelemetryEvent };
