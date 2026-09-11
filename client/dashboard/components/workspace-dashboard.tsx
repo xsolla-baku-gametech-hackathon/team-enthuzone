@@ -1447,3 +1447,26 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                     onClick={() => {
                       setIsFullscreen(false);
                       setPreviewWorkspace(null);
+                    }}
+                  >
+                    <X size={19} />
+                  </button>
+                </div>
+              </div>
+
+              <div
+                ref={previewContainerRef}
+                className="relative flex-1 w-full flex items-center justify-center overflow-hidden bg-[#0d0f12]"
+                style={{
+                  height: isFullscreen ? "calc(100vh - 105px)" : "560px",
+                  minHeight: isFullscreen ? "calc(100vh - 105px)" : "420px",
+                  maxHeight: isFullscreen ? "calc(100vh - 105px)" : "68vh",
+                }}
+              >
+                {resolving ? (
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-surface-sunken">
+                    <RefreshCw size={28} className="animate-spin text-accent" />
+                    <p className="text-sm font-medium text-muted">Connecting WebGL build…</p>
+                  </div>
+                ) : resolvedUrl ? (
+                  <div
