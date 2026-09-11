@@ -762,3 +762,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
         summary: approved
           ? `AI Bot conducted ${testRuns} automated playthroughs on "${issue.target}": Experienced ${botDeaths}/${testRuns} failure events (${failureRate}% fail rate) reproducing reported difficulty/bugs. Issue confirmed.`
           : `AI Bot conducted ${testRuns} automated playthroughs on "${issue.target}": Completed ${botCompleted}/${testRuns} runs smoothly. Could not reproduce the issue under standard test conditions.`,
+        verifiedAt: new Date(),
+      };
+
+      issue.aiVerification = aiVerification;
+      await issue.save();
+
+      res.json({
+        success: true,
+        issueId: issue.id,
+        aiVerification,
+      });
+    },
+  );
