@@ -30,3 +30,20 @@ export type Workspace = {
   webglUrl: string;
   createdAt: string;
 };
+export type Feedback = {
+  id: string;
+  author: string;
+  text: string;
+  analysisStatus: string;
+  candidate?: { authenticity: string };
+  createdAt: string;
+};
+export type Metrics = {
+  eventCount: number;
+  uniquePlayers: number;
+  targets: Record<
+    string,
+    {
+      sessions: number;
+      dropoff: number;
+      avg_attempts: number;
