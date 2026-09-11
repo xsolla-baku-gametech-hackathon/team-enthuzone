@@ -1024,3 +1024,25 @@ export function WorkspaceDashboard({
       "target": "level 1",
       "eventType": "attempt",
       "duration": 45,
+      "build": "1.0.0"
+    }
+  ]
+}`;
+                          navigator.clipboard.writeText(snippet);
+                          setNotice("Developer code snippet copied!");
+                          setTimeout(() => setNotice(""), 3000);
+                        }}
+                      >
+                        <Copy size={12} />
+                        Copy developer guide
+                      </button>
+                    </div>
+
+                    <p className="text-muted leading-relaxed">
+                      Send gameplay events from Unity, Unreal, Godot, or WebGL to the endpoint with the <code className="text-accent">x-api-key</code> header. The system automatically scopes metrics to this workspace.
+                    </p>
+
+                    <pre className="font-mono text-[11px] text-text/90 overflow-x-auto p-3 bg-surface rounded-lg border border-line/40 select-all leading-relaxed">
+{`POST /api/platform/ingest/telemetry
+Headers:
+  Content-Type: application/json
