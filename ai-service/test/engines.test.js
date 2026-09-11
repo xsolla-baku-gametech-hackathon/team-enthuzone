@@ -5,3 +5,4 @@ test("normalization unifies aliases, roman numerals and whitespace", () => {
   assert.deepEqual(
     normalize("Balance", " Level V "),
     normalize("Difficulty", "Level 5"),
+  );
