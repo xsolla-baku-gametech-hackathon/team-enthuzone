@@ -41,3 +41,5 @@ const bot = new Client({
     GatewayIntentBits.MessageContent,
   ],
 });
+
+// 3. Relay message to Core Platform API with exponential backoff retry
