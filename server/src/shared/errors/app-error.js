@@ -35,4 +35,10 @@ class UnauthorizedError extends AppError {
 
 class InvalidCredentialsError extends UnauthorizedError {
   constructor() {
-    super('Invalid email or password', 'INVALID_CREDENTIALS');
+    super('Invalid email or password', 'INVALID_CREDENTIALS');
+  }
+}
+
+class ForbiddenError extends AppError {
+  constructor(message = 'Insufficient permissions') {
+    super(message, 403, 'FORBIDDEN');
