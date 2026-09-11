@@ -41,3 +41,18 @@ export function Sidebar() {
           aria-label="Mobile navigation"
         >
           {nav.map(({ href, label, icon: Icon }) => {
+            const active =
+              href === "/" ? pathname === "/" : pathname.startsWith(href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`flex min-w-max items-center gap-2 rounded-control px-3 py-2 text-xs font-semibold transition-colors ${
+                  active
+                    ? "bg-surface-raised text-ink"
+                    : "text-muted hover:bg-surface hover:text-ink"
+                }`}
+              >
+                <Icon size={15} aria-hidden="true" />
+                {label}
+              </Link>
