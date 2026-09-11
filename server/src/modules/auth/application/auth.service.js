@@ -29,4 +29,10 @@ class AuthService {
         created = await this.transactionManager.execute(async (transaction) => {
           if (await this.userService.findByEmail(email, transaction)) {
             throw Object.assign(new Error('Duplicate user email'), { code: 'DUPLICATE_EMAIL' });
-          }
+          }
+          const organization = await this.organizationService.create({ name: input.organizationName }, transaction);
+          const user = await this.userService.createOwner({
+            organizationId: organization.id,
+            name: input.name,
+            email,
+            passwordHash,
