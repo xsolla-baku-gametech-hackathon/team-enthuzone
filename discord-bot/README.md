@@ -38,3 +38,4 @@ npm run dev
 ### 1. Discord Bot Token
 1. [Discord Developer Portal](https://discord.com/developers/applications) saytına daxil olun.
 2. **"New Application"** yaradın (məs: `PlayerFeedbackBot`).
+3. Sol menyuda **Bot** bölməsinə keçin:
