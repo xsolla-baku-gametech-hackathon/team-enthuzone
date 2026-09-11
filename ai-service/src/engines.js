@@ -13,3 +13,4 @@ function normalize(type, target) {
       .normalize("NFKC")
       .replace(/[^\p{L}\p{N} ]/gu, " ")
       .replace(/\s+/g, " ")
+      .trim();
