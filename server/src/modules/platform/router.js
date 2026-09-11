@@ -349,3 +349,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       ),
     );
   });
+  router.get("/preview-url", async (req, res) => {
+    const rawUrl = req.query.url;
+    if (!rawUrl || typeof rawUrl !== "string") {
+      return res.status(400).json({ error: { message: "URL is required" } });
+    }
+    try {
+      const parsed = new URL(rawUrl);
+      if (parsed.hostname.endsWith("itch.io")) {
+        const response = await fetch(rawUrl, {
+          headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" },
+          signal: AbortSignal.timeout(6000),
+        });
