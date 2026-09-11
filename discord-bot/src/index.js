@@ -141,3 +141,4 @@ bot.once("clientReady", async () => {
     }
   } catch (err) {
     console.warn(`⚠️  [Channel Access]: Bot "${config.DISCORD_CHANNEL_ID}" kanalını görə bilmir (${err.message}).`);
+    console.warn("   Kanal gizlidirsə (private), kanalın Settings -> Permissions bölməsindən bota 'View Channel' icazəsi verin.");
