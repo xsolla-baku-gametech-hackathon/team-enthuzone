@@ -530,3 +530,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                 ["Name", `${data.name} ${data.surname}`.trim()],
                 ["Location", data.location],
                 ["About", data.businessDescription],
+              ].map(([k, v]) => (
+                <div key={k}>
+                  <dt className="text-muted">{k}</dt>
+                  <dd className="mt-1 break-words font-medium">{v || "—"}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {!register && (
+            <div className="flex justify-between gap-4 text-sm">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={data.remember}
+                  onChange={(e) =>
+                    setData({ ...data, remember: e.target.checked })
+                  }
+                />{" "}
+                <span>Remember me</span>
+              </label>
+              <button
