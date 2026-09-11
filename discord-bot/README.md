@@ -34,3 +34,5 @@ npm run dev
 ---
 
 ## 📋 How to get credentials (Məlumatları necə əldə etməli?)
+
+### 1. Discord Bot Token
