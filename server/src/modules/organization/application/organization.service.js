@@ -16,4 +16,9 @@ class OrganizationService {
       }
       slug = `${baseSlug}-${suffix + 1}`;
     }
-
+
+    throw new ConflictError('Could not generate a unique organization slug');
+  }
+
+  findById(id, transaction) {
+    return this.organizationRepository.findById(id, transaction);
