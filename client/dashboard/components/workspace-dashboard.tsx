@@ -555,3 +555,25 @@ export function WorkspaceDashboard({
                                   await request(
                                     `/platform/workspaces/${selected}/issues/${i.id}`,
                                     { status: e.target.value },
+                                    "PATCH",
+                                  );
+                                  await reload();
+                                })
+                              }
+                            >
+                              {["OPEN", "INVESTIGATING", "RESOLVED"].map(
+                                (s) => (
+                                  <option key={s}>{s}</option>
+                                ),
+                              )}
+                            </select>
+                          </div>
+                        </article>
+                      ))}
+                  </div>
+                </>
+              )}
+              {tab === "feedback" && (
+                <>
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
