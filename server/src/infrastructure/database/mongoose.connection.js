@@ -9,4 +9,6 @@ async function connectMongo(uri) {
     minPoolSize: 1,
   });
   return mongoose.connection;
-}
+}
+
+async function disconnectMongo() {
