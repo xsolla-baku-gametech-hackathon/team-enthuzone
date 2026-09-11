@@ -33,3 +33,4 @@ const schema = {
     "summary",
     "authenticity",
     "severity",
+  ],
