@@ -20,3 +20,14 @@ function createSessionRouter(service) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
+    path: "/",
+  };
+  async function issue(res, result, remember = true) {
+    const refresh = randomBytes(48).toString("base64url");
+    await Session.create({
+      tokenHash: hash(refresh),
+      userId: result.user.id,
+      expiresAt: new Date(Date.now() + 30 * 86400000),
+    });
+    res.cookie("access_token", result.accessToken, {
+      ...opts,
