@@ -1,0 +1,43 @@
+.signalTrace {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: draw-signal 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+.signalNode {
+  animation: reveal-node 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+}
+
+.softPanel {
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--canvas) 72%, transparent);
+}
+
+:global(html[data-theme="light"]) .softPanel {
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--text) 12%, transparent);
+}
+
+@keyframes draw-signal {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes reveal-node {
+  from {
+    opacity: 0.2;
+    transform: scale(0.82);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signalTrace,
+  .signalNode {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
