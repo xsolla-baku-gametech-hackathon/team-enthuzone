@@ -63,3 +63,4 @@ function createApp() {
         analysisStatus: "failed",
       });
     }
+  });
