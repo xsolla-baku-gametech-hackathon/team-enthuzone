@@ -487,3 +487,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       for (let i = 1; i <= attempts; i++) {
         mockEvents.push({
           workspaceId,
+          connectionId: "mock-telemetry",
+          eventId: `mock-evt-${playerId}-${sessionId}-att-${i}`,
+          playerId,
+          sessionId,
+          target,
+          eventType: "attempt",
+          duration: Math.min(duration, i * 45),
+          build: "1.0.0",
+        });
+      }
+      if (completed) {
+        mockEvents.push({
