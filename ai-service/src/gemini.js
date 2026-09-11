@@ -27,3 +27,4 @@ const schema = {
   },
   required: [
     "type",
+    "target",
