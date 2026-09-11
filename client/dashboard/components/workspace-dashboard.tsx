@@ -332,3 +332,25 @@ export function WorkspaceDashboard({
                   aria-label="Workspace sections"
                   className="flex max-w-full gap-1 overflow-x-auto"
                 >
+                  {tabs.map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setTab(t)}
+                      className={`rounded-lg px-3 py-2 text-sm capitalize ${tab === t ? "bg-accent text-canvas" : "text-muted hover:bg-surface"}`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </nav>
+                <button
+                  disabled={busy}
+                  className="secondary"
+                  onClick={() => action(() => reload())}
+                >
+                  <RefreshCw size={15} />
+                  Refresh
+                </button>
+              </div>
+              {(tab === "overview" || tab === "issues") && (
+                <>
+                  <div className="grid gap-4 sm:grid-cols-3">
