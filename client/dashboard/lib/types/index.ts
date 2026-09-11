@@ -58,4 +58,6 @@ export interface TelemetryEvent {
 export interface BuildMetric {
   metric: string;
   buildA: number;
-  buildB: number;
+  buildB: number;
+  unit: string;
+  delta: number;
