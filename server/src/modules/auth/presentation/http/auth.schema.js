@@ -7,4 +7,9 @@ const registerSchema = z.object({
   organizationName: z.string().trim().min(2).max(120),
   name: z.string().trim().min(2).max(120),
   email,
-  password: registrationPassword,
+  password: registrationPassword,
+}).strict();
+
+const loginSchema = z.object({ email, password: z.string().min(1).max(128) }).strict();
+
+module.exports = { registerSchema, loginSchema };
