@@ -1202,3 +1202,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                 <button
                   aria-label="Close dialog"
                   className="rounded-lg p-1.5 text-muted hover:bg-surface-raised hover:text-text transition"
+                  onClick={() => setModal(null)}
+                >
+                  <X size={19} />
+                </button>
+              </div>
+
+              <div className="mt-5 grid gap-3">
+                {/* 1. Discord - Active */}
+                <button
+                  type="button"
+                  onClick={() => setModal("discord")}
+                  className="glass group flex items-start gap-4 rounded-xl p-4 text-left transition hover:border-accent hover:bg-surface-raised hover:-translate-y-0.5 cursor-pointer border border-line"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5865F2]/15 text-[#5865F2] group-hover:bg-[#5865F2] group-hover:text-white transition">
+                    <RadioTower size={22} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-semibold text-ink group-hover:text-accent transition">
+                        Discord Community
+                      </h3>
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-0.5 text-[11px] font-semibold text-accent border border-accent/30">
