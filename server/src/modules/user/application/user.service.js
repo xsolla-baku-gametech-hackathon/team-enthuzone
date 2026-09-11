@@ -12,4 +12,7 @@ class UserService {
   findById(id, transaction) {
     return this.userRepository.findById(id, transaction);
   }
-
+
+  createOwner(input, transaction) {
+    return this.userRepository.create(createUser({ ...input, role: 'OWNER' }), transaction);
+  }
