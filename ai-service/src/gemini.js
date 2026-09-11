@@ -37,3 +37,5 @@ const schema = {
 };
 async function generate(prompt, responseJsonSchema) {
   if (!process.env.GEMINI_API_KEY) throw new Error("GEMINI_NOT_CONFIGURED");
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
