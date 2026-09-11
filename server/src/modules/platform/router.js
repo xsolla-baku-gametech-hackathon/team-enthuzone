@@ -587,3 +587,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
         author: z.string().min(1).max(150),
         text: z.string().trim().min(1).max(6000),
       })
+      .strict()
+      .parse(req.body);
+    const f = await Feedback.create({
+      ...input,
+      sourceId: "manual",
+      workspaceId: req.params.id,
+    });
+    await analyzeFeedback(f);
+    res.status(201).json(await Feedback.findOne({ id: f.id }).lean());
+  });
+  router.post(
+    "/workspaces/:id/feedback/:feedbackId/retry",
