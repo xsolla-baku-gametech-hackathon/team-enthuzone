@@ -17,4 +17,7 @@ class FeedbackService {
     const normalizedFilters = {
       ...filters,
       gameId: filters.gameId?.toLowerCase(),
-    };
+    };
+    return this.feedbackRepository.findAll(normalizedFilters);
+  }
+}
