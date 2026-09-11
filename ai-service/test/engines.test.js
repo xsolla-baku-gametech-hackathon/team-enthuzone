@@ -9,3 +9,4 @@ test("normalization unifies aliases, roman numerals and whitespace", () => {
   assert.deepEqual(normalize("Lag", "Main menu"), {
     type: "performance",
     target: "main menu",
+  });
