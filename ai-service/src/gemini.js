@@ -10,3 +10,4 @@ const candidate = z.object({
 });
 const schema = {
   type: "object",
+  properties: {
