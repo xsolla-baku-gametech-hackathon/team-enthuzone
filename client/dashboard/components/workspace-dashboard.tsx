@@ -1626,3 +1626,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
               >
                 <Trash2 size={16} />
               </button>
+            </div>
+          ))}
+      </div>
+    );
+  }
+}
+function MetricsView({ metrics }: { metrics: Metrics }) {
+  return (
+    <div className="space-y-4">
+      <p className="text-sm text-muted">
+        <Activity size={15} className="mr-2 inline" />
+        {metrics.eventCount} events · {metrics.uniquePlayers} players
+      </p>
+      {!Object.keys(metrics.targets).length && (
+        <p className="rounded-xl bg-surface p-6 text-muted">
+          No telemetry yet. Create a connection and send game events.
+        </p>
+      )}
+      {Object.entries(metrics.targets).map(([target, m]) => (
+        <section key={target} className="rounded-xl bg-surface p-5">
+          <h3 className="font-semibold capitalize">
+            {target}{" "}
