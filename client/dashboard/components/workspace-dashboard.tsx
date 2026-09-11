@@ -399,3 +399,25 @@ export function WorkspaceDashboard({
                               {i.type}
                             </span>
                             <span
+                              className={`rounded-full px-3 py-1 text-xs ${i.priority.score >= 70 ? "bg-critical-surface text-critical" : "bg-medium-surface text-medium"}`}
+                            >
+                              {i.priority.label} · {i.priority.score}
+                            </span>
+                            <span className="rounded-full bg-surface-raised px-3 py-1 text-xs text-muted">
+                              {i.authenticity}
+                            </span>
+                            {/* AI Bot Verification Badge (Znak) */}
+                            {i.aiVerification?.status === "APPROVED" ? (
+                              <span
+                                title={i.aiVerification.summary}
+                                className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 px-2.5 py-1 text-xs font-semibold text-emerald-400 shadow-sm"
+                              >
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                <Bot size={13} />
+                                <span>AI Bot Confirmed</span>
+                              </span>
+                            ) : i.aiVerification?.status === "REJECTED" ? (
+                              <span
+                                title={i.aiVerification.summary}
+                                className="inline-flex items-center gap-1.5 rounded-full bg-surface-raised border border-line px-2.5 py-1 text-xs font-medium text-muted"
+                              >
