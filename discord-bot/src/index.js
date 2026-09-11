@@ -107,3 +107,4 @@ bot.on("messageCreate", (message) => {
     message.channelId !== config.DISCORD_CHANNEL_ID ||
     !message.content.trim()
   ) {
+    return;
