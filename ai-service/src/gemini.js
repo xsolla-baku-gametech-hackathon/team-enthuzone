@@ -44,3 +44,4 @@ async function generate(prompt, responseJsonSchema) {
         {
           method: "POST",
           signal: AbortSignal.timeout(25000),
+          headers: {
