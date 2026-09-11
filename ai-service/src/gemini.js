@@ -65,3 +65,5 @@ async function generate(prompt, responseJsonSchema) {
               temperature: 0.1,
             },
           }),
+        },
+      );
