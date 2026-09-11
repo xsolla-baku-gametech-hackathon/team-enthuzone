@@ -84,3 +84,4 @@ async function generate(prompt, responseJsonSchema) {
     }
   }
 }
+async function analyze(text, existing = []) {
