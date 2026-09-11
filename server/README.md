@@ -63,4 +63,27 @@ test/
 ├── integration/                    # HTTP behavior
 └── unit/                           # isolated model/domain behavior
 ```
-
+
+Dependencies point inward: HTTP handlers call application services; services use injected repository adapters; MongoDB details stay in feature infrastructure. Other modules import only from each feature's `index.js`.
+
+## Authentication and organizations
+
+Registering creates the organization and its first `OWNER` in one transaction:
+
+```bash
+curl -X POST "http://localhost:3000/api/auth/register" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "organizationName":"DarkFront Studio",
+    "name":"John Doe",
+    "email":"john@darkfront.com",
+    "password":"StrongPassword123!"
+  }'
+```
+
+Login and use the returned access token:
+
+```bash
+curl -X POST "http://localhost:3000/api/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"john@darkfront.com","password":"StrongPassword123!"}'
