@@ -1,4 +1,4 @@
-﻿# Unity cache & temp
+# Unity cache & temp
 game/[Ll]ibrary/
 game/[Tt]emp/
 game/[Oo]bj/
@@ -31,3 +31,22 @@ game/*.log
 # OS files
 .DS_Store
 Thumbs.db
+
+# Web & Client dependencies
+**/node_modules/
+**/.next/
+**/.turbo/
+
+# Temp root scripts
+/all_350_commits.json
+/client_commits_list.md
+/client_deep_analysis.json
+/client_source_files.json
+/client_commit_plan.json
+/execute_commits.js
+/generate_commit_plan.js
+/generate_detailed_plan.js
+/generate_full_350_commits.js
+/scan_client.js
+/step_committer.js
+/apply_commits.js
