@@ -689,3 +689,25 @@ export function WorkspaceDashboard({
                             );
                             setNotice("Mock telemetry (Level 5 difficulty spike & onboarding) generated!");
                             setTimeout(() => setNotice(""), 4500);
+                            await reload();
+                          })
+                        }
+                      >
+                        <Sparkles size={15} className="text-accent" />
+                        Generate Mock Telemetry
+                      </button>
+                      <button
+                        className="primary"
+                        onClick={() => setModal("telemetry")}
+                      >
+                        <Plus size={16} />
+                        Telemetry connection
+                      </button>
+                    </div>
+                  </div>
+                  <Connections type="telemetry" />
+                  <MetricsView metrics={detail.metrics} />
+                  <details className="rounded-xl bg-surface p-5">
+                    <summary className="cursor-pointer text-accent">
+                      Developer integration contract
+                    </summary>
