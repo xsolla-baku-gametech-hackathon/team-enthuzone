@@ -624,3 +624,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
     if (!c) throw new AppError("Issue not found", 404);
     res.json(c);
   });
+  router.post("/workspaces/:id/issues/:issueId/recommend", async (req, res) => {
+    await owned(req);
+    const issue = await Cluster.findOne({
+      id: req.params.issueId,
+      workspaceId: req.params.id,
+    });
+    if (!issue) throw new AppError("Issue not found", 404);
+    const metrics = aggregate(
+      await Event.find({ workspaceId: req.params.id }).lean(),
+    );
+    try {
+      const result = await aiCall("recommend", {
+        issue: {
