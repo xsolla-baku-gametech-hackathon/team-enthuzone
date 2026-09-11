@@ -14,3 +14,5 @@ npm install
 
 ### 2. Configure Environment (`.env`)
 Faylı redaktə edin: `discord-bot/.env`
+```env
+DISCORD_BOT_TOKEN=your_discord_bot_token_here
