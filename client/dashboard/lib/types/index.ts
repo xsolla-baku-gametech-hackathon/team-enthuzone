@@ -35,4 +35,6 @@ export interface FeedbackItem {
   excerpt: string;
   sentiment: "NEGATIVE" | "MIXED" | "POSITIVE";
   build: string;
-  createdAt: string;
+  createdAt: string;
+}
+
