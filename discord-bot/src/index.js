@@ -181,3 +181,4 @@ for (const signal of ["SIGTERM", "SIGINT"]) {
     bot.destroy();
     process.exit(0);
   });
+}
