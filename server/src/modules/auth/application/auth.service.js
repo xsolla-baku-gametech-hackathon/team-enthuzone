@@ -16,4 +16,10 @@ class AuthService {
     Object.assign(this, { organizationService, userService, passwordService, tokenService, transactionManager });
   }
 
-  async register(input) {
+  async register(input) {
+    const email = normalizeEmail(input.email);
+    if (await this.userService.findByEmail(email)) {
+      throw new ConflictError('A user with this email already exists');
+    }
+
+    const passwordHash = await this.passwordService.hash(input.password);
