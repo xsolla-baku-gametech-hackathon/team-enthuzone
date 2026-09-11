@@ -173,3 +173,5 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
   }
   process.exitCode = 1;
 });
+
+// 7. Graceful Shutdown
