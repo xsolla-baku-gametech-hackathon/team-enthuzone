@@ -30,3 +30,4 @@ try {
     });
   }
   console.error("\nPlease check your discord-bot/.env file and fill in all required credentials.\n");
+  process.exit(1);
