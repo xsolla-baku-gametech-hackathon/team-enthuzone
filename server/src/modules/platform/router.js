@@ -60,3 +60,16 @@ async function analyzeFeedback(feedback) {
       text: feedback.text,
       existing,
     });
+    if (result.analysisStatus === "failed") {
+      await Feedback.updateOne(
+        { id: feedback.id },
+        { $set: { candidate: result, analysisStatus: "failed" } },
+      );
+      return;
+    }
+    const { type, target } = result.normalized;
+    let cluster;
+    try {
+      cluster = await Cluster.findOneAndUpdate(
+        { workspaceId: feedback.workspaceId, type, target },
+        {
