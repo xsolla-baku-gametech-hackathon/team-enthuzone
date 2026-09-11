@@ -70,3 +70,22 @@ test(
         name: "Owner One",
         email: "one@example.test",
         password: "secure-password-123",
+      })
+      .expect(200);
+    await other
+      .post("/api/session/register")
+      .send({
+        organizationName: "Studio Two",
+        name: "Owner Two",
+        email: "two@example.test",
+        password: "secure-password-456",
+      })
+      .expect(200);
+    const { body: w } = await client
+      .post("/api/platform/workspaces")
+      .send({ name: "Test Game", webglUrl: "https://example.com" })
+      .expect(201);
+    await other.get(`/api/platform/workspaces/${w.id}`).expect(404);
+    await request(app).get("/api/platform/workspaces").expect(401);
+    await client
+      .post(`/api/platform/workspaces/${w.id}/connections`)
