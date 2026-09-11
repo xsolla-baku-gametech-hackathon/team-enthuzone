@@ -47,3 +47,27 @@ export function BotLivePlaytestModal({
   onClose,
   onTelemetrySynced,
 }: BotLivePlaytestModalProps) {
+  // Game & Mode states
+  const [mode, setMode] = useState<"snake" | "iframe">(gameUrl ? "snake" : "snake");
+  const [level, setLevel] = useState<1 | 3 | 5>(1);
+  const [speed, setSpeed] = useState<number>(1); // 1 = normal, 2 = fast, 4 = insane, 0.5 = cinematic
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isAiActive, setIsAiActive] = useState<boolean>(true);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+
+  // Game Engine state
+  const [snake, setSnake] = useState<Point[]>([
+    { x: 10, y: 10 },
+    { x: 9, y: 10 },
+    { x: 8, y: 10 },
+  ]);
+  const [direction, setDirection] = useState<Direction>("RIGHT");
+  const [food, setFood] = useState<Point>({ x: 15, y: 10 });
+  const [obstacles, setObstacles] = useState<Point[]>([]);
+  const [score, setScore] = useState<number>(0);
+  const [highScore, setHighScore] = useState<number>(0);
+  const [movesCount, setMovesCount] = useState<number>(0);
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
+
+  // AI Cursor Simulation states
