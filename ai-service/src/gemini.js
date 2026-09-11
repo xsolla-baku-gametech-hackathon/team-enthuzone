@@ -28,3 +28,5 @@ const schema = {
   required: [
     "type",
     "target",
+    "sentiment",
+    "confidence",
