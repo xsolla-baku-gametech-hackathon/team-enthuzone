@@ -56,3 +56,4 @@ async function relay(message) {
         headers: {
           "Content-Type": "application/json",
           "x-webhook-token": config.DISCORD_WEBHOOK_TOKEN,
+        },
