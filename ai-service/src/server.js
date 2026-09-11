@@ -73,3 +73,4 @@ function createApp() {
       .parse(req.body);
     res.json(correlate(input.issue, input.metrics));
   });
+  app.post("/internal/ai/recommend", async (req, res) => {
