@@ -14,3 +14,11 @@ function model(name, fields, indexes = []) {
 const Workspace = model("Workspace", {
   orgId: { type: String, index: true, required: true },
   name: String,
+  webglUrl: String,
+});
+const Connection = model(
+  "PlatformConnection",
+  {
+    workspaceId: { type: String, index: true },
+    name: String,
+    type: { type: String, enum: ["discord", "telemetry", "bot"] },
