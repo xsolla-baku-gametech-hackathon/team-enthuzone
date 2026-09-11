@@ -644,3 +644,26 @@ export function WorkspaceDashboard({
                       </div>
                       <p className="mt-3 whitespace-pre-wrap text-sm text-muted">
                         {f.text}
+                      </p>
+                      {f.analysisStatus === "failed" && (
+                        <button
+                          disabled={busy}
+                          className="secondary mt-3"
+                          onClick={() =>
+                            action(async () => {
+                              await request(
+                                `/platform/workspaces/${selected}/feedback/${f.id}/retry`,
+                                {},
+                              );
+                              await reload();
+                            })
+                          }
+                        >
+                          Retry AI analysis
+                        </button>
+                      )}
+                    </article>
+                  ))}
+                </>
+              )}
+              {tab === "telemetry" && (
