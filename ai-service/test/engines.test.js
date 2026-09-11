@@ -30,3 +30,4 @@ test("correlation uses only matching target and category", () => {
     correlate({ type: "Difficulty", target: "Level 6" }, metrics).score,
     0,
   );
+  assert.equal(correlate({ type: "UX", target: "Level 5" }, metrics).score, 0);
