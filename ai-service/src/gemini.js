@@ -50,3 +50,4 @@ async function generate(prompt, responseJsonSchema) {
           },
           body: JSON.stringify({
             systemInstruction: {
+              parts: [
