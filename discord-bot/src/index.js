@@ -120,3 +120,5 @@ bot.on("messageCreate", (message) => {
       console.error("[Queue Error]:", err.message);
     });
 });
+
+// 5. Bot Lifecycle Events
