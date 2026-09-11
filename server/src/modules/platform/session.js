@@ -97,3 +97,13 @@ function createSessionRouter(service) {
         .status(400)
         .json({
           error: {
+            message: err.issues
+              .map((i) => `${i.path.join(".")}: ${i.message}`)
+              .join("; "),
+          },
+        });
+    next(err);
+  });
+  return router;
+}
+module.exports = { createSessionRouter, cookies };
