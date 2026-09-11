@@ -37,4 +37,7 @@ export interface FeedbackItem {
   build: string;
   createdAt: string;
 }
-
+
+export interface TopicCluster {
+  id: string;
+  label: string;
