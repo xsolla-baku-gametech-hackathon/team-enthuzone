@@ -1403,3 +1403,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                 isFullscreen
                   ? "h-screen w-screen rounded-none max-w-none max-h-none"
                   : "max-h-[95vh] w-full max-w-5xl rounded-2xl"
+              }`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between border-b border-line px-5 py-3.5 bg-surface/80">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/15 text-accent">
+                    <Gamepad2 size={20} />
+                  </div>
+                  <div className="min-w-0">
+                    <h2 id="preview-modal-title" className="truncate text-base font-semibold">
+                      {previewWorkspace.name} — WebGL Preview
+                    </h2>
+                    <p className="truncate text-xs text-muted">
+                      {previewWorkspace.webglUrl}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0 ml-4">
+                  <a
+                    href={previewWorkspace.webglUrl}
+                    target="_blank"
+                    rel="noreferrer"
