@@ -612,3 +612,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
   );
   router.patch("/workspaces/:id/issues/:issueId", async (req, res) => {
     await owned(req);
+    const input = z
+      .object({ status: z.enum(["OPEN", "INVESTIGATING", "RESOLVED"]) })
+      .strict()
+      .parse(req.body);
+    const c = await Cluster.findOneAndUpdate(
+      { id: req.params.issueId, workspaceId: req.params.id },
+      { $set: input },
+      { returnDocument: "after" },
+    );
+    if (!c) throw new AppError("Issue not found", 404);
+    res.json(c);
+  });
