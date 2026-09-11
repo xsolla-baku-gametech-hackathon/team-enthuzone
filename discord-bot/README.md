@@ -39,3 +39,5 @@ npm run dev
 1. [Discord Developer Portal](https://discord.com/developers/applications) saytına daxil olun.
 2. **"New Application"** yaradın (məs: `PlayerFeedbackBot`).
 3. Sol menyuda **Bot** bölməsinə keçin:
+   - **Reset Token** düyməsinə basıb tokeni kopyalayın (`DISCORD_BOT_TOKEN`).
+   - Səhifəni bir az aşağı sürüşdürüb **"Message Content Intent"** parametrini **Aktiv (ON)** edin və yadda saxlayın.
