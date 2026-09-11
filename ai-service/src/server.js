@@ -72,3 +72,4 @@ function createApp() {
       })
       .parse(req.body);
     res.json(correlate(input.issue, input.metrics));
+  });
