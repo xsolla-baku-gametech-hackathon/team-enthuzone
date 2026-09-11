@@ -216,3 +216,21 @@ test(
     process.env.AI_SERVICE_URL = aiUrl;
     const retried = await client
       .post(`/api/platform/workspaces/${w.id}/feedback/${failed.body.id}/retry`)
+      .send({})
+      .expect(200);
+    assert.equal(retried.body.analysisStatus, "complete");
+    const clustered = await client
+      .get(`/api/platform/workspaces/${w.id}`)
+      .expect(200);
+    assert.equal(clustered.body.issues.length, 1);
+    assert.equal(clustered.body.issues[0].count, 2);
+    const oldRefresh = client.jar.getCookie("refresh_token", {
+      path: "/",
+      domain: "127.0.0.1",
+    });
+    await client.post("/api/session/refresh").send({}).expect(200);
+    if (oldRefresh)
+      await request(app)
+        .post("/api/session/refresh")
+        .set("Cookie", `refresh_token=${oldRefresh.value}`)
+        .send({})
