@@ -101,3 +101,4 @@ async function recommend(issue, evidence) {
     JSON.stringify({
       task: "Give up to 3 short actionable recommendations grounded in this issue. Distinguish hypotheses from proven causes.",
       issue,
+      evidence,
