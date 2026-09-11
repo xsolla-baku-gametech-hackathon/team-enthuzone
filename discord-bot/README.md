@@ -43,3 +43,5 @@ npm run dev
    - Səhifəni bir az aşağı sürüşdürüb **"Message Content Intent"** parametrini **Aktiv (ON)** edin və yadda saxlayın.
 4. Sol menyuda **OAuth2** ➔ **URL Generator** bölməsinə keçin:
    - `bot` seçimini işarələyin.
+   - Aşağıda icazələrdən: `Read Messages/View Channels`, `Send Messages`, `Add Reactions` seçin.
+   - Yaranan linki brauzerdə açıb botu öz Discord serverinizə əlavə edin.
