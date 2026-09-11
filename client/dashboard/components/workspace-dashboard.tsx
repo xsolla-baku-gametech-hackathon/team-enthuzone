@@ -1381,3 +1381,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
 
         return (
           <div
+            className={`fixed inset-0 z-50 flex items-center justify-center bg-canvas/95 backdrop-blur-md ${
+              isFullscreen ? "p-0" : "p-3 sm:p-5"
+            }`}
+            onClick={() => {
+              setIsFullscreen(false);
+              setPreviewWorkspace(null);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                if (isFullscreen) setIsFullscreen(false);
+                else setPreviewWorkspace(null);
+              }
+            }}
+          >
+            <section
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="preview-modal-title"
+              className={`glass flex flex-col overflow-hidden border border-line shadow-2xl transition-all duration-150 ${
+                isFullscreen
+                  ? "h-screen w-screen rounded-none max-w-none max-h-none"
+                  : "max-h-[95vh] w-full max-w-5xl rounded-2xl"
