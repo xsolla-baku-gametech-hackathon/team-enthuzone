@@ -39,3 +39,5 @@ async function generate(prompt, responseJsonSchema) {
   if (!process.env.GEMINI_API_KEY) throw new Error("GEMINI_NOT_CONFIGURED");
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
+      const response = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
