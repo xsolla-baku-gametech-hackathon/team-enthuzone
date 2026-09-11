@@ -47,3 +47,4 @@ function correlate(issue, metrics) {
   const reason = [];
   if (normalize(issue.type, issue.target).type === "difficulty") {
     if (m.dropoff >= 30) reason.push("High abandonment");
+    if (m.avg_attempts >= 5) reason.push("High retries");
