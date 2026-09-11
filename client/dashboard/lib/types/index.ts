@@ -65,4 +65,7 @@ export interface BuildMetric {
 }
 
 export interface DashboardData {
-  issues: Issue[];
+  issues: Issue[];
+  trend: TrendPoint[];
+  sample: boolean;
+}
