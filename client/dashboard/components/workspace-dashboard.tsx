@@ -600,3 +600,25 @@ export function WorkspaceDashboard({
                       action(async () => {
                         await request(
                           `/platform/workspaces/${selected}/feedback`,
+                          { author: f.get("author"), text: f.get("text") },
+                        );
+                        form.reset();
+                        await reload();
+                      });
+                    }}
+                  >
+                    <h3 className="font-semibold">Analyze a player review</h3>
+                    <input
+                      className="field"
+                      name="author"
+                      placeholder="Player identifier"
+                      aria-label="Player identifier"
+                      required
+                      maxLength={150}
+                    />
+                    <textarea
+                      name="text"
+                      className="field min-h-28"
+                      placeholder="Paste the player's feedback…"
+                      aria-label="Player review"
+                      required
