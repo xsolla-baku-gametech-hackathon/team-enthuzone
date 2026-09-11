@@ -28,4 +28,11 @@ class ConflictError extends AppError {
 }
 
 class UnauthorizedError extends AppError {
-  constructor(message = 'Authentication required', code = 'UNAUTHORIZED') {
+  constructor(message = 'Authentication required', code = 'UNAUTHORIZED') {
+    super(message, 401, code);
+  }
+}
+
+class InvalidCredentialsError extends UnauthorizedError {
+  constructor() {
+    super('Invalid email or password', 'INVALID_CREDENTIALS');
