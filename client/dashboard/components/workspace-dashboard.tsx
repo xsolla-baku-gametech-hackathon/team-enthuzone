@@ -377,3 +377,25 @@ export function WorkspaceDashboard({
                       placeholder="Search issues…"
                       value={filter}
                       onChange={(e) => setFilter(e.target.value)}
+                    />
+                  </div>
+                  {!detail.issues.length && (
+                    <p className="rounded-xl bg-surface p-8 text-muted">
+                      No analyzed issues yet. Add a feedback source or submit a
+                      player review.
+                    </p>
+                  )}
+                  <div className="grid gap-4 xl:grid-cols-2">
+                    {detail.issues
+                      .filter((i) =>
+                        `${i.type} ${i.target}`
+                          .toLowerCase()
+                          .includes(filter.toLowerCase()),
+                      )
+                      .map((i) => (
+                        <article key={i.id} className="glass rounded-xl p-5">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="rounded-full bg-info-surface px-3 py-1 text-xs text-info">
+                              {i.type}
+                            </span>
+                            <span
