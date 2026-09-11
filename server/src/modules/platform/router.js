@@ -725,3 +725,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
             duration: 40,
             build: "ai-bot-verified-1.0",
           });
+        } else {
+          botCompleted++;
+          botSessionEvents.push({
+            workspaceId,
+            connectionId: "ai-player-bot",
+            eventId: `bot-run-${issue.id}-${r}-comp`,
+            playerId: "ai-player-bot",
+            sessionId: sessId,
+            target: issue.target,
+            eventType: "complete",
+            duration: 85,
+            build: "ai-bot-verified-1.0",
