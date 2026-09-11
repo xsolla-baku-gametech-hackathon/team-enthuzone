@@ -87,3 +87,25 @@ export function WorkspaceDashboard({
       })
       .finally(() => {
         if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!previewWorkspace) {
+      setResolvedUrl(null);
+      setResolving(false);
+      return;
+    }
+    let active = true;
+    setResolving(true);
+    fetch(`/api/resolve-preview?url=${encodeURIComponent(previewWorkspace.webglUrl)}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (!active) return;
+        if (data.embedUrl) {
+          setResolvedUrl(data.embedUrl);
+        } else {
+          setResolvedUrl(previewWorkspace.webglUrl);
