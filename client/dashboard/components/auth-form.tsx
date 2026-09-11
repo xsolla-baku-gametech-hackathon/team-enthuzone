@@ -153,3 +153,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
         });
       }
     }
+  }
+
+  function validateCurrentStep(currentStep: number): boolean {
+    const stepErrors: Record<string, string> = {};
+
+    if (!register) {
+      const emailErr = validateField("email", data.email);
+      const passErr = validateField("password", data.password);
+      if (emailErr) stepErrors.email = emailErr;
+      if (passErr) stepErrors.password = passErr;
+    } else {
+      if (currentStep === 0) {
+        const emailErr = validateField("email", data.email);
+        const passErr = validateField("password", data.password);
+        const confErr = validateField("confirm", data.confirm);
+        if (emailErr) stepErrors.email = emailErr;
+        if (passErr) stepErrors.password = passErr;
+        if (confErr) stepErrors.confirm = confErr;
+      } else if (currentStep === 1) {
+        const nameErr = validateField("name", data.name);
+        const surnameErr = validateField("surname", data.surname);
+        const orgErr = validateField("organizationName", data.organizationName);
