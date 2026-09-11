@@ -62,3 +62,4 @@ function createApp() {
         normalized: normalize("Uncategorized", "Unclassified"),
         analysisStatus: "failed",
       });
+    }
