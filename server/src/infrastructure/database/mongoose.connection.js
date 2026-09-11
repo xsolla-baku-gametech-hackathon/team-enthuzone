@@ -14,4 +14,5 @@ async function connectMongo(uri) {
 async function disconnectMongo() {
   if (mongoose.connection.readyState !== 0) await mongoose.disconnect();
 }
-
+
+module.exports = { connectMongo, disconnectMongo };
