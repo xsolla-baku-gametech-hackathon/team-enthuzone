@@ -11,3 +11,4 @@ function createApp() {
   app.disable("x-powered-by");
   app.use(express.json({ limit: "256kb" }));
   app.get("/health", (_req, res) => res.json({ status: "ok" }));
+  app.use("/internal", (req, res, next) => {
