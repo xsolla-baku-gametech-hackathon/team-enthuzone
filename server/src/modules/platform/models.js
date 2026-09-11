@@ -95,3 +95,11 @@ const Session = model(
   [[{ expiresAt: 1 }, { expireAfterSeconds: 0 }]],
 );
 const Profile = model("OrganizationProfile", {
+  orgId: { type: String, unique: true },
+  surname: String,
+  location: String,
+  businessDescription: String,
+  theme: String,
+});
+module.exports = {
+  Workspace,
