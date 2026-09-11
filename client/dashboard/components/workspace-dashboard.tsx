@@ -979,3 +979,25 @@ export function WorkspaceDashboard({
                       </code>
                       <button
                         type="button"
+                        className="secondary shrink-0 px-3 py-2.5 text-xs flex items-center gap-1.5"
+                        onClick={() => {
+                          const endpoint =
+                            typeof window !== "undefined"
+                              ? `${window.location.origin}/api/platform/ingest/telemetry`
+                              : "http://127.0.0.1:4000/api/platform/ingest/telemetry";
+                          navigator.clipboard.writeText(endpoint);
+                          setNotice("Endpoint URL copied!");
+                          setTimeout(() => setNotice(""), 3000);
+                        }}
+                      >
+                        <Copy size={15} />
+                        Copy URL
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* 3. Developer Documentation / Integration Snippet */}
+                  <div className="rounded-xl bg-surface-sunken/80 border border-line/60 p-4 text-xs space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="font-semibold text-text">
+                        Game Developer Integration Snippet:
