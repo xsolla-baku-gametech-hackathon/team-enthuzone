@@ -47,4 +47,10 @@ function createApp(options = {}) {
   const container = createContainer(options);
 
   app.disable('x-powered-by');
-  app.use(helmet());
+  app.use(helmet());
+  app.use(cors({ origin: env.corsOrigins }));
+  app.use(express.json({ limit: env.httpBodyLimit }));
+  app.use((req, res, next) => {
+    if (!['GET','HEAD','OPTIONS'].includes(req.method) && req.get('cookie') && req.get('origin')) {
+      const corsEnv = process.env.CORS_ORIGINS || '*';
+      if (corsEnv === '*') return next();
