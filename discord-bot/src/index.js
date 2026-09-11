@@ -119,3 +119,4 @@ bot.on("messageCreate", (message) => {
     .catch((err) => {
       console.error("[Queue Error]:", err.message);
     });
+});
