@@ -56,3 +56,18 @@ export function Sidebar() {
                 <Icon size={15} aria-hidden="true" />
                 {label}
               </Link>
+            );
+          })}
+        </nav>
+      </aside>
+
+      {/* Desktop Persistent Fixed Full-Height Sidebar */}
+      <aside
+        className="fixed inset-y-0 left-0 z-30 hidden h-screen w-60 flex-col border-r border-line bg-sidebar lg:flex"
+        aria-label="Sidebar navigation"
+      >
+        <div className="flex h-20 shrink-0 items-center gap-3 px-5 border-b border-line/50">
+          <span className="grid size-10 place-items-center rounded-control bg-accent text-canvas shadow-sm shadow-accent/20">
+            <RadioTower size={20} strokeWidth={2.4} />
+          </span>
+          <div>
