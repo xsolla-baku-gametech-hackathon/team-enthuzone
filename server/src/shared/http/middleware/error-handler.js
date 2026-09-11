@@ -10,4 +10,17 @@ function errorHandler(error, _req, res, _next) {
 
   if (!isOperational) {
     console.error(error);
-  }
+  }
+
+  const payload = {
+    error: {
+      code: isOperational ? error.code : 'INTERNAL_ERROR',
+      message: isOperational ? error.message : 'An unexpected error occurred',
+    },
+  };
+
+  if (isOperational && error.details) payload.error.details = error.details;
+  res.status(statusCode).json(payload);
+}
+
+module.exports = { notFoundHandler, errorHandler };
