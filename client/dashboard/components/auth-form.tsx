@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, ArrowRight, Layers3, Check, AlertCircle } from "lucide-react";
 import { request } from "@/lib/api/platform";
@@ -318,8 +319,13 @@ export function AuthForm({ register = false }: { register?: boolean }) {
     <div className="auth-stage">
       <div className="auth-orb" aria-hidden="true" />
       <section className="relative mx-auto w-full max-w-xl rounded-2xl border border-line bg-surface p-6 sm:p-10">
-        <Layers3 className="mb-6 text-accent" size={32} />
-        <p className="eyebrow">PLAYER ISSUE INTELLIGENCE</p>
+        <div className="mb-5 inline-flex items-center gap-3">
+          <span className="relative grid size-12 place-items-center overflow-hidden rounded-full border border-line bg-surface-raised shadow-xs">
+            <Image src="/logo.png" alt="GoBuster Mascot Logo" width={42} height={42} className="object-contain" priority />
+          </span>
+          <span className="text-xl font-bold tracking-tight text-ink">GoBuster</span>
+        </div>
+        <p className="eyebrow">GOBUSTER INTELLIGENCE</p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight">
           {register ? titles[step] : "Welcome back."}
         </h1>

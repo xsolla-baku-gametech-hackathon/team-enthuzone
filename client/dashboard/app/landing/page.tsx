@@ -11,9 +11,9 @@ import { ScoreRibbon } from "@/components/landing/score-ribbon";
 import { AutonomousPlaytestSection } from "@/components/landing/autonomous-playtest-section";
 
 export const metadata: Metadata = {
-  title: "Player Issue Intelligence for Game Teams",
+  title: "GoBuster — Player Issue Intelligence for Game Teams",
   description:
-    "Connect player feedback with gameplay telemetry, verify issues in context, and decide what to fix next.",
+    "GoBuster connects player feedback with gameplay telemetry, verifies issues in context, and decides what to fix next.",
 };
 
 export default function LandingPage() {

@@ -12,11 +12,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Player Issue Intelligence",
-    template: "%s · Player Issue Intelligence",
+    default: "GoBuster — Game Issue Intelligence",
+    template: "%s · GoBuster",
   },
   description:
-    "Correlated player feedback and gameplay telemetry for issue triage.",
+    "GoBuster: Correlated player feedback and gameplay telemetry for game studio issue triage.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default async function RootLayout({

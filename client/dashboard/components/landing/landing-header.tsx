@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Activity } from "lucide-react";
+import Image from "next/image";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { MobileNavigation } from "@/components/landing/mobile-navigation";
 
@@ -17,10 +17,12 @@ export function LandingHeader() {
         <Link
           href="/landing"
           className="inline-flex items-center gap-2.5 font-semibold tracking-[-0.02em] text-ink"
-          aria-label="Player Issue Intelligence home"
+          aria-label="GoBuster home"
         >
-          <Activity className="size-5 text-accent" aria-hidden="true" />
-          <span>Player Issue Intelligence</span>
+          <span className="relative grid size-8 place-items-center overflow-hidden rounded-full border border-line bg-surface-raised">
+            <Image src="/logo.png" alt="GoBuster Mascot Logo" width={26} height={26} className="object-contain" priority />
+          </span>
+          <span className="text-lg font-bold tracking-tight">GoBuster</span>
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex" aria-label="Primary navigation">
