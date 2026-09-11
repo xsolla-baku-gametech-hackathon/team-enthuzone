@@ -734,3 +734,25 @@ export function WorkspaceDashboard({
                         },
                         null,
                         2,
+                      )}
+                    </pre>
+                    <p className="mt-3 text-xs text-muted">
+                      Events: start, attempt, complete, quit, session_end. Up to
+                      100 events per request.
+                    </p>
+                  </details>
+                </>
+              )}
+              {tab === "bots" && (
+                <>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h2 className="text-xl font-semibold">
+                        AI Player Bot connections
+                      </h2>
+                      <p className="text-sm text-muted">
+                        Test your games with autonomous AI Playtesting Bots. The AI plays live on screen with visible mouse cursor clicks and directional steering.
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
