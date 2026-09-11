@@ -512,3 +512,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       }
       if (quit) {
         mockEvents.push({
+          workspaceId,
+          connectionId: "mock-telemetry",
+          eventId: `mock-evt-${playerId}-${sessionId}-quit`,
+          playerId,
+          sessionId,
+          target,
+          eventType: "quit",
+          duration,
+          build: "1.0.0",
+        });
+      }
+    };
