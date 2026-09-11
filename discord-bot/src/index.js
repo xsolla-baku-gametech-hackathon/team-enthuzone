@@ -69,3 +69,4 @@ async function relay(message) {
           `[Relay OK] Message ${message.id} from @${message.author.username} sent to Core API.`
         );
         try {
+          // Add a subtle reaction so players know their review was registered
