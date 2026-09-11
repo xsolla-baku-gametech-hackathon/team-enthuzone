@@ -10,6 +10,9 @@ const {
   MongoOrganizationRepository,
 } = require("../../src/modules/organization");
 const { MongoUserRepository } = require("../../src/modules/user");
+const {
+  UserMongoModel,
+} = require("../../src/modules/user/infrastructure/persistence/mongo/user.mongo.model");
 const { MongoTransactionManager } = require("../../src/modules/auth");
 const models = require("../../src/modules/platform/models");
 test(
@@ -81,6 +84,31 @@ test(
         password: "secure-password-456",
       })
       .expect(200);
+    await other.get("/api/platform/admin/logs").expect(403);
+    await UserMongoModel.updateOne(
+      { email: "one@example.test" },
+      { $set: { isSuperAdmin: true } },
+    );
+    await request(app)
+      .post("/api/session/login")
+      .send({ email: "one@example.test", password: "wrong-password" })
+      .expect(401);
+    const loginResponse = await client
+      .post("/api/session/login")
+      .send({
+        email: "one@example.test",
+        password: "secure-password-123",
+        remember: true,
+      })
+      .expect(200);
+    assert.equal(loginResponse.body.user.isSuperAdmin, true);
+    const currentSession = await client.get("/api/auth/me").expect(200);
+    assert.equal(currentSession.body.user.isSuperAdmin, true);
+    const organizations = await client
+      .get("/api/platform/admin/organizations")
+      .expect(200);
+    assert.equal(organizations.body.organizations.length, 2);
+    await client.get("/api/platform/admin/logs").expect(200);
     const { body: w } = await client
       .post("/api/platform/workspaces")
       .send({ name: "Test Game", webglUrl: "https://example.com" })
@@ -248,6 +276,27 @@ test(
       await models.Feedback.countDocuments({ workspaceId: w.id }),
       0,
     );
+    const auditResponse = await client
+      .get("/api/platform/admin/logs?pageSize=200")
+      .expect(200);
+    const auditActions = new Set(auditResponse.body.items.map((item) => item.action));
+    for (const action of [
+      "AUTH_REGISTER",
+      "AUTH_LOGIN_SUCCESS",
+      "AUTH_LOGIN_FAILED",
+      "WORKSPACE_CREATED",
+      "CONNECTION_CREATED",
+      "CONNECTION_TOGGLED",
+      "CONNECTION_DELETED",
+      "ISSUE_STATUS_CHANGED",
+      "WORKSPACE_DELETED",
+      "ADMIN_LOGS_VIEWED",
+    ]) {
+      assert.equal(auditActions.has(action), true, `missing audit action ${action}`);
+    }
+    const serializedAuditLogs = JSON.stringify(auditResponse.body.items);
+    assert.equal(serializedAuditLogs.includes(c.key), false);
+    assert.equal(serializedAuditLogs.includes("keyHash"), false);
     await client.post("/api/session/logout").send({}).expect(204);
     await client.get("/api/platform/workspaces").expect(401);
   },

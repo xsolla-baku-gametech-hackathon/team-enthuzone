@@ -3,7 +3,12 @@ process.env.JWT_SECRET = 'test-secret-at-least-32-characters-long';
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { createAuthModule, MemoryTransactionManager, requireAnyRole } = require('../../src/modules/auth');
+const {
+  createAuthModule,
+  MemoryTransactionManager,
+  requireAnyRole,
+  requireSuperAdmin,
+} = require('../../src/modules/auth');
 const { MemoryOrganizationRepository } = require('../../src/modules/organization');
 const { MemoryUserRepository } = require('../../src/modules/user');
 
@@ -44,4 +49,23 @@ test('role middleware allows configured roles and rejects insufficient roles', (
   middleware({ auth: { role: 'MEMBER' } }, {}, (error) => { memberError = error; });
   assert.equal(memberError.statusCode, 403);
   assert.equal(memberError.code, 'FORBIDDEN');
+});
+
+test('super admin middleware uses the platform-scoped database flag', () => {
+  let missingAuthError;
+  requireSuperAdmin({}, {}, (error) => { missingAuthError = error; });
+  assert.equal(missingAuthError.statusCode, 401);
+
+  let regularUserError;
+  requireSuperAdmin({ auth: { role: 'OWNER', isSuperAdmin: false } }, {}, (error) => {
+    regularUserError = error;
+  });
+  assert.equal(regularUserError.statusCode, 403);
+  assert.equal(regularUserError.code, 'FORBIDDEN');
+
+  let superAdminError;
+  requireSuperAdmin({ auth: { role: 'MEMBER', isSuperAdmin: true } }, {}, (error) => {
+    superAdminError = error;
+  });
+  assert.equal(superAdminError, undefined);
 });
