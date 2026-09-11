@@ -19,3 +19,4 @@ test("correlation uses only matching target and category", () => {
         dropoff: 41,
         avg_attempts: 6.8,
         completion_rate: 22,
+      },
