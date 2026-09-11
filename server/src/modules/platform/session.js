@@ -42,3 +42,14 @@ function createSessionRouter(service) {
   router.post("/register", async (req, res) =>
     issue(res, await service.register(registerSchema.parse(req.body))),
   );
+  router.post("/login", async (req, res) => {
+    const { remember, ...input } = req.body;
+    return issue(
+      res,
+      await service.login(loginSchema.parse(input)),
+      remember !== false,
+    );
+  });
+  router.post("/refresh", async (req, res) => {
+    const token = cookies(req).refresh_token;
+    if (!token) throw new AppError("Session expired. Please sign in.", 401);
