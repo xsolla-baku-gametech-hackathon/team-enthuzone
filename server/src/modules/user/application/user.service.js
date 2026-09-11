@@ -1,3 +1,6 @@
 const { createUser, normalizeEmail } = require('../domain/user.factory');
 
-class UserService {
+class UserService {
+  constructor({ userRepository }) {
+    this.userRepository = userRepository;
+  }
