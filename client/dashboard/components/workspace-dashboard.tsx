@@ -1358,3 +1358,26 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                   </label>
                 )}
                 {error && (
+                  <p role="alert" className="text-sm text-critical">
+                    {error}
+                  </p>
+                )}
+                <button className="primary" disabled={busy}>
+                  {busy ? "Creating…" : "Create connection"}
+                </button>
+              </form>
+            </section>
+          )}
+        </div>
+      )}
+      {previewWorkspace && (() => {
+        const BASE_W = 1280;
+        const BASE_H = 720;
+        const availW = containerSize.width || 960;
+        const availH = containerSize.height || 540;
+        const scale = Math.min(availW / BASE_W, availH / BASE_H) || 0.75;
+        const scaledW = Math.round(BASE_W * scale);
+        const scaledH = Math.round(BASE_H * scale);
+
+        return (
+          <div
