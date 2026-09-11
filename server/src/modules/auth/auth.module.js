@@ -5,7 +5,7 @@ const { PasswordService } = require('./application/password.service');
 const { TokenService } = require('./application/token.service');
 const { AuthController } = require('./presentation/http/auth.controller');
 const { createAuthenticateMiddleware } = require('./presentation/http/authenticate.middleware');
-const { requireAnyRole } = require('./presentation/http/authorize-role.middleware');
+const { requireAnyRole, requireSuperAdmin } = require('./presentation/http/authorize-role.middleware');
 const { createAuthRouter } = require('./presentation/http/auth.routes');
 
 function createAuthModule({ organizationRepository, userRepository, transactionManager, config }) {
@@ -27,6 +27,7 @@ function createAuthModule({ organizationRepository, userRepository, transactionM
     controller,
     authenticate,
     requireAnyRole,
+    requireSuperAdmin,
     router: createAuthRouter({ authController: controller, authenticate }),
   };
 }

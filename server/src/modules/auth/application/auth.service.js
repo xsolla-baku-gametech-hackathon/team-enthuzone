@@ -4,7 +4,13 @@ const { normalizeEmail } = require('../../user');
 const INVALID_CREDENTIALS = 'Invalid email or password';
 
 function publicUser(user) {
-  return { id: user.id, name: user.name, email: user.email, role: user.role };
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    isSuperAdmin: user.isSuperAdmin === true,
+  };
 }
 
 function publicOrganization(organization) {
@@ -77,7 +83,12 @@ class AuthService {
     if (!organization || organization.status !== 'ACTIVE') {
       throw new UnauthorizedError('Invalid or expired access token');
     }
-    return { userId: user.id, organizationId: organization.id, role: user.role };
+    return {
+      userId: user.id,
+      organizationId: organization.id,
+      role: user.role,
+      isSuperAdmin: user.isSuperAdmin === true,
+    };
   }
 
   async getCurrentUser(auth) {

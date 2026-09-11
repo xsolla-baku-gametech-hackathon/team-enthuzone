@@ -13,4 +13,10 @@ function requireAnyRole(...roles) {
   };
 }
 
-module.exports = { requireAnyRole };
+function requireSuperAdmin(req, _res, next) {
+  if (!req.auth) return next(new UnauthorizedError());
+  if (req.auth.isSuperAdmin !== true) return next(new ForbiddenError());
+  return next();
+}
+
+module.exports = { requireAnyRole, requireSuperAdmin };
