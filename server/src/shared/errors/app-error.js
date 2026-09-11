@@ -41,4 +41,10 @@ class InvalidCredentialsError extends UnauthorizedError {
 
 class ForbiddenError extends AppError {
   constructor(message = 'Insufficient permissions') {
-    super(message, 403, 'FORBIDDEN');
+    super(message, 403, 'FORBIDDEN');
+  }
+}
+
+module.exports = {
+  AppError,
+  ValidationError,
