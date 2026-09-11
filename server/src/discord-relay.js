@@ -32,3 +32,20 @@ async function relay(message) {
           body: JSON.stringify({
             id: message.id,
             author: message.author.id,
+            content: message.content.slice(0, 6000),
+          }),
+        },
+      );
+      if (response.ok) return;
+      if (response.status < 500 && response.status !== 429) {
+        console.error(
+          JSON.stringify({
+            event: "discord_relay_rejected",
+            messageId: message.id,
+            status: response.status,
+          }),
+        );
+        return;
+      }
+    } catch {}
+    await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
