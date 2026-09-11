@@ -14,3 +14,19 @@ export async function request<T>(
   if (response.status === 401 && !retried && !path.startsWith("/session/")) {
     const refresh = await fetch("/api/session/refresh", { method: "POST" });
     if (refresh.ok) return request<T>(path, body, method, true);
+    window.dispatchEvent(new Event("session-expired"));
+    throw new Error("Please sign in");
+  }
+  if (response.status === 204) return undefined as T;
+  const data = await response
+    .json()
+    .catch(() => ({ error: { message: "The server could not be reached" } }));
+  if (!response.ok) throw new Error(data.error?.message || "Request failed");
+  return data as T;
+}
+export type Workspace = {
+  id: string;
+  name: string;
+  webglUrl: string;
+  createdAt: string;
+};
