@@ -5,3 +5,5 @@ const candidate = z.object({
   sentiment: z.enum(["Positive", "Neutral", "Negative"]),
   confidence: z.number().min(0).max(1),
   summary: z.string().max(500),
+  authenticity: z.enum(["AI Approved", "Needs Review", "Likely Spam"]),
+  severity: z.number().min(0).max(1),
