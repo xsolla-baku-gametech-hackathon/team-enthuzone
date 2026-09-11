@@ -15,3 +15,4 @@ test("correlation uses only matching target and category", () => {
   const metrics = {
     targets: {
       "level 5": {
+        sessions: 10,
