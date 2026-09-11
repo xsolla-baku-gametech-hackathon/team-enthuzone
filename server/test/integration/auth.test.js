@@ -33,4 +33,16 @@ function testContext() {
 async function register(context) {
   return request(context.app).post('/api/auth/register').send(registration).expect(201);
 }
-
+
+test('registration creates an organization and OWNER with a password hash', async () => {
+  const context = testContext();
+  const response = await register(context);
+  const storedUser = await context.userRepository.findByEmail('john@darkfront.com');
+
+  assert.equal(response.body.user.role, 'OWNER');
+  assert.equal(response.body.user.email, 'john@darkfront.com');
+  assert.equal(response.body.organization.slug, 'darkfront-studio');
+  assert.ok(response.body.accessToken);
+  assert.match(storedUser.passwordHash, /^\$2/);
+  assert.notEqual(storedUser.passwordHash, registration.password);
+  assert.equal(JSON.stringify(response.body).includes('passwordHash'), false);
