@@ -73,3 +73,4 @@ async function generate(prompt, responseJsonSchema) {
         throw e;
       }
       const body = await response.json();
+      return JSON.parse(
