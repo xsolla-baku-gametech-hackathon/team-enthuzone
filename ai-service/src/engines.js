@@ -27,3 +27,4 @@ function normalize(type, target) {
     ix: 9,
     x: 10,
   };
+  return {
