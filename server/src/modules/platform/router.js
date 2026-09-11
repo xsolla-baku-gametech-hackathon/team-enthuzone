@@ -386,3 +386,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
   );
   router.post("/workspaces", async (req, res) => {
     const input = z
+      .object({ name, webglUrl: gameUrl })
+      .strict()
+      .parse(req.body);
+    await verifyGameUrl(input.webglUrl);
+    res
+      .status(201)
+      .json(
+        await Workspace.create({ ...input, orgId: req.auth.organizationId }),
+      );
+  });
+  router.patch("/workspaces/:id", async (req, res) => {
+    await owned(req);
+    const input = z
