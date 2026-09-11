@@ -194,3 +194,27 @@ export function BotLivePlaytestModal({
   const handleLevelChange = (newLevel: 1 | 3 | 5) => {
     setLevel(newLevel);
     initLevelObstacles(newLevel);
+    addLog("alert", `⚠️ Difficulty adjusted: Level ${newLevel} (${newLevel === 5 ? "High Dropout Zone" : newLevel === 3 ? "Medium Obstacles" : "Onboarding"})`);
+    resetGame();
+  };
+
+  // BFS Pathfinder for AI
+  const findAiNextDirection = useCallback(
+    (currentSnake: Point[], currentFood: Point, currentObstacles: Point[], currentDir: Direction): Direction => {
+      const head = currentSnake[0];
+      const blocked = new Set<string>();
+
+      // Snake body (excluding tail end since it moves)
+      currentSnake.slice(0, -1).forEach((seg) => blocked.add(`${seg.x},${seg.y}`));
+      // Obstacles
+      currentObstacles.forEach((obs) => blocked.add(`${obs.x},${obs.y}`));
+
+      const dirs: { dir: Direction; dx: number; dy: number; opposite: Direction }[] = [
+        { dir: "UP", dx: 0, dy: -1, opposite: "DOWN" },
+        { dir: "RIGHT", dx: 1, dy: 0, opposite: "LEFT" },
+        { dir: "DOWN", dx: 0, dy: 1, opposite: "UP" },
+        { dir: "LEFT", dx: -1, dy: 0, opposite: "RIGHT" },
+      ];
+
+      // Disallow 180-degree instant reversal
+      const validMoves = dirs.filter((d) => d.opposite !== currentDir);
