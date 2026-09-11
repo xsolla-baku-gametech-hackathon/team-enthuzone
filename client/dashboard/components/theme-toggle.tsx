@@ -13,3 +13,7 @@ export function ThemeToggle() {
       }}
     >
       <SunMoon size={18} />
+      <span className="hidden sm:inline">Theme</span>
+    </button>
+  );
+}
