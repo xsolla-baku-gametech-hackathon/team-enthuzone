@@ -68,4 +68,6 @@ export interface DashboardData {
   issues: Issue[];
   trend: TrendPoint[];
   sample: boolean;
-}
+}
+
+export type IssueResult = { issues: Issue[]; sample: boolean };
