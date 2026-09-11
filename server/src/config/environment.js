@@ -23,4 +23,8 @@ const parsed = environmentSchema.parse(process.env);
 const env = Object.freeze({
   nodeEnv: parsed.NODE_ENV,
   isTest: parsed.NODE_ENV === 'test',
-  port: parsed.PORT,
+  port: parsed.PORT,
+  mongodbUri: parsed.MONGODB_URI,
+  corsOrigins: parsed.CORS_ORIGINS === '*'
+    ? '*'
+    : parsed.CORS_ORIGINS.split(',').map((origin) => origin.trim()).filter(Boolean),
