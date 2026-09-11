@@ -778,3 +778,26 @@ export function WorkspaceDashboard({
                   {detail.connections.filter((c) => c.type === "bot").length === 0 ? (
                     <div className="rounded-2xl border border-dashed border-line p-8 sm:p-10 text-center bg-surface-sunken/40">
                       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/15 text-accent ring-1 ring-accent/30">
+                        <Bot size={28} />
+                      </div>
+                      <h3 className="mt-4 text-base font-semibold text-text">
+                        No AI Player Bot Connections Yet
+                      </h3>
+                      <p className="mt-1.5 text-xs text-muted max-w-md mx-auto leading-relaxed">
+                        Launch an autonomous AI Playtest session immediately on the built-in Cyber Snake testbed, or add a WebGL game URL to test external builds.
+                      </p>
+                      <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+                        <button
+                          type="button"
+                          className="primary text-xs py-2.5 px-4 flex items-center gap-2"
+                          onClick={() =>
+                            setActiveBotTest({
+                              botName: "Cyber Snake AI Autonomous Testbed",
+                              gameUrl: "",
+                            })
+                          }
+                        >
+                          <Sparkles size={16} />
+                          🤖 Test at (Canlı AI Snake Oynasın)
+                        </button>
+                        <button
