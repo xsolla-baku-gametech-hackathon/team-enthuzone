@@ -775,3 +775,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       });
     },
   );
+  router.get("/workspaces/:id", async (req, res) => {
+    const workspace = await owned(req);
+    const filter = { workspaceId: workspace.id };
+    const [connections, feedback, clusters, events] = await Promise.all([
+      Connection.find(filter).lean(),
+      Feedback.find(filter).sort({ createdAt: -1 }).lean(),
+      Cluster.find(filter).lean(),
+      Event.find(filter).lean(),
+    ]);
+    const metrics = aggregate(events);
+    await Evidence.updateOne(filter, { $set: { metrics } }, { upsert: true });
+    const issues = await rankIssues(feedback, clusters, metrics);
