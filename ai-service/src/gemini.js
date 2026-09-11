@@ -31,3 +31,5 @@ const schema = {
     "sentiment",
     "confidence",
     "summary",
+    "authenticity",
+    "severity",
