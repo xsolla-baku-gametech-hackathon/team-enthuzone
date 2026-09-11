@@ -1180,3 +1180,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
           onClick={() => setModal(null)}
           onKeyDown={(e) => {
             if (e.key === "Escape") setModal(null);
+          }}
+        >
+          {modal === "source-picker" ? (
+            <section
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="source-picker-title"
+              className="glass w-full max-w-xl rounded-2xl p-6 sm:p-7 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between border-b border-line pb-4">
+                <div>
+                  <h2 id="source-picker-title" className="text-xl font-semibold">
+                    Add player feedback source
+                  </h2>
+                  <p className="mt-1 text-xs text-muted">
+                    Choose a player platform to stream reviews and sentiment directly into this workspace
+                  </p>
+                </div>
+                <button
+                  aria-label="Close dialog"
+                  className="rounded-lg p-1.5 text-muted hover:bg-surface-raised hover:text-text transition"
