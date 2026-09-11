@@ -508,3 +508,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                   setFieldErrors((prev) => {
                     const next = { ...prev };
                     if (!err) delete next.businessDescription;
+                    else next.businessDescription = err;
+                    return next;
+                  });
+                }}
+              />
+              {fieldErrors.businessDescription && (
+                <p className="flex items-center gap-1.5 text-xs text-critical font-normal mt-0.5">
+                  <AlertCircle size={13} className="shrink-0" />
+                  <span>{fieldErrors.businessDescription}</span>
+                </p>
+              )}
+            </label>
+          )}
+
+          {register && step === 4 && (
+            <dl className="grid gap-3 rounded-xl bg-surface-sunken p-5 text-sm">
+              {[
+                ["Organization", data.organizationName],
+                ["Email", data.email],
+                ["Name", `${data.name} ${data.surname}`.trim()],
+                ["Location", data.location],
+                ["About", data.businessDescription],
