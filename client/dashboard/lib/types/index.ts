@@ -55,4 +55,7 @@ export interface TelemetryEvent {
   points: TrendPoint[];
 }
 
-export interface BuildMetric {
+export interface BuildMetric {
+  metric: string;
+  buildA: number;
+  buildB: number;
