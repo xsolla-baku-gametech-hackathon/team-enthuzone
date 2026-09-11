@@ -44,3 +44,4 @@ function createApp() {
       });
     } catch (e) {
       console.error(
+        JSON.stringify({
