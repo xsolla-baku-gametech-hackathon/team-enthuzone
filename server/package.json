@@ -8,6 +8,7 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "test": "node --test",
+    "promote-super-admin": "node scripts/promote-super-admin.js",
     "discord": "node src/discord-relay.js",
     "dev:local": "node src/dev-local.js"
   },
