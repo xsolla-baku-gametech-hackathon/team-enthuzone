@@ -1648,3 +1648,25 @@ function MetricsView({ metrics }: { metrics: Metrics }) {
         <section key={target} className="rounded-xl bg-surface p-5">
           <h3 className="font-semibold capitalize">
             {target}{" "}
+            <span className="text-xs font-normal text-muted">
+              / {m.sessions} sessions
+            </span>
+          </h3>
+          <dl className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {[
+              ["Drop-off", `${m.dropoff.toFixed(1)}%`],
+              ["Avg attempts", m.avg_attempts.toFixed(1)],
+              ["Completion", `${m.completion_rate.toFixed(1)}%`],
+              ["Avg session", `${m.avg_session.toFixed(1)} min`],
+            ].map(([label, value]) => (
+              <div key={label}>
+                <dt className="text-xs text-muted">{label}</dt>
+                <dd className="mt-2 font-mono text-lg">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ))}
+    </div>
+  );
+}
