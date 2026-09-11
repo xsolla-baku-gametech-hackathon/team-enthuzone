@@ -463,3 +463,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                   <span>{fieldErrors.location}</span>
                 </p>
               )}
+              <datalist id="locations">
+                {[
+                  "Azerbaijan / Baku",
+                  "Türkiye / Istanbul",
+                  "United Kingdom / London",
+                  "United States / New York",
+                  "Germany / Berlin",
+                  "Japan / Tokyo",
+                ].map((l) => (
+                  <option key={l}>{l}</option>
+                ))}
+              </datalist>
+              <span className="text-xs text-muted">
+                Choose a suggestion or enter your country and city.
+              </span>
+            </label>
+          )}
+
+          {register && step === 3 && (
+            <label className="grid gap-2 text-sm font-medium">
+              <div className="flex items-center justify-between">
+                <span>What is your business about?</span>
