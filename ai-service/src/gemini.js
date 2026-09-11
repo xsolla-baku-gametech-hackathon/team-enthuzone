@@ -108,3 +108,5 @@ async function recommend(issue, evidence) {
       properties: {
         recommendations: {
           type: "array",
+          items: { type: "string" },
+          maxItems: 3,
