@@ -7,3 +7,8 @@ function createAuthenticateMiddleware({ authService }) {
       const match = authorization?.match(/^Bearer\s+(\S+)$/i);
       const cookieToken = (req.get('cookie') || '').split(';').map(v => v.trim()).find(v => v.startsWith('access_token='))?.slice(13);
       if (!match && !cookieToken) throw new UnauthorizedError('Bearer access token is required');
+      req.auth = await authService.authenticate(match?.[1] || cookieToken);
+      next();
+    } catch (error) {
+      next(error);
+    }
