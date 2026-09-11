@@ -125,3 +125,21 @@ test(
     assert.equal(duplicate.body.duplicates, 1);
 
     // 1. Test Toggle Connection Pause
+    const { body: toggledPaused } = await client
+      .patch(`/api/platform/workspaces/${w.id}/connections/${c.id}/toggle`)
+      .expect(200);
+    assert.equal(toggledPaused.status, "paused");
+
+    // 2. Test Ingest when Paused (does not accept events, token remains valid)
+    const pausedRes = await request(app)
+      .post("/api/platform/ingest/telemetry")
+      .set("x-api-key", c.key)
+      .send({ events: [{ ...event, eventId: "e-paused-test" }] })
+      .expect(200);
+    assert.equal(pausedRes.body.paused, true);
+    assert.equal(pausedRes.body.accepted, 0);
+
+    // 3. Test Toggle Connection Back to Active (same token!)
+    const { body: toggledActive } = await client
+      .patch(`/api/platform/workspaces/${w.id}/connections/${c.id}/toggle`)
+      .expect(200);
