@@ -42,4 +42,7 @@ export interface TopicCluster {
   id: string;
   label: string;
   mentions: number;
-  growth: number;
+  growth: number;
+  sentimentScore: number;
+  sources: FeedbackSource[];
+}
