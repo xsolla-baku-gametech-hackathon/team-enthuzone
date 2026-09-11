@@ -21,3 +21,5 @@ function createApp() {
   let active = 0;
   app.use("/internal", (_req, res, next) => {
     if (active >= 4)
+      return res.status(429).json({ error: "AI busy; retry later" });
+    active++;
