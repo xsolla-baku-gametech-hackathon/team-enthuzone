@@ -273,3 +273,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       return res.status(200).json({
         accepted: 0,
         paused: true,
+        message: "Telemetry ingestion is currently paused for this connection",
+      });
+    }
+    const input = z
+      .object({
+        events: z
+          .array(
+            z
+              .object({
+                eventId: z.string().min(1).max(100),
+                playerId: z.string().min(1).max(100),
+                sessionId: z.string().min(1).max(100),
+                target: z.string().trim().min(1).max(150),
