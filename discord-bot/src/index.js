@@ -54,3 +54,4 @@ async function relay(message) {
         method: "POST",
         signal: AbortSignal.timeout(65000),
         headers: {
+          "Content-Type": "application/json",
