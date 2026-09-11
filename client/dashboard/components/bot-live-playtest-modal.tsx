@@ -562,3 +562,28 @@ export function BotLivePlaytestModal({
         setDirection("RIGHT");
         setIsAiActive(false);
       } else if (e.code === "Space") {
+        setIsPlaying((p) => !p);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [direction, mode]);
+
+  return (
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-canvas/95 backdrop-blur-md transition-all ${
+        isFullscreen ? "p-0" : "p-3 sm:p-5"
+      }`}
+      onClick={onClose}
+    >
+      <section
+        role="dialog"
+        aria-modal="true"
+        className={`glass flex flex-col overflow-hidden border border-line shadow-2xl transition-all ${
+          isFullscreen
+            ? "h-screen w-screen rounded-none max-w-none max-h-none"
+            : "max-h-[95vh] w-full max-w-6xl rounded-2xl"
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
