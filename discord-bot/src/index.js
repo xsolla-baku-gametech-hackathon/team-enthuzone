@@ -171,3 +171,4 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
   } else {
     console.error("   Please verify DISCORD_BOT_TOKEN in your discord-bot/.env file.\n");
   }
+  process.exitCode = 1;
