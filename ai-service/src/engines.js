@@ -40,3 +40,4 @@ function correlate(issue, metrics) {
   const m = metrics.targets?.[key];
   if (!m || !m.sessions)
     return {
+      supported: false,
