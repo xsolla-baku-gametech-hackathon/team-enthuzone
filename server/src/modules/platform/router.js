@@ -449,3 +449,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       const c = await Connection.findOne({
         id: req.params.connectionId,
         workspaceId: req.params.id,
+      });
+      if (!c) throw new AppError("Connection not found", 404);
+      c.status = c.status === "paused" ? "active" : "paused";
+      await c.save();
+      res.json({ id: c.id, name: c.name, type: c.type, status: c.status });
+    },
+  );
+  router.delete(
+    "/workspaces/:id/connections/:connectionId",
+    async (req, res) => {
+      await owned(req);
+      await Connection.deleteOne({
