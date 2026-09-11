@@ -36,3 +36,5 @@ npm run dev
 ## 📋 How to get credentials (Məlumatları necə əldə etməli?)
 
 ### 1. Discord Bot Token
+1. [Discord Developer Portal](https://discord.com/developers/applications) saytına daxil olun.
+2. **"New Application"** yaradın (məs: `PlayerFeedbackBot`).
