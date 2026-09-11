@@ -636,3 +636,27 @@ export function BotLivePlaytestModal({
               type="button"
               className="rounded-lg p-2 text-muted hover:bg-surface-raised hover:text-text transition"
               onClick={() => setIsFullscreen(!isFullscreen)}
+              title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+            >
+              {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+            </button>
+            <button
+              type="button"
+              className="rounded-lg p-2 text-muted hover:bg-surface-raised hover:text-text transition"
+              onClick={onClose}
+              title="Close"
+            >
+              <X size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Main Content Area */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 grid gap-6 lg:grid-cols-[1fr_360px]">
+          {/* Left Column: Live Game Screen & Simulated Cursor */}
+          <div className="flex flex-col items-center justify-center gap-4">
+            {mode === "snake" ? (
+              <div
+                ref={gameAreaRef}
+                className="relative aspect-square w-full max-w-[480px] rounded-2xl border-2 border-line/80 bg-surface-sunken shadow-2xl overflow-hidden select-none"
+              >
