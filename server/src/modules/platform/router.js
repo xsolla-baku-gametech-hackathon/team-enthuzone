@@ -73,3 +73,15 @@ async function analyzeFeedback(feedback) {
       cluster = await Cluster.findOneAndUpdate(
         { workspaceId: feedback.workspaceId, type, target },
         {
+          $setOnInsert: {
+            summary: result.summary,
+            severity: result.severity,
+            authenticity: result.authenticity,
+          },
+        },
+        { upsert: true, returnDocument: "after" },
+      );
+    } catch (e) {
+      if (e.code !== 11000) throw e;
+      cluster = await Cluster.findOne({
+        workspaceId: feedback.workspaceId,
