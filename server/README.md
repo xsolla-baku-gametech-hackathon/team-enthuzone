@@ -108,4 +108,26 @@ curl -X POST "http://localhost:3000/api/feedback" \
   -H "Content-Type: application/json" \
   -d '{
     "gameId":"darkfront",
-    "source":"STEAM",
+    "source":"STEAM",
+    "content":"Boss 4 became impossible after the update",
+    "createdAt":"2026-09-10T12:30:00Z",
+    "metadata":{"buildVersion":"1.8.0","language":"en"}
+  }'
+```
+
+Batch collection accepts up to 500 records:
+
+```text
+POST /api/feedback/batch
+{ "feedbacks": [...] }
+```
+
+Read stored feedback:
+
+```text
+GET /api/feedback?gameId=darkfront&source=STEAM&limit=50&offset=0
+```
+
+## Telemetry
+
+Create one telemetry event:
