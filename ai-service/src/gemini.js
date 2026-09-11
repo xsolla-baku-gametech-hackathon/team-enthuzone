@@ -85,3 +85,5 @@ async function generate(prompt, responseJsonSchema) {
   }
 }
 async function analyze(text, existing = []) {
+  return candidate.parse(
+    await generate(
