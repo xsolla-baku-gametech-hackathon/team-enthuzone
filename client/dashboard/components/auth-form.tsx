@@ -219,3 +219,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                 val.length > limits.max
                   ? "text-critical font-bold"
                   : val.length >= limits.max * 0.9
+                  ? "text-high"
+                  : "text-muted"
+              }`}
+            >
+              {val.length}/{limits.max}
+            </span>
+          )}
+        </div>
+        <input
+          className={`field transition-colors ${
+            fieldError
+              ? "!border-critical ring-1 !ring-critical/40 focus:!border-critical"
+              : ""
+          }`}
+          value={val}
+          type={type}
+          maxLength={limits.max}
+          onChange={(e) => handleFieldChange(key, e.target.value)}
+          onBlur={() => {
+            const err = validateField(key, val);
+            setFieldErrors((prev) => {
+              const next = { ...prev };
