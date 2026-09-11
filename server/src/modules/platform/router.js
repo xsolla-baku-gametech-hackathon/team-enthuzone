@@ -687,3 +687,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
 
       for (let r = 1; r <= testRuns; r++) {
         const sessId = `ai-bot-run-${Date.now()}-${r}`;
+        botSessionEvents.push({
+          workspaceId,
+          connectionId: "ai-player-bot",
+          eventId: `bot-run-${issue.id}-${r}-start`,
+          playerId: "ai-player-bot",
+          sessionId: sessId,
+          target: issue.target,
+          eventType: "start",
+          duration: 2,
+          build: "ai-bot-verified-1.0",
+        });
+
+        const failed =
