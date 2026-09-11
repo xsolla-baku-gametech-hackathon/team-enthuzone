@@ -7,3 +7,4 @@ test("normalization unifies aliases, roman numerals and whitespace", () => {
     normalize("Difficulty", "Level 5"),
   );
   assert.deepEqual(normalize("Lag", "Main menu"), {
+    type: "performance",
