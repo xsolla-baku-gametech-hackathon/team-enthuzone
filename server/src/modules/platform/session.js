@@ -86,3 +86,14 @@ function createSessionRouter(service) {
       .status(503)
       .json({
         error: {
+          message:
+            "Password recovery email is not configured. Contact your organization administrator.",
+        },
+      }),
+  );
+  router.use((err, req, res, next) => {
+    if (err instanceof z.ZodError)
+      return res
+        .status(400)
+        .json({
+          error: {
