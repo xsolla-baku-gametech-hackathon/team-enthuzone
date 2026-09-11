@@ -9,3 +9,4 @@ function createApp() {
     throw new Error("AI_INTERNAL_TOKEN must contain at least 32 characters");
   const app = express();
   app.disable("x-powered-by");
+  app.use(express.json({ limit: "256kb" }));
