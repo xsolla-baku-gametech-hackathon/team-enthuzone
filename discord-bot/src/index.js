@@ -52,3 +52,4 @@ async function relay(message) {
     try {
       const response = await fetch(targetUrl, {
         method: "POST",
+        signal: AbortSignal.timeout(65000),
