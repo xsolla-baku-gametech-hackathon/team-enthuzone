@@ -11,11 +11,11 @@
   --line-strong: #56616d;
   --text: #f2f5f7;
   --text-muted: #a8b1bb;
-  --text-faint: #77818c;
+  --text-faint: #87939f;
   --accent: #35b8a5;
   --accent-strong: #55d1bf;
   --critical: #e45b5b;
-  --critical-surface: #3a1d21;
+  --critical-surface: #32191c;
   --high: #ed9840;
   --high-surface: #392719;
   --medium: #e0bd4f;
@@ -54,11 +54,8 @@ html[data-theme="light"] {
   --info-surface: #e3eef9;
 }
 .glass {
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: var(--surface);
   border: 1px solid var(--line);
-  box-shadow: 0 12px 45px
-    color-mix(in srgb, var(--surface-sunken) 30%, transparent);
-  backdrop-filter: blur(16px);
 }
 .eyebrow {
   color: var(--accent);
@@ -118,27 +115,10 @@ button:disabled {
   place-items: center;
   padding: 32px 16px;
   overflow: hidden;
-  background:
-    radial-gradient(
-      ellipse at 15% 20%,
-      color-mix(in srgb, var(--accent) 13%, transparent),
-      transparent 55%
-    ),
-    var(--canvas);
+  background: var(--canvas);
 }
 .auth-orb {
-  position: absolute;
-  width: 55vw;
-  height: 55vw;
-  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
-  border-radius: 50%;
-  transform: translate(40%, 15%);
-  animation: orbit 18s ease-in-out infinite alternate;
-}
-@keyframes orbit {
-  to {
-    transform: translate(30%, 5%) scale(1.1);
-  }
+  display: none;
 }
 
 @theme inline {

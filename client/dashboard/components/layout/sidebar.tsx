@@ -9,9 +9,12 @@ import {
   MessageSquareText,
   RadioTower,
   ShieldAlert,
+  ShieldCheck,
 } from "lucide-react";
+import { fetchCurrentSession } from "@/lib/api/session";
+import { useEffect, useState } from "react";
 
-const nav = [
+const baseNav = [
   { href: "/", label: "Overview", icon: LayoutDashboard },
   { href: "/issues", label: "Issues", icon: ShieldAlert },
   { href: "/feedback", label: "Feedback", icon: MessageSquareText },
@@ -21,10 +24,32 @@ const nav = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const nav = isSuperAdmin
+    ? [
+        ...baseNav,
+        { href: "/admin/logs", label: "Admin logs", icon: ShieldCheck },
+      ]
+    : baseNav;
+
+  useEffect(() => {
+    let active = true;
+    fetchCurrentSession()
+      .then((session) => {
+        if (active) setIsSuperAdmin(session.user.isSuperAdmin === true);
+      })
+      .catch(() => {
+        if (active) setIsSuperAdmin(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <>
       {/* Mobile Top Navigation */}
-      <aside className="sticky top-0 z-30 flex min-w-0 max-w-full flex-col border-b border-line bg-sidebar/95 backdrop-blur-md lg:hidden">
+      <aside data-dialog-background className="sticky top-0 z-30 flex min-w-0 max-w-full flex-col border-b border-line bg-sidebar/95 backdrop-blur-md lg:hidden">
         <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
             <span className="grid size-9 place-items-center rounded-control bg-accent text-canvas">
@@ -47,7 +72,7 @@ export function Sidebar() {
               <Link
                 key={href}
                 href={href}
-                className={`flex min-w-max items-center gap-2 rounded-control px-3 py-2 text-xs font-semibold transition-colors ${
+                className={`flex min-h-11 min-w-max items-center gap-2 rounded-control px-3 py-2 text-xs font-semibold transition-colors ${
                   active
                     ? "bg-surface-raised text-ink"
                     : "text-muted hover:bg-surface hover:text-ink"
@@ -63,11 +88,12 @@ export function Sidebar() {
 
       {/* Desktop Persistent Fixed Full-Height Sidebar */}
       <aside
+        data-dialog-background
         className="fixed inset-y-0 left-0 z-30 hidden h-screen w-60 flex-col border-r border-line bg-sidebar lg:flex"
         aria-label="Sidebar navigation"
       >
         <div className="flex h-20 shrink-0 items-center gap-3 px-5 border-b border-line/50">
-          <span className="grid size-10 place-items-center rounded-control bg-accent text-canvas shadow-sm shadow-accent/20">
+          <span className="grid size-10 place-items-center rounded-control bg-accent text-canvas">
             <RadioTower size={20} strokeWidth={2.4} />
           </span>
           <div>
@@ -91,7 +117,7 @@ export function Sidebar() {
                 href={href}
                 className={`flex items-center gap-3 rounded-control px-3.5 py-2.5 text-sm font-semibold transition-all ${
                   active
-                    ? "bg-surface-raised text-ink shadow-sm ring-1 ring-line/50"
+                    ? "bg-surface-raised text-ink ring-1 ring-line/50"
                     : "text-muted hover:bg-surface hover:text-ink"
                 }`}
               >

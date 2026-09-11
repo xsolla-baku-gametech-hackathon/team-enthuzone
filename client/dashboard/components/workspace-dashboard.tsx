@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState, useRef } from "react";
+import Link from "next/link";
 import {
   Plus,
   ArrowUpRight,
@@ -28,11 +29,14 @@ import {
   type Metrics,
 } from "@/lib/api/platform";
 import { BotLivePlaytestModal } from "./bot-live-playtest-modal";
+import { useDialogFocus } from "./use-dialog-focus";
 type Modal = "workspace" | "discord" | "telemetry" | "bot" | "source-picker" | null;
 export function WorkspaceDashboard({
   section = "overview",
+  issueId,
 }: {
   section?: string;
+  issueId?: string;
 }) {
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [selected, setSelected] = useState("");
@@ -59,6 +63,23 @@ export function WorkspaceDashboard({
   const [notice, setNotice] = useState("");
   const [tab, setTab] = useState(section);
   const [filter, setFilter] = useState("");
+  const [currentBuild, setCurrentBuild] = useState("");
+  const [baselineBuild, setBaselineBuild] = useState("");
+  const secretDialogRef = useDialogFocus<HTMLElement>(Boolean(secret), () =>
+    setSecret(null),
+  );
+  const sourceDialogRef = useDialogFocus<HTMLElement>(
+    modal === "source-picker",
+    () => setModal(null),
+  );
+  const connectionDialogRef = useDialogFocus<HTMLElement>(
+    Boolean(modal && modal !== "source-picker"),
+    () => setModal(null),
+  );
+  const previewDialogRef = useDialogFocus<HTMLElement>(
+    Boolean(previewWorkspace),
+    () => setPreviewWorkspace(null),
+  );
   const reload = useCallback(
     async (id = selected) => {
       if (id)
@@ -199,17 +220,44 @@ export function WorkspaceDashboard({
     "bots",
     "compare",
   ];
+  const selectedWorkspace = workspaces.find((workspace) => workspace.id === selected);
+  const sectionMeta: Record<string, { title: string; description: string }> = {
+    overview: {
+      title: "Decision desk",
+      description: "See the issue that needs attention and the evidence behind it.",
+    },
+    issues: {
+      title: issueId ? "Issue evidence" : "Issue triage",
+      description: issueId
+        ? "Review priority, player impact, and supporting signals."
+        : "Rank open player problems by impact and evidence strength.",
+    },
+    feedback: {
+      title: "Player voices",
+      description: "Inspect incoming reports and analysis status.",
+    },
+    telemetry: {
+      title: "Behavior evidence",
+      description: "Track drop-off, attempts, completion, and session duration.",
+    },
+    bots: {
+      title: "Live playtest control",
+      description: "Run autonomous playtests and capture verified telemetry.",
+    },
+    compare: {
+      title: "Build comparison",
+      description: "Validate release movement against a prior build.",
+    },
+  };
+  const activeMeta = sectionMeta[tab] ?? sectionMeta.overview;
   return (
     <div className="space-y-6">
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="eyebrow">ORGANIZATION / WORKSPACES</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight">
-            Your next better build.
+          <h1 className="text-2xl font-semibold tracking-tight">
+            {activeMeta.title}
           </h1>
-          <p className="mt-2 text-muted">
-            Listen to players. Connect the evidence. Know what to fix.
-          </p>
+          <p className="mt-1 text-sm text-muted">{activeMeta.description}</p>
         </div>
         <button className="primary" onClick={() => setModal("workspace")}>
           <Plus size={17} />
@@ -262,69 +310,35 @@ export function WorkspaceDashboard({
         </section>
       ) : (
         <>
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {workspaces.map((w) => {
-              const hostname = (() => {
-                try {
-                  return new URL(w.webglUrl).hostname;
-                } catch {
-                  return w.webglUrl;
-                }
-              })();
-              return (
-                <div
-                  key={w.id}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => choose(w.id)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") choose(w.id);
-                  }}
-                  className={`glass group relative flex flex-col justify-between rounded-xl p-5 text-left transition hover:-translate-y-0.5 cursor-pointer ${selected === w.id ? "ring-1 ring-accent" : ""}`}
-                >
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <Gamepad2 className="text-accent" />
-                      <button
-                        type="button"
-                        title="Preview game build"
-                        aria-label="Preview game build"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setPreviewWorkspace(w);
-                        }}
-                        className="flex items-center gap-1 rounded-lg p-1.5 text-muted transition hover:bg-surface-raised hover:text-accent"
-                      >
-                        <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                          Preview
-                        </span>
-                        <ArrowUpRight size={17} />
-                      </button>
-                    </div>
-                    <h2 className="mt-4 font-semibold text-lg">{w.name}</h2>
-                    <p className="mt-1 truncate text-xs text-muted">
-                      {hostname}
-                    </p>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between border-t border-line/40 pt-3 text-xs">
-                    <span className="text-faint">
-                      Created {new Date(w.createdAt).toLocaleDateString()}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setPreviewWorkspace(w);
-                      }}
-                      className="font-medium text-accent hover:underline flex items-center gap-1"
-                    >
-                      Play preview ↗
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <section className="flex flex-col gap-3 border-y border-line py-3 sm:flex-row sm:items-end sm:justify-between">
+            <label className="grid min-w-0 gap-1.5 sm:min-w-72">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted">
+                Program workspace
+              </span>
+              <select
+                className="field"
+                value={selected}
+                onChange={(event) => choose(event.target.value)}
+              >
+                {workspaces.map((workspace) => (
+                  <option key={workspace.id} value={workspace.id}>
+                    {workspace.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            {selectedWorkspace?.webglUrl && (
+              <button
+                type="button"
+                className="secondary shrink-0"
+                onClick={() => setPreviewWorkspace(selectedWorkspace)}
+              >
+                <Gamepad2 size={16} />
+                Preview current build
+                <ArrowUpRight size={15} />
+              </button>
+            )}
+          </section>
           {detail && (
             <>
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-3">
@@ -353,24 +367,10 @@ export function WorkspaceDashboard({
               </div>
               {(tab === "overview" || tab === "issues") && (
                 <>
-                  <div className="grid gap-4 sm:grid-cols-3">
-                    {[
-                      ["Player feedback", detail.feedbackTotal],
-                      ["Behavior events", detail.metrics.eventCount],
-                      [
-                        "Issues to investigate",
-                        detail.issues.filter((i) => i.status !== "RESOLVED")
-                          .length,
-                      ],
-                    ].map(([label, value]) => (
-                      <section key={label} className="glass rounded-xl p-5">
-                        <p className="text-xs text-muted">{label}</p>
-                        <p className="mt-3 font-mono text-3xl">{value}</p>
-                      </section>
-                    ))}
-                  </div>
                   <div className="flex items-center justify-between gap-3">
-                    <h2 className="text-lg font-semibold">Priority queue</h2>
+                    <h2 className="text-lg font-semibold">
+                      {issueId ? "Issue evidence" : "Priority queue"}
+                    </h2>
                     <input
                       className="field max-w-64"
                       aria-label="Filter issues"
@@ -379,7 +379,7 @@ export function WorkspaceDashboard({
                       onChange={(e) => setFilter(e.target.value)}
                     />
                   </div>
-                  {!detail.issues.length && (
+                  {!detail.issues.length && !issueId && (
                     <p className="rounded-xl bg-surface p-8 text-muted">
                       No analyzed issues yet. Add a feedback source or submit a
                       player review.
@@ -387,13 +387,17 @@ export function WorkspaceDashboard({
                   )}
                   <div className="grid gap-4 xl:grid-cols-2">
                     {detail.issues
+                      .filter((i) => !issueId || i.id === issueId)
                       .filter((i) =>
                         `${i.type} ${i.target}`
                           .toLowerCase()
                           .includes(filter.toLowerCase()),
                       )
-                      .map((i) => (
-                        <article key={i.id} className="glass rounded-xl p-5">
+                      .map((i, index) => (
+                        <article
+                          key={i.id}
+                          className={`glass rounded-xl p-5 ${issueId || index === 0 ? "xl:col-span-2" : ""}`}
+                        >
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="rounded-full bg-info-surface px-3 py-1 text-xs text-info">
                               {i.type}
@@ -410,9 +414,8 @@ export function WorkspaceDashboard({
                             {i.aiVerification?.status === "APPROVED" ? (
                               <span
                                 title={i.aiVerification.summary}
-                                className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 px-2.5 py-1 text-xs font-semibold text-emerald-400 shadow-sm"
+                                className="inline-flex items-center gap-1.5 rounded-full border border-low/40 bg-low-surface px-2.5 py-1 text-xs font-semibold text-low"
                               >
-                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                                 <Bot size={13} />
                                 <span>AI Bot Confirmed</span>
                               </span>
@@ -427,15 +430,36 @@ export function WorkspaceDashboard({
                             ) : null}
                           </div>
                           <h3 className="mt-4 text-xl font-semibold capitalize">
-                            {i.target}
+                            {issueId ? (
+                              i.target
+                            ) : (
+                              <Link
+                                href={`/issues/${i.id}`}
+                                className="transition-colors hover:text-accent"
+                              >
+                                {i.target}
+                              </Link>
+                            )}
                           </h3>
                           <p className="mt-2 text-sm leading-6 text-muted">
                             {i.summary}
                           </p>
-                          <p className="mt-4 text-sm">
-                            {i.affectedUsers} unique reviewers · {i.count}{" "}
-                            mentions
-                          </p>
+                          <dl className="mt-4 grid gap-px overflow-hidden rounded-lg bg-line sm:grid-cols-3">
+                            <div className="bg-surface-sunken p-3">
+                              <dt className="text-xs text-muted">Player impact</dt>
+                              <dd className="mt-1 font-mono text-sm text-text">
+                                {i.affectedUsers} reviewers · {i.count} reports
+                              </dd>
+                            </div>
+                            <div className="bg-surface-sunken p-3">
+                              <dt className="text-xs text-muted">Affected area</dt>
+                              <dd className="mt-1 text-sm capitalize text-text">{i.target}</dd>
+                            </div>
+                            <div className="bg-surface-sunken p-3">
+                              <dt className="text-xs text-muted">Build scope</dt>
+                              <dd className="mt-1 text-sm text-text">Not reported</dd>
+                            </div>
+                          </dl>
                           <p className="mt-2 text-xs text-muted">
                             Telemetry support:{" "}
                             {Math.round(i.correlation.score * 100)}% ·{" "}
@@ -446,12 +470,20 @@ export function WorkspaceDashboard({
                             Priority uses reviewer share. Revenue impact is
                             unavailable and contributes 0.
                           </p>
+                          {i.samples[0] && (
+                            <blockquote className="mt-4 border-l-2 border-accent pl-3 text-sm leading-6 text-text">
+                              <p>{i.samples[0].text}</p>
+                              <footer className="mt-1 text-xs text-muted">
+                                {i.samples[0].author} · {i.samples[0].candidate?.authenticity}
+                              </footer>
+                            </blockquote>
+                          )}
                           {/* AI Bot Playthrough Report Box */}
                           {i.aiVerification && (
                             <div
                               className={`mt-4 rounded-xl border p-3.5 text-xs ${
                                 i.aiVerification.status === "APPROVED"
-                                  ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
+                                  ? "border-low/30 bg-low-surface text-low"
                                   : "border-line bg-surface-sunken text-muted"
                               }`}
                             >
@@ -475,11 +507,12 @@ export function WorkspaceDashboard({
                               </p>
                             </div>
                           )}
-                          <details className="mt-4 border-t border-line pt-3">
-                            <summary className="cursor-pointer text-sm text-accent">
-                              Player evidence ({i.count})
-                            </summary>
-                            {i.samples.map((f) => (
+                          {i.samples.length > 1 && (
+                            <details className="mt-4 border-t border-line pt-3">
+                              <summary className="cursor-pointer text-sm text-accent">
+                                View more player evidence ({i.count - 1})
+                              </summary>
+                            {i.samples.slice(1).map((f) => (
                               <blockquote
                                 key={f.id}
                                 className="mt-3 rounded-lg bg-surface-sunken p-3 text-sm"
@@ -495,7 +528,8 @@ export function WorkspaceDashboard({
                                 +{i.count - 5} more reviews in Feedback
                               </p>
                             )}
-                          </details>
+                            </details>
+                          )}
                           {i.recommendations?.length > 0 && (
                             <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-accent">
                               {i.recommendations.map((r) => (
@@ -571,6 +605,33 @@ export function WorkspaceDashboard({
                         </article>
                       ))}
                   </div>
+                  {issueId && !detail.issues.some((issue) => issue.id === issueId) && (
+                    <p className="rounded-xl border border-line bg-surface p-6 text-muted">
+                      This issue is not available in the selected workspace.
+                    </p>
+                  )}
+                  {!issueId && (
+                    <section
+                      aria-label="Workspace score ribbon"
+                      className="grid gap-px overflow-hidden rounded-lg bg-line sm:grid-cols-3"
+                    >
+                      {[
+                        ["Player feedback", detail.feedbackTotal, "reports in this workspace"],
+                        ["Behavior events", detail.metrics.eventCount, "events in this workspace"],
+                        [
+                          "Open issues",
+                          detail.issues.filter((i) => i.status !== "RESOLVED").length,
+                          "unresolved in the current queue",
+                        ],
+                      ].map(([label, value, context]) => (
+                        <div key={label} className="bg-surface px-5 py-4">
+                          <p className="text-xs font-semibold text-muted">{label}</p>
+                          <p className="mt-1 font-mono text-2xl text-text">{value}</p>
+                          <p className="mt-1 text-xs text-faint">{context}</p>
+                        </div>
+                      ))}
+                    </section>
+                  )}
                 </>
               )}
               {tab === "feedback" && (
@@ -798,7 +859,7 @@ export function WorkspaceDashboard({
                           }
                         >
                           <Sparkles size={16} />
-                          🤖 Test at (Canlı AI Snake Oynasın)
+                          Run live AI Snake test
                         </button>
                         <button
                           type="button"
@@ -826,7 +887,7 @@ export function WorkspaceDashboard({
                             <div className="mt-4 flex flex-wrap items-center gap-2">
                               <button
                                 type="button"
-                                className="primary text-xs py-2 px-3.5 flex items-center gap-1.5 shadow"
+                                className="primary text-xs py-2 px-3.5 flex items-center gap-1.5"
                                 onClick={() =>
                                   setActiveBotTest({
                                     botName: c.name,
@@ -835,7 +896,7 @@ export function WorkspaceDashboard({
                                 }
                               >
                                 <Bot size={15} />
-                                🤖 Test at (Canlı AI Oynasın)
+                                Run live AI playtest
                               </button>
                               <a
                                 href={c.gameUrl}
@@ -847,7 +908,7 @@ export function WorkspaceDashboard({
                               </a>
                             </div>
                             <p className="mt-3 text-xs text-muted">
-                              Click "Test at" to launch the autonomous AI playtester modal. The AI will physically steer and click to play live on screen.
+                              Run the live playtest to watch the autonomous agent steer and interact on screen.
                             </p>
                           </div>
                           <iframe
@@ -866,11 +927,118 @@ export function WorkspaceDashboard({
               {tab === "compare" && (
                 <>
                   <h2 className="text-xl font-semibold">Build comparison</h2>
-                  {!detail.builds.length && (
-                    <p className="text-muted">
-                      Send telemetry with a build identifier to compare
-                      releases.
+                  {detail.builds.length >= 2 && (
+                    <div className="grid gap-3 border-y border-line py-4 sm:grid-cols-2">
+                      <label className="grid gap-1.5 text-xs font-semibold text-muted">
+                        Current build
+                        <select
+                          className="field"
+                          value={currentBuild}
+                          onChange={(event) => {
+                            setCurrentBuild(event.target.value);
+                            if (event.target.value === baselineBuild) setBaselineBuild("");
+                          }}
+                        >
+                          <option value="">Select current build</option>
+                          {detail.builds.map((build) => (
+                            <option key={build.build} value={build.build}>
+                              {build.build}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <label className="grid gap-1.5 text-xs font-semibold text-muted">
+                        Baseline build
+                        <select
+                          className="field"
+                          value={baselineBuild}
+                          onChange={(event) => {
+                            setBaselineBuild(event.target.value);
+                            if (event.target.value === currentBuild) setCurrentBuild("");
+                          }}
+                        >
+                          <option value="">Select baseline build</option>
+                          {detail.builds.map((build) => (
+                            <option key={build.build} value={build.build}>
+                              {build.build}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                    </div>
+                  )}
+                  {currentBuild && baselineBuild && (() => {
+                    const current = detail.builds.find((build) => build.build === currentBuild);
+                    const baseline = detail.builds.find((build) => build.build === baselineBuild);
+                    if (!current || !baseline || current.build === baseline.build) return null;
+                    const readings = [
+                      {
+                        label: "Events",
+                        value: current.eventCount,
+                        delta: percentChange(current.eventCount, baseline.eventCount),
+                        tone: "text-accent",
+                      },
+                      {
+                        label: "Players",
+                        value: current.uniquePlayers,
+                        delta: percentChange(current.uniquePlayers, baseline.uniquePlayers),
+                        tone: "text-info",
+                      },
+                      {
+                        label: "Average drop-off",
+                        value: `${averageDropoff(current).toFixed(1)}%`,
+                        delta: percentChange(
+                          averageDropoff(current),
+                          averageDropoff(baseline),
+                        ),
+                        tone:
+                          averageDropoff(current) > averageDropoff(baseline)
+                            ? "text-critical"
+                            : "text-low",
+                      },
+                    ];
+                    return (
+                      <section aria-label="Build delta ribbon" className="overflow-hidden rounded-lg bg-line">
+                        <header className="flex flex-wrap items-center justify-between gap-2 bg-surface-sunken px-4 py-3 text-xs text-muted">
+                          <span className="font-mono text-text">{current.build}</span>
+                          <span>compared with</span>
+                          <span className="font-mono text-text">{baseline.build}</span>
+                        </header>
+                        <div className="grid gap-px sm:grid-cols-3">
+                          {readings.map((reading) => (
+                            <div key={reading.label} className="bg-surface px-4 py-4">
+                              <p className="text-xs font-semibold text-muted">{reading.label}</p>
+                              <p className={`mt-1 font-mono text-xl ${reading.tone}`}>
+                                {reading.value}
+                              </p>
+                              <p className="mt-1 font-mono text-xs text-faint">
+                                {reading.delta} vs baseline
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+                    );
+                  })()}
+                  {detail.builds.length === 1 && (
+                    <p className="border-y border-line py-5 text-muted">
+                      Add telemetry for one more build to calculate release deltas.
                     </p>
+                  )}
+                  {!detail.builds.length && (
+                    <div className="flex flex-wrap items-center justify-between gap-4 border-y border-line py-5">
+                      <p className="text-muted">
+                        Send telemetry with a build identifier to compare releases.
+                      </p>
+                      <button
+                        type="button"
+                        className="secondary"
+                        onClick={() => setTab("telemetry")}
+                      >
+                        <Activity size={16} />
+                        Set up telemetry
+                      </button>
+                    </div>
                   )}
                   <div className="grid gap-4 xl:grid-cols-2">
                     {detail.builds.map((b) => (
@@ -897,10 +1065,12 @@ export function WorkspaceDashboard({
           }}
         >
           <section
+            ref={secretDialogRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="secret-modal-title"
-            className="glass w-full max-w-xl rounded-2xl p-6 sm:p-7 shadow-2xl border border-accent/40 max-h-[92vh] overflow-y-auto"
+            tabIndex={-1}
+            className="w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-2xl border border-accent/40 bg-surface p-6 sm:p-7"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between border-b border-line pb-4">
@@ -931,7 +1101,7 @@ export function WorkspaceDashboard({
               </div>
               <button
                 aria-label="Close dialog"
-                className="rounded-lg p-1.5 text-muted hover:bg-surface-raised hover:text-text transition"
+                className="grid size-11 place-items-center rounded-lg text-muted transition hover:bg-surface-raised hover:text-text"
                 onClick={() => setSecret(null)}
               >
                 <X size={19} />
@@ -945,7 +1115,7 @@ export function WorkspaceDashboard({
                   {/* 1. Telemetry API Key */}
                   <div>
                     <label className="text-xs font-semibold uppercase tracking-wider text-muted mb-1.5 block">
-                      Telemetry API Key (Pass in "x-api-key" Header)
+                      Telemetry API key (use the x-api-key header)
                     </label>
                     <div className="flex items-center gap-2">
                       <code className="flex-1 font-mono text-xs bg-surface-sunken border border-line rounded-lg p-3 break-all text-accent select-all">
@@ -1168,7 +1338,7 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                 className="primary text-xs py-2 px-4"
                 onClick={() => setSecret(null)}
               >
-                I've saved my credentials
+                I have saved my credentials
               </button>
             </div>
           </section>
@@ -1184,10 +1354,12 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
         >
           {modal === "source-picker" ? (
             <section
+              ref={sourceDialogRef}
               role="dialog"
               aria-modal="true"
               aria-labelledby="source-picker-title"
-              className="glass w-full max-w-xl rounded-2xl p-6 sm:p-7 shadow-2xl"
+              tabIndex={-1}
+              className="w-full max-w-xl rounded-2xl border border-line bg-surface p-6 sm:p-7"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start justify-between border-b border-line pb-4">
@@ -1201,7 +1373,7 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                 </div>
                 <button
                   aria-label="Close dialog"
-                  className="rounded-lg p-1.5 text-muted hover:bg-surface-raised hover:text-text transition"
+                  className="grid size-11 place-items-center rounded-lg text-muted transition hover:bg-surface-raised hover:text-text"
                   onClick={() => setModal(null)}
                 >
                   <X size={19} />
@@ -1213,9 +1385,9 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                 <button
                   type="button"
                   onClick={() => setModal("discord")}
-                  className="glass group flex items-start gap-4 rounded-xl p-4 text-left transition hover:border-accent hover:bg-surface-raised hover:-translate-y-0.5 cursor-pointer border border-line"
+                  className="group flex items-start gap-4 rounded-xl border border-line bg-surface-sunken p-4 text-left transition hover:border-accent hover:bg-surface-raised"
                 >
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#5865F2]/15 text-[#5865F2] group-hover:bg-[#5865F2] group-hover:text-white transition">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-info-surface text-info transition group-hover:bg-info group-hover:text-canvas">
                     <RadioTower size={22} />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -1224,7 +1396,7 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                         Discord Community
                       </h3>
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-0.5 text-[11px] font-semibold text-accent border border-accent/30">
-                        <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                        <Check size={12} />
                         Active
                       </span>
                     </div>
@@ -1305,9 +1477,11 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
             </section>
           ) : (
             <section
+              ref={connectionDialogRef}
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-title"
+              tabIndex={-1}
               className="glass w-full max-w-lg rounded-2xl p-6"
               onClick={(e) => e.stopPropagation()}
             >
@@ -1328,7 +1502,11 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                       : `Add ${modal} connection`}
                   </h2>
                 </div>
-                <button aria-label="Close dialog" onClick={() => setModal(null)}>
+                <button
+                  aria-label="Close dialog"
+                  className="grid size-11 place-items-center rounded-lg text-muted transition hover:bg-surface-raised hover:text-text"
+                  onClick={() => setModal(null)}
+                >
                   <X size={19} />
                 </button>
               </div>
@@ -1396,10 +1574,12 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
             }}
           >
             <section
+              ref={previewDialogRef}
               role="dialog"
               aria-modal="true"
               aria-labelledby="preview-modal-title"
-              className={`glass flex flex-col overflow-hidden border border-line shadow-2xl transition-all duration-150 ${
+              tabIndex={-1}
+              className={`flex flex-col overflow-hidden border border-line bg-surface transition-all duration-150 ${
                 isFullscreen
                   ? "h-screen w-screen rounded-none max-w-none max-h-none"
                   : "max-h-[95vh] w-full max-w-5xl rounded-2xl"
@@ -1435,7 +1615,7 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                     type="button"
                     title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
                     aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-                    className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-surface-raised hover:text-text transition"
+                    className="grid size-11 place-items-center rounded-lg text-muted transition hover:bg-surface-raised hover:text-text"
                     onClick={() => setIsFullscreen(!isFullscreen)}
                   >
                     {isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
@@ -1443,7 +1623,7 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                   <button
                     type="button"
                     aria-label="Close preview"
-                    className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-surface-raised hover:text-text transition"
+                    className="grid size-11 place-items-center rounded-lg text-muted transition hover:bg-surface-raised hover:text-text"
                     onClick={() => {
                       setIsFullscreen(false);
                       setPreviewWorkspace(null);
@@ -1456,7 +1636,7 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
 
               <div
                 ref={previewContainerRef}
-                className="relative flex-1 w-full flex items-center justify-center overflow-hidden bg-[#0d0f12]"
+                className="relative flex-1 w-full flex items-center justify-center overflow-hidden bg-surface-sunken"
                 style={{
                   height: isFullscreen ? "calc(100vh - 105px)" : "560px",
                   minHeight: isFullscreen ? "calc(100vh - 105px)" : "420px",
@@ -1475,7 +1655,6 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                       height: `${scaledH}px`,
                       position: "relative",
                       overflow: "hidden",
-                      boxShadow: "0 12px 48px rgba(0,0,0,0.85)",
                     }}
                   >
                     <iframe
@@ -1513,7 +1692,7 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
               <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line bg-surface/60 px-5 py-3 text-xs text-muted">
                 {resolvedUrl && resolvedUrl !== previewWorkspace.webglUrl ? (
                   <div className="flex items-center gap-2 text-accent font-medium">
-                    <span className="inline-block h-2 w-2 rounded-full bg-accent animate-pulse" />
+                    <Check size={13} />
                     <span>Auto-scaled to fit ({scaledW}×{scaledH}) — zero scrollbars</span>
                   </div>
                 ) : (
@@ -1591,15 +1770,15 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                     }
                     className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold transition border cursor-pointer ${
                       c.status === "paused"
-                        ? "bg-amber-500/15 border-amber-500/30 text-amber-400 hover:bg-amber-500/25"
-                        : "bg-emerald-500/15 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/25"
+                        ? "border-medium/30 bg-medium-surface text-medium hover:border-medium/50"
+                        : "border-low/30 bg-low-surface text-low hover:border-low/50"
                     }`}
                   >
                     <span
                       className={`h-1.5 w-1.5 rounded-full ${
                         c.status === "paused"
-                          ? "bg-amber-400"
-                          : "bg-emerald-400 animate-pulse"
+                          ? "bg-medium"
+                          : "bg-low"
                       }`}
                     />
                     {c.status === "paused"
@@ -1669,4 +1848,16 @@ function MetricsView({ metrics }: { metrics: Metrics }) {
       ))}
     </div>
   );
+}
+
+function averageDropoff(metrics: Metrics) {
+  const targets = Object.values(metrics.targets);
+  if (!targets.length) return 0;
+  return targets.reduce((total, target) => total + target.dropoff, 0) / targets.length;
+}
+
+function percentChange(current: number, baseline: number) {
+  if (baseline === 0) return current === 0 ? "0%" : "new";
+  const change = ((current - baseline) / baseline) * 100;
+  return `${change > 0 ? "+" : ""}${change.toFixed(1)}%`;
 }
