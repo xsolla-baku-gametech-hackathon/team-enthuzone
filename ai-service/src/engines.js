@@ -45,3 +45,4 @@ function correlate(issue, metrics) {
       reason: ["No matching target telemetry"],
     };
   const reason = [];
+  if (normalize(issue.type, issue.target).type === "difficulty") {
