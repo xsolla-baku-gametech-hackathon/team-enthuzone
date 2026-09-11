@@ -29,3 +29,4 @@ npm start
 Və ya inkişaf (hot-reload) rejimində:
 ```bash
 npm run dev
+```
