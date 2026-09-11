@@ -132,3 +132,7 @@ button:disabled {
   height: 55vw;
   border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
   border-radius: 50%;
+  transform: translate(40%, 15%);
+  animation: orbit 18s ease-in-out infinite alternate;
+}
+@keyframes orbit {
