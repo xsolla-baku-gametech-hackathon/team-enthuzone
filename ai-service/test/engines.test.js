@@ -14,3 +14,4 @@ test("normalization unifies aliases, roman numerals and whitespace", () => {
 test("correlation uses only matching target and category", () => {
   const metrics = {
     targets: {
+      "level 5": {
