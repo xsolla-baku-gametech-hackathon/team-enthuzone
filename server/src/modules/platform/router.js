@@ -436,3 +436,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
     const c = await Connection.create({
       ...input,
       workspaceId: req.params.id,
+      ...(key ? { keyHash: hash(key) } : {}),
+    });
+    res
+      .status(201)
+      .json({ id: c.id, name: c.name, type: c.type, status: c.status || "active", gameUrl: c.gameUrl, key });
+  });
+  router.patch(
+    "/workspaces/:id/connections/:connectionId/toggle",
+    async (req, res) => {
+      await owned(req);
+      const c = await Connection.findOne({
+        id: req.params.connectionId,
+        workspaceId: req.params.id,
