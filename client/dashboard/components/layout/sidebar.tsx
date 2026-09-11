@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Activity,
@@ -52,12 +53,12 @@ export function Sidebar() {
       <aside data-dialog-background className="sticky top-0 z-30 flex min-w-0 max-w-full flex-col border-b border-line bg-sidebar/95 backdrop-blur-md lg:hidden">
         <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <span className="grid size-9 place-items-center rounded-control bg-accent text-canvas">
-              <RadioTower size={19} strokeWidth={2.4} />
+            <span className="relative grid size-9 place-items-center overflow-hidden rounded-full border border-line bg-surface-raised shadow-xs">
+              <Image src="/logo.png" alt="GoBuster Mascot Logo" width={32} height={32} className="object-contain" priority />
             </span>
             <div>
-              <div className="text-sm font-bold text-ink">Player Issue</div>
-              <div className="text-xs text-muted">Intelligence</div>
+              <div className="text-sm font-bold text-ink tracking-tight">GoBuster</div>
+              <div className="text-[11px] font-medium text-muted">Issue Intelligence</div>
             </div>
           </div>
         </div>
@@ -93,14 +94,14 @@ export function Sidebar() {
         aria-label="Sidebar navigation"
       >
         <div className="flex h-20 shrink-0 items-center gap-3 px-5 border-b border-line/50">
-          <span className="grid size-10 place-items-center rounded-control bg-accent text-canvas">
-            <RadioTower size={20} strokeWidth={2.4} />
+          <span className="relative grid size-11 place-items-center overflow-hidden rounded-full border border-line/80 bg-surface-raised shadow-sm">
+            <Image src="/logo.png" alt="GoBuster Mascot Logo" width={38} height={38} className="object-contain" priority />
           </span>
           <div>
-            <div className="text-sm font-bold text-ink tracking-tight">
-              Player Issue
+            <div className="text-base font-bold text-ink tracking-tight">
+              GoBuster
             </div>
-            <div className="text-xs text-muted">Intelligence</div>
+            <div className="text-xs font-medium text-muted">Issue Intelligence</div>
           </div>
         </div>
 
