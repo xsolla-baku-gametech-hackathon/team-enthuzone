@@ -7,18 +7,13 @@ import {
   Pause,
   RotateCcw,
   Bot,
-  Sparkles,
-  Zap,
   Activity,
   Maximize2,
   Minimize2,
-  Volume2,
-  VolumeX,
   ShieldAlert,
   Sliders,
   Send,
   CheckCircle2,
-  Crosshair,
   Gamepad2,
   ChevronUp,
   ChevronDown,
@@ -26,6 +21,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { request } from "@/lib/api/platform";
+import { useDialogFocus } from "./use-dialog-focus";
 
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 type Point = { x: number; y: number };
@@ -47,6 +43,7 @@ export function BotLivePlaytestModal({
   onClose,
   onTelemetrySynced,
 }: BotLivePlaytestModalProps) {
+  const dialogRef = useDialogFocus<HTMLElement>(true, onClose);
   // Game & Mode states
   const [mode, setMode] = useState<"snake" | "iframe">(gameUrl ? "snake" : "snake");
   const [level, setLevel] = useState<1 | 3 | 5>(1);
@@ -54,7 +51,6 @@ export function BotLivePlaytestModal({
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isAiActive, setIsAiActive] = useState<boolean>(true);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
 
   // Game Engine state
   const [snake, setSnake] = useState<Point[]>([
@@ -74,7 +70,6 @@ export function BotLivePlaytestModal({
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 250, y: 250 });
   const [cursorClicking, setCursorClicking] = useState<boolean>(false);
   const [cursorAction, setCursorAction] = useState<string>("Scanning...");
-  const [lastActionDir, setLastActionDir] = useState<Direction | null>(null);
 
   // Telemetry & Neural Logs
   const [logs, setLogs] = useState<Array<{ id: string; time: string; type: "ai" | "telemetry" | "game" | "alert"; text: string }>>([
@@ -106,14 +101,16 @@ export function BotLivePlaytestModal({
   const speedRef = useRef(speed);
   const isGameOverRef = useRef(isGameOver);
 
-  snakeRef.current = snake;
-  directionRef.current = direction;
-  foodRef.current = food;
-  obstaclesRef.current = obstacles;
-  isPlayingRef.current = isPlaying;
-  isAiActiveRef.current = isAiActive;
-  speedRef.current = speed;
-  isGameOverRef.current = isGameOver;
+  useEffect(() => {
+    snakeRef.current = snake;
+    directionRef.current = direction;
+    foodRef.current = food;
+    obstaclesRef.current = obstacles;
+    isPlayingRef.current = isPlaying;
+    isAiActiveRef.current = isAiActive;
+    speedRef.current = speed;
+    isGameOverRef.current = isGameOver;
+  }, [snake, direction, food, obstacles, isPlaying, isAiActive, speed, isGameOver]);
 
   const addLog = useCallback((type: "ai" | "telemetry" | "game" | "alert", text: string) => {
     const now = new Date();
@@ -187,14 +184,14 @@ export function BotLivePlaytestModal({
     setMovesCount(0);
     setIsGameOver(false);
     setIsPlaying(true);
-    addLog("game", "🎮 New AI Playtest session launched. Grid initialized.");
+    addLog("game", "New AI playtest session launched. Grid initialized.");
   }, [addLog, initLevelObstacles, level, spawnFood]);
 
   // Handle Level Switch
   const handleLevelChange = (newLevel: 1 | 3 | 5) => {
     setLevel(newLevel);
     initLevelObstacles(newLevel);
-    addLog("alert", `⚠️ Difficulty adjusted: Level ${newLevel} (${newLevel === 5 ? "High Dropout Zone" : newLevel === 3 ? "Medium Obstacles" : "Onboarding"})`);
+    addLog("alert", `Difficulty adjusted: Level ${newLevel} (${newLevel === 5 ? "High Dropout Zone" : newLevel === 3 ? "Medium Obstacles" : "Onboarding"})`);
     resetGame();
   };
 
@@ -308,7 +305,6 @@ export function BotLivePlaytestModal({
         y: Math.max(20, Math.min(rect.height - 40, headScreenY + targetOffsetY * 0.8)),
       });
       setCursorAction(`Steering Snake [${targetDir}]`);
-      setLastActionDir(targetDir);
 
       // Perform Click Simulation (Visual Pulse & Waves)
       setCursorClicking(true);
@@ -354,7 +350,7 @@ export function BotLivePlaytestModal({
       if (nextX < 0 || nextX >= GRID_SIZE || nextY < 0 || nextY >= GRID_SIZE) {
         setIsGameOver(true);
         setIsPlaying(false);
-        addLog("alert", `💥 Game Over! Collision with perimeter barrier at (${nextX}, ${nextY}). Final Score: ${score}`);
+        addLog("alert", `Game over: collision with perimeter barrier at (${nextX}, ${nextY}). Final score: ${score}`);
         return;
       }
 
@@ -362,7 +358,7 @@ export function BotLivePlaytestModal({
       if (currentObs.some((o) => o.x === nextX && o.y === nextY)) {
         setIsGameOver(true);
         setIsPlaying(false);
-        addLog("alert", `💥 Game Over! AI collided with obstacle at Level ${level}. Telemetry registered difficulty drop-off.`);
+        addLog("alert", `Game over: AI collided with an obstacle at Level ${level}. Telemetry registered difficulty drop-off.`);
         return;
       }
 
@@ -370,7 +366,7 @@ export function BotLivePlaytestModal({
       if (currentSnake.slice(0, -1).some((s) => s.x === nextX && s.y === nextY)) {
         setIsGameOver(true);
         setIsPlaying(false);
-        addLog("alert", `💥 Game Over! Tail self-collision. Safe navigation route exhausted.`);
+        addLog("alert", "Game over: tail self-collision. Safe navigation route exhausted.");
         return;
       }
 
@@ -386,7 +382,7 @@ export function BotLivePlaytestModal({
 
         const nextFood = spawnFood(newSnake, currentObs);
         setFood(nextFood);
-        addLog("game", `🍎 Food consumed! Score: ${newScore}. Length: ${newSnake.length}. Telemetry: 'target_reached'.`);
+        addLog("game", `Target reached. Score: ${newScore}. Length: ${newSnake.length}. Telemetry: 'target_reached'.`);
       } else {
         newSnake.pop(); // Remove tail
       }
@@ -396,7 +392,7 @@ export function BotLivePlaytestModal({
 
       // Random telemetry pulse log periodically
       if (Math.random() < 0.08) {
-        addLog("telemetry", `📡 Ingesting event: 'attempt', duration: ${Math.floor(movesCount * 0.2)}s, score: ${score}`);
+        addLog("telemetry", `Ingesting event: 'attempt', duration: ${Math.floor(movesCount * 0.2)}s, score: ${score}`);
       }
     }, intervalMs);
 
@@ -427,12 +423,24 @@ export function BotLivePlaytestModal({
     const height = canvas.height;
     const cellSize = width / GRID_SIZE;
 
+    const styles = getComputedStyle(canvas);
+    const color = (token: string) => styles.getPropertyValue(token).trim();
+    const surfaceSunken = color("--surface-sunken");
+    const line = color("--line");
+    const critical = color("--critical");
+    const criticalSurface = color("--critical-surface");
+    const medium = color("--medium");
+    const high = color("--high");
+    const accent = color("--accent");
+    const accentStrong = color("--accent-strong");
+
     // Background
-    ctx.fillStyle = "#090c10";
+    ctx.fillStyle = surfaceSunken;
     ctx.fillRect(0, 0, width, height);
 
     // Subtle Grid lines
-    ctx.strokeStyle = "rgba(52, 60, 70, 0.25)";
+    ctx.strokeStyle = line;
+    ctx.globalAlpha = 0.25;
     ctx.lineWidth = 1;
     for (let i = 0; i <= GRID_SIZE; i++) {
       ctx.beginPath();
@@ -445,41 +453,38 @@ export function BotLivePlaytestModal({
       ctx.lineTo(width, i * cellSize);
       ctx.stroke();
     }
+    ctx.globalAlpha = 1;
 
     // Draw Obstacles (Level 3 / 5)
     obstacles.forEach((obs) => {
-      ctx.fillStyle = "#e45b5b";
-      ctx.shadowColor = "rgba(228, 91, 91, 0.6)";
-      ctx.shadowBlur = 8;
+      ctx.fillStyle = critical;
       ctx.fillRect(obs.x * cellSize + 2, obs.y * cellSize + 2, cellSize - 4, cellSize - 4);
-      ctx.shadowBlur = 0;
-
       // Hazard stripe pattern
-      ctx.fillStyle = "#2d1215";
+      ctx.fillStyle = criticalSurface;
       ctx.fillRect(obs.x * cellSize + 6, obs.y * cellSize + 6, cellSize - 12, cellSize - 12);
     });
 
-    // Draw Food (Pulsing glowing orb)
+    // Draw the current objective with calibrated priority colors.
     const foodX = food.x * cellSize + cellSize / 2;
     const foodY = food.y * cellSize + cellSize / 2;
     const foodRadius = cellSize * 0.38;
 
     ctx.save();
-    ctx.shadowColor = "#e0bd4f";
-    ctx.shadowBlur = 14;
     const grad = ctx.createRadialGradient(foodX, foodY, 2, foodX, foodY, foodRadius);
-    grad.addColorStop(0, "#fff5cc");
-    grad.addColorStop(0.4, "#e0bd4f");
-    grad.addColorStop(1, "#ed9840");
+    grad.addColorStop(0, medium);
+    grad.addColorStop(0.55, medium);
+    grad.addColorStop(1, high);
     ctx.fillStyle = grad;
     ctx.beginPath();
     ctx.arc(foodX, foodY, foodRadius, 0, Math.PI * 2);
     ctx.fill();
 
     // Subtle outer ring
-    ctx.strokeStyle = "rgba(255, 230, 100, 0.7)";
+    ctx.strokeStyle = medium;
+    ctx.globalAlpha = 0.7;
     ctx.lineWidth = 2;
     ctx.stroke();
+    ctx.globalAlpha = 1;
     ctx.restore();
 
     // Draw Snake
@@ -490,16 +495,14 @@ export function BotLivePlaytestModal({
       if (index === 0) {
         // Head
         ctx.save();
-        ctx.shadowColor = "#35b8a5";
-        ctx.shadowBlur = 12;
-        ctx.fillStyle = "#55d1bf";
+        ctx.fillStyle = accentStrong;
         ctx.beginPath();
         ctx.roundRect(segX + 2, segY + 2, cellSize - 4, cellSize - 4, 7);
         ctx.fill();
         ctx.restore();
 
         // Glowing visor / eyes based on direction
-        ctx.fillStyle = "#090c10";
+        ctx.fillStyle = surfaceSunken;
         const eyeSize = cellSize * 0.18;
         if (direction === "RIGHT") {
           ctx.fillRect(segX + cellSize - 7, segY + 5, eyeSize, eyeSize);
@@ -517,10 +520,12 @@ export function BotLivePlaytestModal({
       } else {
         // Body segments (Gradient fade)
         const alpha = Math.max(0.4, 1 - index / (snake.length + 6));
-        ctx.fillStyle = `rgba(53, 184, 165, ${alpha})`;
+        ctx.fillStyle = accent;
+        ctx.globalAlpha = alpha;
         ctx.beginPath();
         ctx.roundRect(segX + 3, segY + 3, cellSize - 6, cellSize - 6, 5);
         ctx.fill();
+        ctx.globalAlpha = 1;
       }
     });
   }, [snake, food, obstacles, direction, mode]);
@@ -534,12 +539,12 @@ export function BotLivePlaytestModal({
       await request(`/platform/workspaces/${workspaceId}/telemetry/mock`, {});
 
       setTelemetryNotice("Telemetry session synced to workspace!");
-      addLog("telemetry", `✅ Real-time telemetry batch verified and ingested into workspace.`);
+      addLog("telemetry", "Real-time telemetry batch verified and ingested into workspace.");
       if (onTelemetrySynced) onTelemetrySynced();
       setTimeout(() => setTelemetryNotice(""), 3500);
     } catch (err) {
       setTelemetryNotice("Failed to sync telemetry.");
-      addLog("alert", `❌ Telemetry sync error: ${(err as Error).message}`);
+      addLog("alert", `Telemetry sync error: ${(err as Error).message}`);
     } finally {
       setIsSendingTelemetry(false);
     }
@@ -577,9 +582,12 @@ export function BotLivePlaytestModal({
       onClick={onClose}
     >
       <section
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        className={`glass flex flex-col overflow-hidden border border-line shadow-2xl transition-all ${
+        aria-labelledby="playtest-dialog-title"
+        tabIndex={-1}
+        className={`flex flex-col overflow-hidden border border-line bg-surface transition-all ${
           isFullscreen
             ? "h-screen w-screen rounded-none max-w-none max-h-none"
             : "max-h-[95vh] w-full max-w-6xl rounded-2xl"
@@ -587,34 +595,34 @@ export function BotLivePlaytestModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-line px-5 py-3.5 bg-surface/90">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line bg-surface/90 px-4 py-3.5 sm:flex-nowrap sm:items-center sm:px-5">
+          <div className="flex min-w-0 items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/20 text-accent ring-1 ring-accent/30">
-              <Bot size={22} className="animate-pulse" />
+              <Bot size={22} />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-text">
+            <div className="min-w-0">
+              <div className="flex min-w-0 flex-wrap items-center gap-2">
+                <h2 id="playtest-dialog-title" className="truncate text-base font-bold text-text">
                   AI Autonomous Playtest Environment
                 </h2>
                 <span className="flex items-center gap-1.5 rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-semibold text-accent ring-1 ring-accent/30">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent animate-ping" />
+                  <Activity size={12} />
                   LIVE AUTOPILOT ACTIVE
                 </span>
               </div>
-              <p className="text-xs text-muted">
+              <p className="truncate text-xs text-muted">
                 Bot Target: <span className="font-semibold text-text">{botName}</span> | Model: BFS Heuristic Agent v2.4
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex w-full min-w-0 shrink-0 items-center justify-end gap-2 sm:w-auto">
             {gameUrl && (
-              <div className="flex rounded-lg bg-surface-sunken p-0.5 border border-line text-xs font-semibold">
+              <div className="mr-auto flex min-w-0 overflow-x-auto rounded-lg border border-line bg-surface-sunken p-0.5 text-xs font-semibold sm:mr-0">
                 <button
                   type="button"
                   onClick={() => setMode("snake")}
-                  className={`px-3 py-1.5 rounded-md transition ${
+                  className={`min-h-10 whitespace-nowrap rounded-md px-3 py-1.5 transition ${
                     mode === "snake" ? "bg-accent text-canvas" : "text-muted hover:text-text"
                   }`}
                 >
@@ -623,7 +631,7 @@ export function BotLivePlaytestModal({
                 <button
                   type="button"
                   onClick={() => setMode("iframe")}
-                  className={`px-3 py-1.5 rounded-md transition ${
+                  className={`min-h-10 whitespace-nowrap rounded-md px-3 py-1.5 transition ${
                     mode === "iframe" ? "bg-accent text-canvas" : "text-muted hover:text-text"
                   }`}
                 >
@@ -634,7 +642,7 @@ export function BotLivePlaytestModal({
 
             <button
               type="button"
-              className="rounded-lg p-2 text-muted hover:bg-surface-raised hover:text-text transition"
+              className="grid size-11 place-items-center rounded-lg text-muted transition hover:bg-surface-raised hover:text-text"
               onClick={() => setIsFullscreen(!isFullscreen)}
               title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
             >
@@ -642,7 +650,8 @@ export function BotLivePlaytestModal({
             </button>
             <button
               type="button"
-              className="rounded-lg p-2 text-muted hover:bg-surface-raised hover:text-text transition"
+              className="grid size-11 place-items-center rounded-lg text-muted transition hover:bg-surface-raised hover:text-text"
+              aria-label="Close playtest"
               onClick={onClose}
               title="Close"
             >
@@ -658,7 +667,7 @@ export function BotLivePlaytestModal({
             {mode === "snake" ? (
               <div
                 ref={gameAreaRef}
-                className="relative aspect-square w-full max-w-[480px] rounded-2xl border-2 border-line/80 bg-surface-sunken shadow-2xl overflow-hidden select-none"
+                className="relative aspect-square w-full max-w-[480px] overflow-hidden rounded-2xl border border-line bg-surface-sunken select-none"
               >
                 {/* 2D Canvas */}
                 <canvas
@@ -691,12 +700,11 @@ export function BotLivePlaytestModal({
                         viewBox="0 0 24 24"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="drop-shadow-[0_0_8px_rgba(53,184,165,0.9)]"
                       >
                         <path
                           d="M4 3L11 20L14 13L21 10L4 3Z"
-                          fill="#35b8a5"
-                          stroke="#ffffff"
+                          fill="var(--accent)"
+                          stroke="var(--text)"
                           strokeWidth="1.5"
                           strokeLinejoin="round"
                         />
@@ -704,9 +712,9 @@ export function BotLivePlaytestModal({
                     </div>
 
                     {/* AI Label Tag beside cursor */}
-                    <div className="absolute left-6 top-3 flex items-center gap-1 whitespace-nowrap rounded-md bg-canvas/90 px-2 py-0.5 text-[10px] font-mono font-bold text-accent shadow-lg border border-accent/40 backdrop-blur-sm">
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-                      🤖 {cursorAction}
+                    <div className="absolute left-6 top-3 flex items-center gap-1 whitespace-nowrap rounded-md border border-accent/40 bg-canvas/90 px-2 py-0.5 font-mono text-[10px] font-bold text-accent">
+                      <Bot size={11} />
+                      {cursorAction}
                     </div>
                   </div>
                 )}
@@ -769,15 +777,15 @@ export function BotLivePlaytestModal({
                     width="26"
                     height="26"
                     viewBox="0 0 24 24"
-                    fill="#35b8a5"
-                    stroke="#ffffff"
+                    fill="var(--accent)"
+                    stroke="var(--text)"
                     strokeWidth="1.5"
-                    className="drop-shadow-[0_0_8px_rgba(53,184,165,0.8)]"
                   >
                     <path d="M4 3L11 20L14 13L21 10L4 3Z" strokeLinejoin="round" />
                   </svg>
-                  <div className="absolute left-6 top-2 rounded bg-canvas/90 px-1.5 py-0.5 text-[10px] font-mono text-accent">
-                    🤖 AI Simulating Inputs
+                  <div className="absolute left-6 top-2 flex items-center gap-1 rounded bg-canvas/90 px-1.5 py-0.5 font-mono text-[10px] text-accent">
+                    <Bot size={11} />
+                    AI simulating inputs
                   </div>
                 </div>
               </div>
@@ -796,7 +804,7 @@ export function BotLivePlaytestModal({
                       triggerAiCursorAction("UP", snake[0]);
                     }}
                     className={`h-9 w-9 rounded-lg flex items-center justify-center transition ${
-                      direction === "UP" ? "bg-accent text-canvas font-bold shadow" : "bg-surface-sunken text-muted hover:text-text"
+                      direction === "UP" ? "bg-accent text-canvas font-bold" : "bg-surface-sunken text-muted hover:text-text"
                     }`}
                     title="Move Up"
                   >
@@ -811,7 +819,7 @@ export function BotLivePlaytestModal({
                       triggerAiCursorAction("LEFT", snake[0]);
                     }}
                     className={`h-9 w-9 rounded-lg flex items-center justify-center transition ${
-                      direction === "LEFT" ? "bg-accent text-canvas font-bold shadow" : "bg-surface-sunken text-muted hover:text-text"
+                      direction === "LEFT" ? "bg-accent text-canvas font-bold" : "bg-surface-sunken text-muted hover:text-text"
                     }`}
                     title="Move Left"
                   >
@@ -832,7 +840,7 @@ export function BotLivePlaytestModal({
                       triggerAiCursorAction("RIGHT", snake[0]);
                     }}
                     className={`h-9 w-9 rounded-lg flex items-center justify-center transition ${
-                      direction === "RIGHT" ? "bg-accent text-canvas font-bold shadow" : "bg-surface-sunken text-muted hover:text-text"
+                      direction === "RIGHT" ? "bg-accent text-canvas font-bold" : "bg-surface-sunken text-muted hover:text-text"
                     }`}
                     title="Move Right"
                   >
@@ -847,7 +855,7 @@ export function BotLivePlaytestModal({
                       triggerAiCursorAction("DOWN", snake[0]);
                     }}
                     className={`h-9 w-9 rounded-lg flex items-center justify-center transition ${
-                      direction === "DOWN" ? "bg-accent text-canvas font-bold shadow" : "bg-surface-sunken text-muted hover:text-text"
+                      direction === "DOWN" ? "bg-accent text-canvas font-bold" : "bg-surface-sunken text-muted hover:text-text"
                     }`}
                     title="Move Down"
                   >
@@ -862,7 +870,7 @@ export function BotLivePlaytestModal({
                     type="button"
                     onClick={() => {
                       setIsAiActive((a) => !a);
-                      addLog("ai", !isAiActive ? "🤖 AI Autopilot engaged." : "🎮 Manual keyboard control activated.");
+                      addLog("ai", !isAiActive ? "AI autopilot engaged." : "Manual keyboard control activated.");
                     }}
                     className={`px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2 border transition ${
                       isAiActive
@@ -893,17 +901,17 @@ export function BotLivePlaytestModal({
             <div className="grid grid-cols-3 gap-2">
               <div className="glass rounded-xl p-3 border border-line">
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-muted">Current Score</div>
-                <div className="text-xl font-bold text-accent mt-0.5">{score}</div>
+                <div className="mt-0.5 font-mono text-xl font-bold text-accent">{score}</div>
                 <div className="text-[10px] text-faint">Best: {highScore}</div>
               </div>
               <div className="glass rounded-xl p-3 border border-line">
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-muted">Decision Latency</div>
-                <div className="text-xl font-bold text-text mt-0.5">14<span className="text-xs text-muted">ms</span></div>
+                <div className="mt-0.5 font-mono text-xl font-bold text-text">14<span className="text-xs text-muted">ms</span></div>
                 <div className="text-[10px] text-accent">60 FPS Loop</div>
               </div>
               <div className="glass rounded-xl p-3 border border-line">
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-muted">AI Confidence</div>
-                <div className="text-xl font-bold text-low mt-0.5">99.4%</div>
+                <div className="mt-0.5 font-mono text-xl font-bold text-low">99.4%</div>
                 <div className="text-[10px] text-muted">Path Solved</div>
               </div>
             </div>
@@ -930,7 +938,7 @@ export function BotLivePlaytestModal({
                       type="button"
                       onClick={() => {
                         setSpeed(s);
-                        addLog("ai", `⚡ Simulation speed set to ${s}x.`);
+                        addLog("ai", `Simulation speed set to ${s}x.`);
                       }}
                       className={`py-1 rounded text-xs font-semibold transition ${
                         speed === s
@@ -990,10 +998,10 @@ export function BotLivePlaytestModal({
                 {logs.map((item) => (
                   <div key={item.id} className="leading-relaxed break-words">
                     <span className="text-faint mr-1.5">[{item.time}]</span>
-                    {item.type === "ai" && <span className="text-accent font-semibold mr-1">🤖 [AI]</span>}
-                    {item.type === "telemetry" && <span className="text-info font-semibold mr-1">📡 [INGEST]</span>}
-                    {item.type === "alert" && <span className="text-critical font-semibold mr-1">⚠️ [ALERT]</span>}
-                    {item.type === "game" && <span className="text-medium font-semibold mr-1">🎮 [GAME]</span>}
+                    {item.type === "ai" && <span className="mr-1 inline-flex items-center gap-1 font-semibold text-accent"><Bot size={11} />[AI]</span>}
+                    {item.type === "telemetry" && <span className="mr-1 inline-flex items-center gap-1 font-semibold text-info"><Activity size={11} />[INGEST]</span>}
+                    {item.type === "alert" && <span className="mr-1 inline-flex items-center gap-1 font-semibold text-critical"><ShieldAlert size={11} />[ALERT]</span>}
+                    {item.type === "game" && <span className="mr-1 inline-flex items-center gap-1 font-semibold text-medium"><Gamepad2 size={11} />[GAME]</span>}
                     <span className={item.type === "alert" ? "text-critical" : "text-text"}>
                       {item.text}
                     </span>
