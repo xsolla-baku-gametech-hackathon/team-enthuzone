@@ -857,3 +857,27 @@ export function BotLivePlaytestModal({
                 </div>
 
                 {/* Primary Actions & Autopilot Switch */}
+                <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAiActive((a) => !a);
+                      addLog("ai", !isAiActive ? "🤖 AI Autopilot engaged." : "🎮 Manual keyboard control activated.");
+                    }}
+                    className={`px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2 border transition ${
+                      isAiActive
+                        ? "bg-accent/15 border-accent text-accent"
+                        : "bg-surface border-line text-muted hover:text-text"
+                    }`}
+                  >
+                    <Bot size={15} />
+                    {isAiActive ? "AI Autopilot: ON" : "AI Autopilot: OFF (Manual)"}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={resetGame}
+                    className="secondary text-xs py-2 px-3 flex items-center gap-1.5"
+                  >
+                    <RotateCcw size={14} />
+                    Reset Playfield
