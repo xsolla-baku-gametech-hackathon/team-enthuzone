@@ -84,4 +84,10 @@ function createApp(options = {}) {
     app.use('/api/telemetry', container.telemetry.router);
   }
 
-  app.use(notFoundHandler);
+  app.use(notFoundHandler);
+  app.use(errorHandler);
+  app.locals.container = container;
+  return app;
+}
+
+module.exports = { createApp, createContainer };
