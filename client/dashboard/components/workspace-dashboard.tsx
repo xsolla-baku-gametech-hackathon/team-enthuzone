@@ -934,3 +934,26 @@ export function WorkspaceDashboard({
                 className="rounded-lg p-1.5 text-muted hover:bg-surface-raised hover:text-text transition"
                 onClick={() => setSecret(null)}
               >
+                <X size={19} />
+              </button>
+            </div>
+
+            <div className="mt-5 space-y-4">
+              {/* TELEMETRY SPECIFIC UI */}
+              {secret.type === "telemetry" ? (
+                <>
+                  {/* 1. Telemetry API Key */}
+                  <div>
+                    <label className="text-xs font-semibold uppercase tracking-wider text-muted mb-1.5 block">
+                      Telemetry API Key (Pass in "x-api-key" Header)
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <code className="flex-1 font-mono text-xs bg-surface-sunken border border-line rounded-lg p-3 break-all text-accent select-all">
+                        {secret.key}
+                      </code>
+                      <button
+                        type="button"
+                        className="secondary shrink-0 px-3 py-2.5 text-xs flex items-center gap-1.5"
+                        onClick={() => {
+                          navigator.clipboard.writeText(secret.key);
+                          setNotice("API Key copied!");
