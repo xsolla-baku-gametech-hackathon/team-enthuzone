@@ -787,3 +787,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
     const metrics = aggregate(events);
     await Evidence.updateOne(filter, { $set: { metrics } }, { upsert: true });
     const issues = await rankIssues(feedback, clusters, metrics);
+    res.json({
+      workspace,
+      connections,
+      feedback: feedback.slice(0, 100),
+      feedbackTotal: feedback.length,
+      issues: issues.sort((a, b) => b.priority.score - a.priority.score),
+      metrics,
+      builds: [...new Set(events.map((e) => e.build))].map((build) => ({
+        build,
+        ...aggregate(events.filter((e) => e.build === build)),
+      })),
+    });
+  });
