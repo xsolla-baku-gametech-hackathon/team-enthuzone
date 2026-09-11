@@ -104,3 +104,4 @@ bot.on("messageCreate", (message) => {
   // Ignore bot messages, system messages, messages in other channels, or empty content
   if (
     message.author.bot ||
+    message.channelId !== config.DISCORD_CHANNEL_ID ||
