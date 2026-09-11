@@ -549,3 +549,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
 
     // Scenario 3: Level 2 (Boss Encounter, 25% Dropoff, 65% Completion)
     for (let i = 1; i <= 20; i++) {
+      const pid = `player_l2_${i}`;
+      const sid = `sess_l2_${i}`;
+      const completed = i <= 13;
+      const quit = !completed && i <= 18;
+      const attempts = completed ? Math.floor(Math.random() * 3) + 2 : 5;
+      const duration = Math.floor(250 + Math.random() * 70);
+      addSession("level 2", pid, sid, attempts, completed, quit, duration);
+    }
+
+    await Event.bulkWrite(
+      mockEvents.map((e) => ({
+        updateOne: {
+          filter: { workspaceId, eventId: e.eventId },
