@@ -40,4 +40,6 @@ export interface FeedbackItem {
 
 export interface TopicCluster {
   id: string;
-  label: string;
+  label: string;
+  mentions: number;
+  growth: number;
