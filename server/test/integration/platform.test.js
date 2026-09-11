@@ -89,3 +89,21 @@ test(
     await request(app).get("/api/platform/workspaces").expect(401);
     await client
       .post(`/api/platform/workspaces/${w.id}/connections`)
+      .send({ name: "bad", type: "invalid" })
+      .expect(400);
+    const { body: c } = await client
+      .post(`/api/platform/workspaces/${w.id}/connections`)
+      .send({ name: "Game telemetry", type: "telemetry" })
+      .expect(201);
+    const stored = await models.Connection.findOne({ id: c.id }).select(
+      "+keyHash",
+    );
+    assert.notEqual(stored.keyHash, c.key);
+    const event = {
+      eventId: "e1",
+      playerId: "player1",
+      sessionId: "session1",
+      target: "level 5",
+      eventType: "quit",
+      duration: 120,
+      build: "v1",
