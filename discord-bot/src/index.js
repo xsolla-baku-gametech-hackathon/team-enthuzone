@@ -118,3 +118,4 @@ bot.on("messageCreate", (message) => {
     .then(() => relay(message))
     .catch((err) => {
       console.error("[Queue Error]:", err.message);
+    });
