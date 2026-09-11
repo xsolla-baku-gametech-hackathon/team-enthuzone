@@ -1559,3 +1559,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
           .filter((c) => c.type === type)
           .map((c) => (
             <div
+              key={c.id}
+              className="flex items-center justify-between gap-3 rounded-xl bg-surface p-4 border border-line/60 hover:border-line transition"
+            >
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="text-sm font-medium truncate">{c.name}</span>
+                {c.type === "telemetry" && (
+                  <button
+                    type="button"
+                    disabled={busy}
+                    title={
+                      c.status === "paused"
+                        ? "Ingestion paused (Click to resume without changing token)"
+                        : "Ingestion active (Click to pause without changing token)"
+                    }
+                    onClick={() =>
+                      action(async () => {
+                        await request(
+                          `/platform/workspaces/${selected}/connections/${c.id}/toggle`,
+                          {},
+                          "PATCH",
+                        );
+                        setNotice(
