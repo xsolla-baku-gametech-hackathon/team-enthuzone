@@ -27,4 +27,8 @@ const env = Object.freeze({
   mongodbUri: parsed.MONGODB_URI,
   corsOrigins: parsed.CORS_ORIGINS === '*'
     ? '*'
-    : parsed.CORS_ORIGINS.split(',').map((origin) => origin.trim()).filter(Boolean),
+    : parsed.CORS_ORIGINS.split(',').map((origin) => origin.trim()).filter(Boolean),
+  httpBodyLimit: parsed.HTTP_BODY_LIMIT,
+  jwtSecret: parsed.JWT_SECRET || 'development-only-secret-change-me-now',
+  jwtExpiresIn: parsed.JWT_EXPIRES_IN,
+  passwordHashRounds: parsed.PASSWORD_HASH_ROUNDS,
