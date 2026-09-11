@@ -17,3 +17,4 @@ test("correlation uses only matching target and category", () => {
       "level 5": {
         sessions: 10,
         dropoff: 41,
+        avg_attempts: 6.8,
