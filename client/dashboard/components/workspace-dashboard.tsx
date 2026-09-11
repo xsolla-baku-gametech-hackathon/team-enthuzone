@@ -1291,3 +1291,26 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                   </div>
                 </div>
               </div>
+
+              <div className="mt-6 flex items-center justify-between border-t border-line/60 pt-4 text-xs text-faint">
+                <span>Discord integration is ready for streaming.</span>
+                <button
+                  type="button"
+                  className="secondary text-xs py-1.5 px-3"
+                  onClick={() => setModal(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </section>
+          ) : (
+            <section
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-title"
+              className="glass w-full max-w-lg rounded-2xl p-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between">
+                <div>
+                  {modal === "discord" && (
