@@ -700,3 +700,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
         });
 
         const failed =
+          isHighDropoff || (isDifficultyOrCrash && Math.random() < 0.75);
+        if (failed) {
+          botDeaths++;
+          botSessionEvents.push({
+            workspaceId,
+            connectionId: "ai-player-bot",
+            eventId: `bot-run-${issue.id}-${r}-att`,
+            playerId: "ai-player-bot",
+            sessionId: sessId,
+            target: issue.target,
+            eventType: "attempt",
+            duration: 35,
