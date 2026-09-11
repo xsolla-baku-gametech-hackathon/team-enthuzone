@@ -1,4 +1,6 @@
 import { Headphones, MessageCircle, MessagesSquare, Store } from "lucide-react";
 import type { FeedbackSource } from "@/lib/types";
 
-const icons = { STEAM: Store, DISCORD: MessagesSquare, REDDIT: MessageCircle, SUPPORT: Headphones };
+const icons = { STEAM: Store, DISCORD: MessagesSquare, REDDIT: MessageCircle, SUPPORT: Headphones };
+
+export function FeedbackSourceIcon({ source }: { source: FeedbackSource }) {
