@@ -22,4 +22,10 @@ function createContainer(options = {}) {
     userRepository,
     transactionManager,
     config: options.authConfig || env,
+  });
+  const feedback = createFeedbackModule({
+    repository: options.feedbackRepository || new MemoryFeedbackRepository(),
+  });
+  const telemetry = createTelemetryModule({
+    repository: options.telemetryRepository || new MemoryTelemetryRepository(),
   });
