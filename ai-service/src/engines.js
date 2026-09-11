@@ -41,3 +41,4 @@ function correlate(issue, metrics) {
   if (!m || !m.sessions)
     return {
       supported: false,
+      score: 0,
