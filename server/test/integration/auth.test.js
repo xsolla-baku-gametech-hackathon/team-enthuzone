@@ -57,4 +57,16 @@ test('registration rejects duplicate email and invalid requests', async () => {
     organizationName: 'Another Studio',
     email: 'JOHN@DARKFRONT.COM',
   }).expect(409);
-  assert.equal(duplicate.body.error.code, 'CONFLICT');
+  assert.equal(duplicate.body.error.code, 'CONFLICT');
+  assert.equal((await context.organizationRepository.findAll()).length, 1);
+
+  const invalid = await request(context.app).post('/api/auth/register').send({
+    organizationName: '', name: '', email: 'invalid', password: 'short',
+  }).expect(400);
+  assert.equal(invalid.body.error.code, 'VALIDATION_ERROR');
+});
+
+test('login succeeds and unknown email and wrong password share a generic error', async () => {
+  const context = testContext();
+  await register(context);
+  const loggedIn = await request(context.app).post('/api/auth/login').send({
