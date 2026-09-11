@@ -70,3 +70,4 @@ async function generate(prompt, responseJsonSchema) {
       if (!response.ok) {
         const e = new Error(`GEMINI_HTTP_${response.status}`);
         e.retryable = response.status === 429 || response.status >= 500;
+        throw e;
