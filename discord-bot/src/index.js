@@ -28,3 +28,4 @@ try {
     err.issues.forEach((issue) => {
       console.error(`   👉 ${issue.path.join(".")}: ${issue.message}`);
     });
+  }
