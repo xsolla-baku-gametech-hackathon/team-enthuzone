@@ -145,3 +145,27 @@ export function BotLivePlaytestModal({
         obs.push({ x: 19 - i, y: 14 });
       }
     } else if (lvl === 5) {
+      // Challenging maze walls mimicking Level 5 difficulty
+      for (let y = 3; y <= 8; y++) obs.push({ x: 5, y });
+      for (let y = 11; y <= 16; y++) obs.push({ x: 14, y });
+      for (let x = 8; x <= 12; x++) obs.push({ x, y: 10 });
+    }
+    setObstacles(obs);
+  }, []);
+
+  // Respawn Food avoiding snake & obstacles
+  const spawnFood = useCallback((currentSnake: Point[], currentObstacles: Point[]): Point => {
+    let newFood: Point;
+    let collision: boolean;
+    let attempts = 0;
+    do {
+      newFood = {
+        x: Math.floor(Math.random() * GRID_SIZE),
+        y: Math.floor(Math.random() * GRID_SIZE),
+      };
+      collision =
+        currentSnake.some((s) => s.x === newFood.x && s.y === newFood.y) ||
+        currentObstacles.some((o) => o.x === newFood.x && o.y === newFood.y);
+      attempts++;
+    } while (collision && attempts < 100);
+    return newFood;
