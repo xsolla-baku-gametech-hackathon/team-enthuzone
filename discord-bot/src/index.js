@@ -50,3 +50,4 @@ async function relay(message) {
 
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
+      const response = await fetch(targetUrl, {
