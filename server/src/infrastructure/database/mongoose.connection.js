@@ -8,4 +8,5 @@ async function connectMongo(uri) {
     maxPoolSize: 20,
     minPoolSize: 1,
   });
-  return mongoose.connection;
+  return mongoose.connection;
+}
