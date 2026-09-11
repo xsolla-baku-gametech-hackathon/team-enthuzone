@@ -955,3 +955,27 @@ export function BotLivePlaytestModal({
                     { lvl: 3, label: "Level 3 (Obstacles)" },
                     { lvl: 5, label: "Level 5 (Drop-off Zone)" },
                   ].map(({ lvl, label }) => (
+                    <button
+                      key={lvl}
+                      type="button"
+                      onClick={() => handleLevelChange(lvl as 1 | 3 | 5)}
+                      className={`py-1 px-2 rounded text-[11px] font-semibold transition truncate ${
+                        level === lvl
+                          ? "bg-accent text-canvas"
+                          : "bg-surface-sunken text-muted hover:text-text border border-line/40"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Neural Console & Telemetry Stream */}
+            <div className="glass flex-1 flex flex-col rounded-xl border border-line overflow-hidden">
+              <div className="flex items-center justify-between border-b border-line px-3.5 py-2 bg-surface-sunken/60">
+                <div className="flex items-center gap-1.5">
+                  <Activity size={13} className="text-accent" />
+                  <span className="text-xs font-mono font-semibold text-text">AI Telemetry Console</span>
+                </div>
