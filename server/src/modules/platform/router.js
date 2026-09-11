@@ -599,3 +599,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
   });
   router.post(
     "/workspaces/:id/feedback/:feedbackId/retry",
+    async (req, res) => {
+      await owned(req);
+      const f = await Feedback.findOne({
+        id: req.params.feedbackId,
+        workspaceId: req.params.id,
+      });
+      if (!f) throw new AppError("Feedback not found", 404);
+      await analyzeFeedback(f);
+      res.json(await Feedback.findOne({ id: f.id }).lean());
+    },
+  );
+  router.patch("/workspaces/:id/issues/:issueId", async (req, res) => {
+    await owned(req);
