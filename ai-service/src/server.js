@@ -47,3 +47,4 @@ function createApp() {
         JSON.stringify({
           event: "analysis_failed",
           code: e.message?.startsWith("GEMINI_")
+            ? e.message
