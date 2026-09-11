@@ -22,3 +22,28 @@ import {
   Gamepad2,
   ChevronUp,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { request } from "@/lib/api/platform";
+
+type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
+type Point = { x: number; y: number };
+
+interface BotLivePlaytestModalProps {
+  botName: string;
+  gameUrl?: string;
+  workspaceId: string;
+  onClose: () => void;
+  onTelemetrySynced?: () => void;
+}
+
+const GRID_SIZE = 20;
+
+export function BotLivePlaytestModal({
+  botName,
+  gameUrl,
+  workspaceId,
+  onClose,
+  onTelemetrySynced,
+}: BotLivePlaytestModalProps) {
