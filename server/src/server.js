@@ -24,4 +24,9 @@ async function bootstrap() {
 
   const shutdown = (signal) => {
     console.log(`${signal} received; closing HTTP server`);
-    server.close(async () => {
+    server.close(async () => {
+      await disconnectMongo();
+      process.exit(0);
+    });
+  };
+
