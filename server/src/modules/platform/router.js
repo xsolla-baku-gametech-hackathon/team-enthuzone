@@ -424,3 +424,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       .object({
         name,
         type: z.enum(["discord", "telemetry", "bot"]),
+        gameUrl: gameUrl.optional(),
+      })
+      .strict()
+      .parse(req.body);
+    if (input.type === "bot" && !input.gameUrl)
+      throw new AppError("Game URL required", 400);
+    if (input.gameUrl) await verifyGameUrl(input.gameUrl);
+    const key =
+      input.type === "bot" ? undefined : randomBytes(32).toString("base64url");
+    const c = await Connection.create({
+      ...input,
+      workspaceId: req.params.id,
