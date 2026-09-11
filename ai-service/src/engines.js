@@ -5,3 +5,4 @@ function normalize(type, target) {
     gameplay_balance: "difficulty",
     crash: "bug",
     lag: "performance",
+    usability: "ux",
