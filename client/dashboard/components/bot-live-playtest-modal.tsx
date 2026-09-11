@@ -96,3 +96,27 @@ export function BotLivePlaytestModal({
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const gameAreaRef = useRef<HTMLDivElement | null>(null);
+  const logBoxRef = useRef<HTMLDivElement | null>(null);
+  const snakeRef = useRef(snake);
+  const directionRef = useRef(direction);
+  const foodRef = useRef(food);
+  const obstaclesRef = useRef(obstacles);
+  const isPlayingRef = useRef(isPlaying);
+  const isAiActiveRef = useRef(isAiActive);
+  const speedRef = useRef(speed);
+  const isGameOverRef = useRef(isGameOver);
+
+  snakeRef.current = snake;
+  directionRef.current = direction;
+  foodRef.current = food;
+  obstaclesRef.current = obstacles;
+  isPlayingRef.current = isPlaying;
+  isAiActiveRef.current = isAiActive;
+  speedRef.current = speed;
+  isGameOverRef.current = isGameOver;
+
+  const addLog = useCallback((type: "ai" | "telemetry" | "game" | "alert", text: string) => {
+    const now = new Date();
+    const timeStr = `${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}.${String(Math.floor(now.getMilliseconds() / 100))}`;
+    setLogs((prev) => [
+      ...prev.slice(-30),
