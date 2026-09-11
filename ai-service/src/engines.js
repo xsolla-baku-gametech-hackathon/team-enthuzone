@@ -14,3 +14,4 @@ function normalize(type, target) {
       .replace(/[^\p{L}\p{N} ]/gu, " ")
       .replace(/\s+/g, " ")
       .trim();
+  const t = clean(type);
