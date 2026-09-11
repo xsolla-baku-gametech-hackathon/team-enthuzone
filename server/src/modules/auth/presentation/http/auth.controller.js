@@ -9,4 +9,7 @@ class AuthController {
       res.json(result);
     };
     this.me = async (req, res) => {
-      res.json(await authService.getCurrentUser(req.auth));
+      res.json(await authService.getCurrentUser(req.auth));
+    };
+  }
+}
