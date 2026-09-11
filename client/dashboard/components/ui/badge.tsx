@@ -10,4 +10,8 @@ const priorityTone: Record<Priority, string> = {
 const statusTone: Record<IssueStatus, string> = {
   OPEN: "bg-info-surface text-info",
   INVESTIGATING: "bg-high-surface text-high",
-  VALIDATING: "bg-medium-surface text-medium",
+  VALIDATING: "bg-medium-surface text-medium",
+  RESOLVED: "bg-low-surface text-low",
+};
+
+export function PriorityBadge({ priority }: { priority: Priority }) {
