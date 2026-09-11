@@ -140,3 +140,4 @@ bot.once("clientReady", async () => {
       console.log(`✅ [Target Channel Found]: #${channel.name} (Server: "${channel.guild?.name}")`);
     }
   } catch (err) {
+    console.warn(`⚠️  [Channel Access]: Bot "${config.DISCORD_CHANNEL_ID}" kanalını görə bilmir (${err.message}).`);
