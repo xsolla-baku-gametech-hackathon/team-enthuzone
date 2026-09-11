@@ -16,3 +16,9 @@ export function Topbar() {
           onClick={async () => {
             try {
               await request("/session/logout", {});
+              router.push("/login");
+              router.refresh();
+            } catch (e) {
+              setError((e as Error).message);
+            }
+          }}
