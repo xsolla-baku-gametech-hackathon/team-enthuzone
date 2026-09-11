@@ -125,3 +125,5 @@ bot.on("messageCreate", (message) => {
 bot.once("clientReady", async () => {
   console.log("\n=======================================================");
   console.log(`🤖 [Discord Bot Ready]: Logged in as ${bot.user.tag}`);
+
+  const guilds = bot.guilds.cache.map((g) => `"${g.name}"`);
