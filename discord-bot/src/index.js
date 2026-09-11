@@ -148,3 +148,4 @@ bot.once("clientReady", async () => {
   console.log(`🎯 [Source ID]: ${config.DISCORD_SOURCE_ID}`);
   console.log(`🚀 [Core API]: ${config.CORE_API_URL}`);
   console.log("Listening for new player feedback messages in real-time...");
+  console.log("=======================================================\n");
