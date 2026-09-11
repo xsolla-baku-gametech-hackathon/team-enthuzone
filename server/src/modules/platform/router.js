@@ -661,3 +661,17 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
         workspaceId,
       });
       if (!issue) throw new AppError("Issue not found", 404);
+
+      const allEvents = await Event.find({ workspaceId }).lean();
+      const metrics = aggregate(allEvents);
+      const targetKey = issue.target.toLowerCase().trim();
+      const targetMetrics = metrics.targets[targetKey] || {
+        dropoff: 0,
+        avg_attempts: 1,
+        completion_rate: 100,
+      };
+
+      const botSessionEvents = [];
+      const testRuns = 10;
+      let botDeaths = 0;
+      let botCompleted = 0;
