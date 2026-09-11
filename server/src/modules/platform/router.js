@@ -123,3 +123,15 @@ async function rankIssues(feedback, clusters, metrics) {
     let correlation = {
       supported: false,
       score: 0,
+      reason: ["AI service unavailable"],
+      available: false,
+    };
+    try {
+      correlation = {
+        ...(await aiCall("correlate", {
+          issue: { type: c.type, target: c.target },
+          metrics,
+        })),
+        available: true,
+      };
+    } catch {
