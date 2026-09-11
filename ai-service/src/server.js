@@ -48,3 +48,4 @@ function createApp() {
           event: "analysis_failed",
           code: e.message?.startsWith("GEMINI_")
             ? e.message
+            : "INVALID_AI_OUTPUT",
