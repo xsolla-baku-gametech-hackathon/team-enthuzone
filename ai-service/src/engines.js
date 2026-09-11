@@ -37,3 +37,4 @@ function normalize(type, target) {
 }
 function correlate(issue, metrics) {
   const key = normalize(issue.type, issue.target).target;
+  const m = metrics.targets?.[key];
