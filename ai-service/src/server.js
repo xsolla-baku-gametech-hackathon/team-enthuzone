@@ -23,3 +23,4 @@ function createApp() {
     if (active >= 4)
       return res.status(429).json({ error: "AI busy; retry later" });
     active++;
+    res.on("finish", () => active--);
