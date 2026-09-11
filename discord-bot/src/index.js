@@ -160,3 +160,4 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
   console.error("\n❌ [Discord Login Failed]: Could not connect to Discord.");
   console.error(`   Reason: ${err.message}`);
   if (err.message.includes("disallowed intents")) {
+    console.error("\n⚠️  [ÇOX VACİB / REQUIRED ACTION]:");
