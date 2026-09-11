@@ -8,3 +8,8 @@ export function ThemeToggle() {
       onClick={() => {
         const next =
           document.documentElement.dataset.theme === "light" ? "dark" : "light";
+        document.documentElement.dataset.theme = next;
+        document.cookie = `theme=${next}; Path=/; Max-Age=31536000; SameSite=Lax`;
+      }}
+    >
+      <SunMoon size={18} />
