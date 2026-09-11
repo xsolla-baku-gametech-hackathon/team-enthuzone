@@ -30,3 +30,19 @@ async function checkPublicUrl(value, redirects = 0) {
       {
         method: "GET",
         headers: {
+          Range: "bytes=0-0",
+          "User-Agent": "PlayerIntelligence-LinkCheck/1.0",
+        },
+        lookup: (_h, _o, cb) =>
+          _o.all
+            ? cb(null, [address])
+            : cb(null, address.address, address.family),
+      },
+      (res) => {
+        const result = {
+          status: res.statusCode,
+          location: res.headers.location,
+        };
+        res.destroy();
+        resolve(result);
+      },
