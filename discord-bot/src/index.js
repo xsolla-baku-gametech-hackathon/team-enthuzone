@@ -137,3 +137,4 @@ bot.once("clientReady", async () => {
   try {
     const channel = await bot.channels.fetch(config.DISCORD_CHANNEL_ID);
     if (channel) {
+      console.log(`✅ [Target Channel Found]: #${channel.name} (Server: "${channel.guild?.name}")`);
