@@ -42,4 +42,10 @@ class AuthService {
         break;
       } catch (error) {
         if (error?.code === 'DUPLICATE_SLUG' && attempt < 2) continue;
-        if (error?.code === 'DUPLICATE_EMAIL') {
+        if (error?.code === 'DUPLICATE_EMAIL') {
+          throw new ConflictError('A user with this email already exists');
+        }
+        throw error;
+      }
+    }
+
