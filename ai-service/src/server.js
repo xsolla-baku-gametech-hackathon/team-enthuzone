@@ -53,3 +53,4 @@ function createApp() {
       );
       res.json({
         type: "Uncategorized",
+        target: "Unclassified",
