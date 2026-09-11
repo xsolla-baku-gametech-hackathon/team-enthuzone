@@ -28,3 +28,9 @@ export function Topbar() {
       </div>
       {error && (
         <p role="alert" className="text-sm text-critical">
+          {error}
+        </p>
+      )}
+    </header>
+  );
+}
