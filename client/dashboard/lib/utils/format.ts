@@ -3,4 +3,4 @@ export const signed = (value: number) => `${value > 0 ? "+" : ""}${value}%`;
 export const trendTone = (value: number, inverse = false) => {
   const bad = inverse ? value < 0 : value > 0;
   return bad ? "text-critical" : "text-low";
-};
+};
