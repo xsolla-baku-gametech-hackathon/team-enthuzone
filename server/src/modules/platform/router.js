@@ -336,3 +336,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       .object({
         surname: z.string().max(120),
         location: z.string().max(200),
+        businessDescription: z.string().max(2000),
+        theme: z.enum(["dark", "light"]).optional(),
+      })
+      .strict()
+      .parse(req.body);
+    res.json(
+      await Profile.findOneAndUpdate(
+        { orgId: req.auth.organizationId },
+        { $set: input },
+        { upsert: true, returnDocument: "after" },
+      ),
+    );
+  });
