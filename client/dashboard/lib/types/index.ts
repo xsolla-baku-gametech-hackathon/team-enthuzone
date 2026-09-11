@@ -4,4 +4,7 @@ export type FeedbackSource = "STEAM" | "DISCORD" | "REDDIT" | "SUPPORT";
 
 export interface TrendPoint {
   date: string;
-  feedback: number;
+  feedback: number;
+  telemetry: number;
+  build?: string;
+}
