@@ -186,3 +186,15 @@ async function refreshRecommendations(workspaceId) {
         { returnDocument: "after" },
       );
       if (!claimed) continue;
+      try {
+        const result = await aiCall("recommend", {
+          issue: {
+            type: issue.type,
+            target: issue.target,
+            summary: issue.summary,
+            priority: issue.priority,
+          },
+          evidence: metrics,
+        });
+        await Cluster.updateOne(
+          { id: issue.id },
