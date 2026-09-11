@@ -18,3 +18,5 @@ const configSchema = z.object({
     .min(1, "DISCORD_WEBHOOK_TOKEN cannot be empty"),
   CORE_API_URL: z.string().url().default("http://127.0.0.1:4000"),
 });
+
+let config;
