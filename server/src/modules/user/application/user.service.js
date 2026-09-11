@@ -6,4 +6,7 @@ class UserService {
   }
 
   findByEmail(email, transaction) {
-    return this.userRepository.findByEmail(normalizeEmail(email), transaction);
+    return this.userRepository.findByEmail(normalizeEmail(email), transaction);
+  }
+
+  findById(id, transaction) {
