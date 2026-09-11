@@ -61,4 +61,10 @@ class AuthService {
       throw new InvalidCredentialsError();
     }
     const organization = await this.organizationService.findById(user.organizationId);
-    if (!organization || organization.status !== 'ACTIVE') {
+    if (!organization || organization.status !== 'ACTIVE') {
+      throw new InvalidCredentialsError();
+    }
+    return this.#authResponse(user, organization);
+  }
+
+  async authenticate(token) {
