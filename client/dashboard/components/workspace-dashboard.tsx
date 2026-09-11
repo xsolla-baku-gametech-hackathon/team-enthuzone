@@ -421,3 +421,26 @@ export function WorkspaceDashboard({
                                 title={i.aiVerification.summary}
                                 className="inline-flex items-center gap-1.5 rounded-full bg-surface-raised border border-line px-2.5 py-1 text-xs font-medium text-muted"
                               >
+                                <Bot size={13} />
+                                <span>AI Bot: Could Not Reproduce</span>
+                              </span>
+                            ) : null}
+                          </div>
+                          <h3 className="mt-4 text-xl font-semibold capitalize">
+                            {i.target}
+                          </h3>
+                          <p className="mt-2 text-sm leading-6 text-muted">
+                            {i.summary}
+                          </p>
+                          <p className="mt-4 text-sm">
+                            {i.affectedUsers} unique reviewers · {i.count}{" "}
+                            mentions
+                          </p>
+                          <p className="mt-2 text-xs text-muted">
+                            Telemetry support:{" "}
+                            {Math.round(i.correlation.score * 100)}% ·{" "}
+                            {i.correlation.reason.join(" / ") ||
+                              "No supporting signals"}
+                          </p>
+                          <p className="mt-1 text-xs text-faint">
+                            Priority uses reviewer share. Revenue impact is
