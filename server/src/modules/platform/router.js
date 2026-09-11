@@ -286,3 +286,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
                 playerId: z.string().min(1).max(100),
                 sessionId: z.string().min(1).max(100),
                 target: z.string().trim().min(1).max(150),
+                eventType: z.enum([
+                  "start",
+                  "attempt",
+                  "complete",
+                  "quit",
+                  "session_end",
+                ]),
+                duration: z.number().min(0).max(86400).default(0),
+                build: z.string().max(100).default("unspecified"),
+              })
+              .strict(),
+          )
