@@ -10,3 +10,4 @@ Standalone Discord bot microservice that listens to feedback/bug report channels
 ```bash
 cd discord-bot
 npm install
+```
