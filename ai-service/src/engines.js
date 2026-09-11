@@ -48,9 +48,3 @@ function correlate(issue, metrics) {
   if (normalize(issue.type, issue.target).type === "difficulty") {
     if (m.dropoff >= 30) reason.push("High abandonment");
     if (m.avg_attempts >= 5) reason.push("High retries");
-    if (m.completion_rate <= 35) reason.push("Low completion");
-  }
-  const score = reason.length / 3;
-  return { supported: score >= 2 / 3, score, reason };
-}
-module.exports = { normalize, correlate };
