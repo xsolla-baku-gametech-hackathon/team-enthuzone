@@ -622,3 +622,25 @@ export function WorkspaceDashboard({
                       placeholder="Paste the player's feedback…"
                       aria-label="Player review"
                       required
+                      maxLength={6000}
+                    />
+                    <button
+                      className="primary justify-self-start"
+                      disabled={busy}
+                    >
+                      <MessageSquare size={16} />
+                      {busy ? "Analyzing…" : "Analyze feedback"}
+                    </button>
+                  </form>
+                  {detail.feedback.map((f) => (
+                    <article key={f.id} className="rounded-xl bg-surface p-5">
+                      <div className="flex justify-between gap-3">
+                        <span className="text-sm font-semibold">
+                          {f.author}
+                        </span>
+                        <span className="text-xs text-muted">
+                          {f.candidate?.authenticity || "Needs Review"}
+                        </span>
+                      </div>
+                      <p className="mt-3 whitespace-pre-wrap text-sm text-muted">
+                        {f.text}
