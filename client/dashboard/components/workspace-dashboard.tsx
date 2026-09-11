@@ -1046,3 +1046,25 @@ export function WorkspaceDashboard({
 {`POST /api/platform/ingest/telemetry
 Headers:
   Content-Type: application/json
+  x-api-key: ${secret.key}
+
+Body:
+{
+  "events": [
+    {
+      "eventId": "unique-event-id",
+      "playerId": "player-id-123",
+      "sessionId": "session-id-456",
+      "target": "level 1",
+      "eventType": "attempt",
+      "duration": 45,
+      "build": "1.0.0"
+    }
+  ]
+}`}
+                    </pre>
+
+                    <p className="text-[11px] text-faint">
+                      Allowed event types: <code className="text-accent font-mono">start</code>, <code className="text-accent font-mono">attempt</code>, <code className="text-accent font-mono">complete</code>, <code className="text-accent font-mono">quit</code>, <code className="text-accent font-mono">session_end</code>.
+                    </p>
+                  </div>
