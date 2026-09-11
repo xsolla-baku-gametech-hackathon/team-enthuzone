@@ -734,3 +734,27 @@ export function BotLivePlaytestModal({
                       <div className="h-8 w-px bg-line" />
                       <div>
                         <div className="text-xs text-muted">Level</div>
+                        <div className="text-lg font-bold text-medium">Lvl {level}</div>
+                      </div>
+                    </div>
+                    <div className="mt-5 flex gap-2">
+                      <button
+                        type="button"
+                        className="primary text-xs py-2 px-4 flex items-center gap-1.5"
+                        onClick={resetGame}
+                      >
+                        <RotateCcw size={15} />
+                        Rerun AI Playtest
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              /* External Iframe Game Mode */
+              <div className="relative aspect-video w-full max-w-[640px] rounded-2xl border border-line bg-surface-sunken overflow-hidden">
+                <iframe
+                  title={`${botName} live play`}
+                  src={gameUrl}
+                  className="h-full w-full border-0"
+                  sandbox="allow-scripts allow-pointer-lock"
