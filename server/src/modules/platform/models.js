@@ -71,3 +71,11 @@ const Event = model(
   {
     workspaceId: { type: String, index: true },
     connectionId: String,
+    eventId: String,
+    playerId: String,
+    sessionId: String,
+    target: String,
+    eventType: String,
+    duration: Number,
+    build: String,
+  },
