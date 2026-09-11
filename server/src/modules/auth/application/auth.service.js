@@ -54,4 +54,11 @@ class AuthService {
 
   async login({ email, password }) {
     const user = await this.userService.findByEmail(normalizeEmail(email));
-    const validPassword = user?.passwordHash
+    const validPassword = user?.passwordHash
+      ? await this.passwordService.compare(password, user.passwordHash)
+      : false;
+    if (!user || !validPassword || user.status !== 'ACTIVE') {
+      throw new InvalidCredentialsError();
+    }
+    const organization = await this.organizationService.findById(user.organizationId);
+    if (!organization || organization.status !== 'ACTIVE') {
