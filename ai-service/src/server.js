@@ -26,3 +26,4 @@ function createApp() {
     res.on("finish", () => active--);
     next();
   });
+  app.post("/internal/ai/analyze-feedback", async (req, res) => {
