@@ -165,3 +165,4 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
     console.error("   Addımlar:");
     console.error("   1. https://discord.com/developers/applications saytına daxil olun.");
     console.error("   2. Botunuzu seçin və sol menyudan 'Bot' bölməsinə keçin.");
+    console.error("   3. Aşağı sürüşdürün, 'Privileged Gateway Intents' başlığı altında:");
