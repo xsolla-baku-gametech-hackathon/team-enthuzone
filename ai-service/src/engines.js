@@ -16,3 +16,4 @@ function normalize(type, target) {
       .trim();
   const t = clean(type);
   const roman = {
+    i: 1,
