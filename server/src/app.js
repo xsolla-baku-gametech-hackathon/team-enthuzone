@@ -60,3 +60,9 @@ function createApp(options = {}) {
       try {
         const originUrl = new URL(req.get('origin'));
         if (
+          originUrl.hostname === 'localhost' ||
+          originUrl.hostname === '127.0.0.1' ||
+          originUrl.hostname === req.hostname ||
+          req.get('host')?.includes(originUrl.hostname)
+        ) {
+          return next();
