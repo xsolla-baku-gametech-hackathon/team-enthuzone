@@ -211,3 +211,15 @@ async function refreshRecommendations(workspaceId) {
           { $set: { recommendationStatus: "failed" } },
         );
         console.error(
+          JSON.stringify({ event: "recommendation_failed", issueId: issue.id }),
+        );
+      }
+    }
+  } catch {
+    console.error(
+      JSON.stringify({ event: "insights_refresh_failed", workspaceId }),
+    );
+  }
+}
+function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
+  const router = Router();
