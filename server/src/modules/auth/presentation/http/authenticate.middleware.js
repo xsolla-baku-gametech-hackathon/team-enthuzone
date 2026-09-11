@@ -11,4 +11,8 @@ function createAuthenticateMiddleware({ authService }) {
       next();
     } catch (error) {
       next(error);
-    }
+    }
+  };
+}
+
+module.exports = { createAuthenticateMiddleware };
