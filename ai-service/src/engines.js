@@ -42,3 +42,4 @@ function correlate(issue, metrics) {
     return {
       supported: false,
       score: 0,
+      reason: ["No matching target telemetry"],
