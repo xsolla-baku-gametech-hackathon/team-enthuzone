@@ -236,3 +236,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
     const c = await Connection.findOne({
       id: req.params.sourceId,
       type: "discord",
+    }).select("+keyHash");
+    if (!c || hash(req.get("x-webhook-token") || "") !== c.keyHash)
+      throw new AppError("Invalid webhook token", 401);
+    const input = z
+      .object({
+        id: z.string().min(1).max(100),
+        author: z.string().min(1).max(150),
+        content: z.string().trim().min(1).max(6000),
+      })
+      .strict()
+      .parse(req.body);
+    let feedback;
