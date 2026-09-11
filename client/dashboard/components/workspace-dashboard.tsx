@@ -1492,3 +1492,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                         border: "none",
                         overflow: "hidden",
                         display: "block",
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center">
+                    <p className="text-muted">Unable to load live frame.</p>
+                    <a
+                      href={previewWorkspace.webglUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="primary"
+                    >
+                      Open in new tab ↗
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line bg-surface/60 px-5 py-3 text-xs text-muted">
+                {resolvedUrl && resolvedUrl !== previewWorkspace.webglUrl ? (
+                  <div className="flex items-center gap-2 text-accent font-medium">
+                    <span className="inline-block h-2 w-2 rounded-full bg-accent animate-pulse" />
