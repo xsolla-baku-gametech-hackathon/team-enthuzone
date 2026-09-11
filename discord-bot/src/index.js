@@ -55,3 +55,4 @@ async function relay(message) {
         signal: AbortSignal.timeout(65000),
         headers: {
           "Content-Type": "application/json",
+          "x-webhook-token": config.DISCORD_WEBHOOK_TOKEN,
