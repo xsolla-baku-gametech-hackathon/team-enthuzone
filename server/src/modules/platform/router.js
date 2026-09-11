@@ -737,3 +737,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
             eventType: "complete",
             duration: 85,
             build: "ai-bot-verified-1.0",
+          });
+        }
+      }
+
+      await Event.bulkWrite(
+        botSessionEvents.map((e) => ({
+          updateOne: {
+            filter: { workspaceId, eventId: e.eventId },
+            update: { $set: e },
+            upsert: true,
+          },
+        })),
+      );
