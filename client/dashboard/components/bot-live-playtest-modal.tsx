@@ -979,3 +979,28 @@ export function BotLivePlaytestModal({
                   <Activity size={13} className="text-accent" />
                   <span className="text-xs font-mono font-semibold text-text">AI Telemetry Console</span>
                 </div>
+                <span className="text-[10px] text-faint font-mono">STREAMS_ACTIVE</span>
+              </div>
+
+              {/* Stream Logs */}
+              <div
+                ref={logBoxRef}
+                className="flex-1 p-3 overflow-y-auto space-y-1.5 font-mono text-[11px] max-h-56 bg-surface-sunken/90 select-text"
+              >
+                {logs.map((item) => (
+                  <div key={item.id} className="leading-relaxed break-words">
+                    <span className="text-faint mr-1.5">[{item.time}]</span>
+                    {item.type === "ai" && <span className="text-accent font-semibold mr-1">🤖 [AI]</span>}
+                    {item.type === "telemetry" && <span className="text-info font-semibold mr-1">📡 [INGEST]</span>}
+                    {item.type === "alert" && <span className="text-critical font-semibold mr-1">⚠️ [ALERT]</span>}
+                    {item.type === "game" && <span className="text-medium font-semibold mr-1">🎮 [GAME]</span>}
+                    <span className={item.type === "alert" ? "text-critical" : "text-text"}>
+                      {item.text}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Sync Telemetry to Platform Button */}
+              <div className="border-t border-line p-2.5 bg-surface/70 flex items-center justify-between gap-2">
+                <button
