@@ -14,3 +14,19 @@ async function checkPublicUrl(value, redirects = 0) {
   const hostname = url.hostname.replace(/^\[|\]$/g, "");
   let addresses;
   try {
+    addresses = await dns.lookup(hostname, { all: true });
+  } catch {
+    throw new AppError("Game hostname could not be resolved", 400);
+  }
+  if (
+    !addresses.length ||
+    addresses.some((a) => ipaddr.process(a.address).range() !== "unicast")
+  )
+    throw new AppError("Game URL must point to a public host", 400);
+  const address = addresses[0];
+  const result = await new Promise((resolve, reject) => {
+    const req = https.request(
+      url,
+      {
+        method: "GET",
+        headers: {
