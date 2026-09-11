@@ -79,3 +79,19 @@ export type Issue = {
     status: "APPROVED" | "REJECTED" | "PENDING";
     confidence?: number;
     summary?: string;
+    verifiedAt?: string;
+    failureRate?: number;
+    testRuns?: number;
+  } | null;
+  recommendations: string[];
+  status: string;
+};
+export type WorkspaceDetail = {
+  workspace: Workspace;
+  connections: Connection[];
+  feedback: Feedback[];
+  feedbackTotal: number;
+  issues: Issue[];
+  metrics: Metrics;
+  builds: (Metrics & { build: string })[];
+};
