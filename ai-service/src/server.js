@@ -92,3 +92,4 @@ function createApp() {
   });
   return app;
 }
+if (require.main === module)
