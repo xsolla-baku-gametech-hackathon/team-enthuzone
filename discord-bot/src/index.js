@@ -96,3 +96,5 @@ async function relay(message) {
     `[Relay Failed] Could not deliver message ${message.id} after 3 attempts.`
   );
 }
+
+// 4. Message Ingestion Queue
