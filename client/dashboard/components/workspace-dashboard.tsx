@@ -154,3 +154,25 @@ export function WorkspaceDashboard({
     } catch (e) {
       setError((e as Error).message);
     } finally {
+      setBusy(false);
+    }
+  }
+  async function choose(id: string) {
+    setSelected(id);
+    setDetail(null);
+    localStorage.setItem("workspace", id);
+    await action(() => reload(id));
+  }
+  async function create(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    await action(async () => {
+      if (modal === "workspace") {
+        const w = await request<Workspace>("/platform/workspaces", {
+          name: data.get("name"),
+          webglUrl: data.get("url"),
+        });
+        setWorkspaces([w, ...workspaces]);
+        setSelected(w.id);
+        localStorage.setItem("workspace", w.id);
+        await reload(w.id);
