@@ -611,3 +611,28 @@ export function BotLivePlaytestModal({
           <div className="flex items-center gap-2">
             {gameUrl && (
               <div className="flex rounded-lg bg-surface-sunken p-0.5 border border-line text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setMode("snake")}
+                  className={`px-3 py-1.5 rounded-md transition ${
+                    mode === "snake" ? "bg-accent text-canvas" : "text-muted hover:text-text"
+                  }`}
+                >
+                  Snake AI Testbed
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMode("iframe")}
+                  className={`px-3 py-1.5 rounded-md transition ${
+                    mode === "iframe" ? "bg-accent text-canvas" : "text-muted hover:text-text"
+                  }`}
+                >
+                  External Game URL
+                </button>
+              </div>
+            )}
+
+            <button
+              type="button"
+              className="rounded-lg p-2 text-muted hover:bg-surface-raised hover:text-text transition"
+              onClick={() => setIsFullscreen(!isFullscreen)}
