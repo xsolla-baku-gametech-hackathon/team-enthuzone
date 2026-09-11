@@ -16,3 +16,4 @@ function createApp() {
     const expected = Buffer.from(`Bearer ${process.env.AI_INTERNAL_TOKEN}`);
     if (actual.length !== expected.length || !timingSafeEqual(actual, expected))
       return res.status(401).json({ error: "Unauthorized" });
+    next();
