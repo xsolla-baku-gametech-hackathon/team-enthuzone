@@ -6,4 +6,8 @@ const { MongoTelemetryRepository } = require('./modules/telemetry');
 const { MongoOrganizationRepository } = require('./modules/organization');
 const { MongoUserRepository } = require('./modules/user');
 const { MongoTransactionManager } = require('./modules/auth');
-
+
+async function bootstrap() {
+  await connectMongo(env.mongodbUri);
+  const repositoryOptions = {
+    feedbackRepository: new MongoFeedbackRepository(),
