@@ -16,3 +16,4 @@ npm install
 Faylı redaktə edin: `discord-bot/.env`
 ```env
 DISCORD_BOT_TOKEN=your_discord_bot_token_here
+DISCORD_CHANNEL_ID=your_discord_channel_id_here
