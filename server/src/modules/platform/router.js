@@ -324,3 +324,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
         accepted: result.upsertedCount,
         duplicates: input.events.length - result.upsertedCount,
       });
+  });
+  router.use(authenticate);
+  router.get("/profile", async (req, res) =>
+    res.json(
+      (await Profile.findOne({ orgId: req.auth.organizationId }).lean()) || {},
+    ),
+  );
+  router.put("/profile", async (req, res) => {
+    const input = z
+      .object({
+        surname: z.string().max(120),
+        location: z.string().max(200),
