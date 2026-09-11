@@ -198,3 +198,16 @@ async function refreshRecommendations(workspaceId) {
         });
         await Cluster.updateOne(
           { id: issue.id },
+          {
+            $set: {
+              recommendations: result.recommendations,
+              recommendationStatus: "complete",
+            },
+          },
+        );
+      } catch {
+        await Cluster.updateOne(
+          { id: issue.id },
+          { $set: { recommendationStatus: "failed" } },
+        );
+        console.error(
