@@ -411,3 +411,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       ),
     );
   });
+  router.delete("/workspaces/:id", async (req, res) => {
+    await owned(req);
+    for (const model of [Connection, Feedback, Cluster, Event, Evidence])
+      await model.deleteMany({ workspaceId: req.params.id });
+    await Workspace.deleteOne({ id: req.params.id });
+    res.status(204).end();
+  });
+  router.post("/workspaces/:id/connections", async (req, res) => {
+    await owned(req);
+    const input = z
+      .object({
+        name,
+        type: z.enum(["discord", "telemetry", "bot"]),
