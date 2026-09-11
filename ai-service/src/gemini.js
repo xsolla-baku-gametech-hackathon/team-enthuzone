@@ -7,3 +7,4 @@ const candidate = z.object({
   summary: z.string().max(500),
   authenticity: z.enum(["AI Approved", "Needs Review", "Likely Spam"]),
   severity: z.number().min(0).max(1),
+});
