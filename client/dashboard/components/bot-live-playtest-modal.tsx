@@ -292,3 +292,27 @@ export function BotLivePlaytestModal({
 
       // 1. Position of the Snake Head on screen
       const headScreenX = head.x * cellW + cellW / 2;
+      const headScreenY = head.y * cellH + cellH / 2;
+
+      // 2. Compute target vector direction
+      let targetOffsetX = 0;
+      let targetOffsetY = 0;
+      if (targetDir === "UP") targetOffsetY = -cellH * 1.5;
+      else if (targetDir === "DOWN") targetOffsetY = cellH * 1.5;
+      else if (targetDir === "LEFT") targetOffsetX = -cellW * 1.5;
+      else if (targetDir === "RIGHT") targetOffsetX = cellW * 1.5;
+
+      // First move cursor directly to the snake head, then steer in target direction
+      setCursorPos({
+        x: Math.max(20, Math.min(rect.width - 40, headScreenX + targetOffsetX * 0.8)),
+        y: Math.max(20, Math.min(rect.height - 40, headScreenY + targetOffsetY * 0.8)),
+      });
+      setCursorAction(`Steering Snake [${targetDir}]`);
+      setLastActionDir(targetDir);
+
+      // Perform Click Simulation (Visual Pulse & Waves)
+      setCursorClicking(true);
+      setTimeout(() => setCursorClicking(false), 140);
+    },
+    []
+  );
