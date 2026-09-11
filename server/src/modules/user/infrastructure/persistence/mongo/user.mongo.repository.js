@@ -13,4 +13,20 @@ class MongoUserRepository {
     }
   }
 
-  async findByEmail(email, transaction = {}) {
+  async findByEmail(email, transaction = {}) {
+    return UserMongoModel.findOne({ email })
+      .select('+passwordHash')
+      .session(transaction.session || null)
+      .lean();
+  }
+
+  async findById(id, transaction = {}) {
+    return UserMongoModel.findOne({ id }).session(transaction.session || null).lean();
+  }
+
+  async update(id, changes, transaction = {}) {
+    return UserMongoModel.findOneAndUpdate({ id }, { $set: changes }, { new: true, session: transaction.session }).lean();
+  }
+}
+
+module.exports = { MongoUserRepository };
