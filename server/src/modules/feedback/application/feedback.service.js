@@ -11,4 +11,7 @@ class FeedbackService {
 
   async ingestMany(inputs) {
     return this.feedbackRepository.saveMany(inputs.map(toFeedback));
-  }
+  }
+
+  async list(filters = {}) {
+    const normalizedFilters = {
