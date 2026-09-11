@@ -397,3 +397,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                           data.confirm && data.confirm === data.password
                             ? "bg-accent/20 text-accent"
                             : "bg-surface text-muted"
+                        }`}
+                      >
+                        {data.confirm && data.confirm === data.password ? (
+                          <Check size={11} />
+                        ) : (
+                          "•"
+                        )}
+                      </span>
+                      <span
+                        className={
+                          data.confirm && data.confirm === data.password
+                            ? "text-text font-medium"
+                            : "text-muted"
+                        }
+                      >
+                        Passwords match
+                      </span>
+                    </div>
+                  </div>
+                </>
+              )}
+            </>
