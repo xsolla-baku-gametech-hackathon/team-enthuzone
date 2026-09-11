@@ -11,3 +11,4 @@ function normalize(type, target) {
     s
       .toLowerCase()
       .normalize("NFKC")
+      .replace(/[^\p{L}\p{N} ]/gu, " ")
