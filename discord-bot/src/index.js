@@ -89,3 +89,4 @@ async function relay(message) {
 
     if (attempt < 3) {
       await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, attempt - 1)));
+    }
