@@ -28,3 +28,12 @@ export default async function RootLayout({
     <html
       lang="en"
       data-theme={theme}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} bg-canvas`}
+    >
+      <body className="min-h-screen bg-canvas text-ink antialiased">
+        <AppShell>{children}</AppShell>
+      </body>
+    </html>
+  );
+}
