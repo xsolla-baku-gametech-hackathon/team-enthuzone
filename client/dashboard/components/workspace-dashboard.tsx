@@ -1269,3 +1269,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                     <p className="mt-1 text-xs text-faint leading-relaxed">
                       Monitor mentions, player discussions, and feedback threads across game subreddits.
                     </p>
+                  </div>
+                </div>
+
+                {/* 4. Mobile Stores - Coming soon */}
+                <div className="glass flex items-start gap-4 rounded-xl p-4 text-left opacity-70 bg-surface-sunken/40 border-dashed border-line">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-surface-raised text-muted">
+                    <Smartphone size={22} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-semibold text-muted">App Store & Google Play</h3>
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-raised px-2.5 py-0.5 text-[11px] font-medium text-faint border border-line">
+                        <Clock size={12} className="text-muted" />
+                        Coming soon
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs text-faint leading-relaxed">
+                      Collect mobile store reviews, star ratings, and player crash complaints automatically.
+                    </p>
+                  </div>
+                </div>
+              </div>
