@@ -10,4 +10,7 @@ class TelemetryService {
   }
 
   async ingestBatch(inputs) {
-    return this.telemetryRepository.saveMany(inputs.map(toTelemetryEvent));
+    return this.telemetryRepository.saveMany(inputs.map(toTelemetryEvent));
+  }
+
+  async list(filters = {}) {
