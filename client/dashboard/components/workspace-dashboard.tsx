@@ -1470,3 +1470,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                   </div>
                 ) : resolvedUrl ? (
                   <div
+                    style={{
+                      width: `${scaledW}px`,
+                      height: `${scaledH}px`,
+                      position: "relative",
+                      overflow: "hidden",
+                      boxShadow: "0 12px 48px rgba(0,0,0,0.85)",
+                    }}
+                  >
+                    <iframe
+                      title={`${previewWorkspace.name} Game Preview`}
+                      src={resolvedUrl}
+                      scrolling="no"
+                      allow="autoplay; fullscreen; focus-without-user-activation *; gamepad *"
+                      sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"
+                      style={{
+                        width: "1280px",
+                        height: "720px",
+                        transform: `scale(${scale})`,
+                        transformOrigin: "top left",
+                        border: "none",
+                        overflow: "hidden",
+                        display: "block",
