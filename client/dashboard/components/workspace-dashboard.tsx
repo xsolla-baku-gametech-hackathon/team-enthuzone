@@ -1157,3 +1157,26 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
               {notice ? (
                 <span className="text-xs text-accent font-medium flex items-center gap-1">
                   <Check size={14} /> {notice}
+                </span>
+              ) : (
+                <span className="text-xs text-faint">
+                  The database stores only cryptographic hashes of keys.
+                </span>
+              )}
+              <button
+                type="button"
+                className="primary text-xs py-2 px-4"
+                onClick={() => setSecret(null)}
+              >
+                I've saved my credentials
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
+      {modal && (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-canvas/90 p-4"
+          onClick={() => setModal(null)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setModal(null);
