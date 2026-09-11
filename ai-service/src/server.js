@@ -88,3 +88,4 @@ function createApp() {
     );
     res
       .status(err instanceof z.ZodError ? 400 : 503)
+      .json({ error: "AI request failed" });
