@@ -43,3 +43,4 @@ function createApp() {
         normalized: normalize(result.type, result.target),
       });
     } catch (e) {
+      console.error(
