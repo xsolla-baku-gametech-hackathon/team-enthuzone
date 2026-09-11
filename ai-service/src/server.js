@@ -33,3 +33,4 @@ function createApp() {
         existing: z
           .array(z.object({ type: z.string(), target: z.string() }))
           .max(100)
+          .default([]),
