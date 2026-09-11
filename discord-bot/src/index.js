@@ -91,3 +91,5 @@ async function relay(message) {
       await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, attempt - 1)));
     }
   }
+
+  console.error(
