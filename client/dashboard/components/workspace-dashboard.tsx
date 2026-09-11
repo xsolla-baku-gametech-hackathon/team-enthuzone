@@ -1604,3 +1604,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                     />
                     {c.status === "paused"
                       ? "Paused (Click to On)"
+                      : "Active (Click to Off)"}
+                  </button>
+                )}
+              </div>
+              <button
+                className="text-muted hover:text-critical p-1 rounded-lg hover:bg-surface-raised transition shrink-0"
+                aria-label={`Revoke ${c.name}`}
+                title={`Revoke ${c.name}`}
+                disabled={busy}
+                onClick={() =>
+                  action(async () => {
+                    await request(
+                      `/platform/workspaces/${selected}/connections/${c.id}`,
+                      undefined,
+                      "DELETE",
+                    );
+                    await reload();
+                  })
+                }
+              >
+                <Trash2 size={16} />
+              </button>
