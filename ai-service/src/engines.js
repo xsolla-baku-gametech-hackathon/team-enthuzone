@@ -29,3 +29,4 @@ function normalize(type, target) {
   };
   return {
     type: aliases[t] || t,
+    target: clean(target).replace(
