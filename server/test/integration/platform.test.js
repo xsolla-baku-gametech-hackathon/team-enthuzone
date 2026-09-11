@@ -161,3 +161,22 @@ test(
       author: "player1",
       content: "Level 5 is far too difficult; I quit after ten attempts.",
     };
+    await request(app)
+      .post(`/api/platform/ingest/discord/${source.id}`)
+      .set("x-webhook-token", source.key)
+      .send(feedback)
+      .expect(201);
+    await request(app)
+      .post(`/api/platform/ingest/discord/${source.id}`)
+      .set("x-webhook-token", source.key)
+      .send(feedback)
+      .expect(200);
+    let { body: d } = await client
+      .get(`/api/platform/workspaces/${w.id}`)
+      .expect(200);
+    assert.equal(d.feedbackTotal, 1);
+    assert.equal(d.issues.length, 1);
+    assert.equal(d.issues[0].count, 1);
+    assert.equal(d.connections[0].keyHash, undefined);
+
+    // 5. Test AI Bot Scenario Verification
