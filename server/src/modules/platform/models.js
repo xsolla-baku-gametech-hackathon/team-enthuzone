@@ -63,3 +63,11 @@ const Cluster = model(
     aiVerification: mongoose.Schema.Types.Mixed,
     recommendations: [String],
     recommendationStatus: String,
+  },
+  [[{ workspaceId: 1, type: 1, target: 1 }, { unique: true }]],
+);
+const Event = model(
+  "PlatformEvent",
+  {
+    workspaceId: { type: String, index: true },
+    connectionId: String,
