@@ -21,4 +21,16 @@ const registration = {
 function testContext() {
   const organizationRepository = new MemoryOrganizationRepository();
   const userRepository = new MemoryUserRepository();
-  const app = createApp({
+  const app = createApp({
+    organizationRepository,
+    userRepository,
+    transactionManager: new MemoryTransactionManager([organizationRepository, userRepository]),
+    authConfig: { jwtSecret: secret, jwtExpiresIn: '15m', passwordHashRounds: 4 },
+  });
+  return { app, organizationRepository, userRepository };
+}
+
+async function register(context) {
+  return request(context.app).post('/api/auth/register').send(registration).expect(201);
+}
+
