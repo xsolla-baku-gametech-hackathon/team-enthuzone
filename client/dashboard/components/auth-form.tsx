@@ -317,7 +317,7 @@ export function AuthForm({ register = false }: { register?: boolean }) {
   return (
     <div className="auth-stage">
       <div className="auth-orb" aria-hidden="true" />
-      <section className="glass relative mx-auto w-full max-w-xl rounded-2xl p-6 sm:p-10">
+      <section className="relative mx-auto w-full max-w-xl rounded-2xl border border-line bg-surface p-6 sm:p-10">
         <Layers3 className="mb-6 text-accent" size={32} />
         <p className="eyebrow">PLAYER ISSUE INTELLIGENCE</p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight">
@@ -348,7 +348,6 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                 {field("password", "Password", visible ? "text" : "password")}
                 <button
                   type="button"
-                  tabIndex={-1}
                   className="absolute right-3 top-9 text-muted hover:text-text transition-colors"
                   aria-label={visible ? "Hide password" : "Show password"}
                   onClick={() => setVisible(!visible)}
