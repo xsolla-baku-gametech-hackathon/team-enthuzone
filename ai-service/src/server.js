@@ -55,3 +55,4 @@ function createApp() {
         type: "Uncategorized",
         target: "Unclassified",
         sentiment: "Neutral",
+        confidence: 0,
