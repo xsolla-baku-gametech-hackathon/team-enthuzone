@@ -171,14 +171,3 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
   } else {
     console.error("   Please verify DISCORD_BOT_TOKEN in your discord-bot/.env file.\n");
   }
-  process.exitCode = 1;
-});
-
-// 7. Graceful Shutdown
-for (const signal of ["SIGTERM", "SIGINT"]) {
-  process.on(signal, () => {
-    console.log(`\n[Shutdown] Received ${signal}. Closing Discord bot connection...`);
-    bot.destroy();
-    process.exit(0);
-  });
-}
