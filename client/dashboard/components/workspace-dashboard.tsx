@@ -198,3 +198,26 @@ export function WorkspaceDashboard({
     "telemetry",
     "bots",
     "compare",
+  ];
+  return (
+    <div className="space-y-6">
+      <header className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p className="eyebrow">ORGANIZATION / WORKSPACES</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight">
+            Your next better build.
+          </h1>
+          <p className="mt-2 text-muted">
+            Listen to players. Connect the evidence. Know what to fix.
+          </p>
+        </div>
+        <button className="primary" onClick={() => setModal("workspace")}>
+          <Plus size={17} />
+          Create workspace
+        </button>
+      </header>
+      {error && (
+        <div
+          role="alert"
+          className="flex items-center justify-between rounded-xl bg-critical-surface p-4 text-critical"
+        >
