@@ -135,3 +135,16 @@ async function rankIssues(feedback, clusters, metrics) {
         available: true,
       };
     } catch {
+      console.error(
+        JSON.stringify({ event: "correlation_unavailable", issueId: c.id }),
+      );
+    }
+    const score = priority({
+      correlation: correlation.score,
+      affected: allAuthors.size ? affectedUsers / allAuthors.size : 0,
+      severity: c.severity || 0,
+      revenue: 0,
+    });
+    issues.push({
+      ...c,
+      count: members.length,
