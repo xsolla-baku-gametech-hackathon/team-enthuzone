@@ -1,6 +1,6 @@
-# 🎮 Unity 3D Game Client Documentation
+# 🎮 GoBuster Unity 3D Game Client Documentation
 
-Welcome to the **Unity 3D Game Client & Telemetry** documentation.
+Welcome to the **GoBuster Unity 3D Game Client & Telemetry** documentation.
 
 ### Full Documentation Links:
 - 🕹️ [Game Architecture & Mechanics](../../docs/game/architecture.md)

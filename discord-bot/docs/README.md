@@ -1,6 +1,6 @@
-# 🤖 Discord Bot Relay Documentation
+# 🤖 GoBuster Discord Bot Relay Documentation
 
-Welcome to the **Discord Bot Relay** microservice documentation.
+Welcome to the **GoBuster Discord Bot Relay** microservice documentation.
 
 ### Full Documentation Links:
 - 🛠️ [Discord Developer Portal & Intents Setup Guide](../../docs/discord-bot/setup-guide.md)

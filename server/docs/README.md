@@ -1,6 +1,6 @@
-# 🖥️ Server Documentation
+# 🖥️ GoBuster Server Documentation
 
-Welcome to the **Core Platform Server** documentation.
+Welcome to the **GoBuster Core Platform Server** documentation.
 
 ### Full Documentation Links:
 - 🏛️ [Architecture & Hexagonal Design](../../docs/server/architecture.md)

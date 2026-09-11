@@ -1,6 +1,6 @@
 # 📊 Web Dashboard & Landing Documentation
 
-The **Client Dashboard** (`client/dashboard`) is a modern web application built on **Next.js 16 (App Router)**, **TypeScript**, and **Tailwind CSS**. It provides an evidence-based, data-dense operational environment for game studio Product Managers, QA Leads, and Game Designers to triage correlated player issues, compare game builds, inspect telemetry trends, and manage bot relays.
+The **Client Dashboard** (`client/dashboard`) is a modern web application built on **Next.js 16 (App Router)**, **TypeScript**, and **Tailwind CSS**. It provides an evidence-based, data-dense operational environment for game studio Product Managers, QA Leads, and Game Designers to triage correlated player issues, compare game builds, inspect telemetry trends, and manage bot relays on the **GoBuster** platform.
 
 ---
 

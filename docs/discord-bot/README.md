@@ -1,6 +1,6 @@
 # 🤖 Discord Bot Relay Documentation
 
-The **Discord Bot Relay** is a standalone microservice that connects a game's community Discord server directly with the **Player Issue Intelligence** platform. It monitors designated feedback and bug-reporting channels in real time, buffers and queues messages, and relays them to the Core Platform Ingest API via authenticated webhooks with automated exponential backoff retries.
+The **Discord Bot Relay** is a standalone microservice that connects a game's community Discord server directly with the **GoBuster** platform. It monitors designated feedback and bug-reporting channels in real time, buffers and queues messages, and relays them to the Core Platform Ingest API via authenticated webhooks with automated exponential backoff retries.
 
 ---
 

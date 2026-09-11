@@ -1,6 +1,6 @@
-# 🧠 AI Service Documentation
+# 🧠 GoBuster AI Service Documentation
 
-Welcome to the **Player Intelligence AI Service** documentation.
+Welcome to the **GoBuster Player Intelligence AI Service** documentation.
 
 ### Full Documentation Links:
 - 🏛️ [AI Architecture & Gemini 2.5 Flash Integration](../../docs/ai-service/architecture.md)

@@ -1,6 +1,6 @@
 # 🎮 Unity 3D Game Client & Telemetry Documentation
 
-The **Game** component is a Unity 3D game project created using the **Universal Render Pipeline (URP)**. It integrates an automated runtime telemetry client (`TelemetrySender.cs`) that monitors and streams player behavior, difficulty progression, retry attempts, and abandonment dropoffs directly to the **Player Issue Intelligence** platform.
+The **Game** component is a Unity 3D game project created using the **Universal Render Pipeline (URP)**. It integrates an automated runtime telemetry client (`TelemetrySender.cs`) that monitors and streams player behavior, difficulty progression, retry attempts, and abandonment dropoffs directly to the **GoBuster** platform.
 
 ---
 

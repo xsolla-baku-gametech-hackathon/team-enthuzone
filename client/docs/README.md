@@ -1,6 +1,6 @@
-# 📊 Client Dashboard Documentation
+# 📊 GoBuster Web Dashboard Documentation
 
-Welcome to the **Web Dashboard & Landing** documentation.
+Welcome to the **GoBuster Web Dashboard & Landing** documentation.
 
 ### Full Documentation Links:
 - 🏛️ [Next.js App Router Architecture](../../docs/client/architecture.md)

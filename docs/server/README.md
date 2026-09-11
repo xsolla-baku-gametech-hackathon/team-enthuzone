@@ -1,6 +1,6 @@
 # 🖥️ Core Platform Server Documentation
 
-The **Core Platform Server** is the central backbone of the **Player Issue Intelligence** platform. It provides high-throughput ingestion gateways, multi-tenant organization boundaries, atomic database operations via MongoDB, issue clustering, evidence linkage, and operational REST APIs consumed by the Next.js frontend.
+The **Core Platform Server** is the central backbone of the **GoBuster** platform. It provides high-throughput ingestion gateways, multi-tenant organization boundaries, atomic database operations via MongoDB, issue clustering, evidence linkage, and operational REST APIs consumed by the Next.js frontend.
 
 ---
 
