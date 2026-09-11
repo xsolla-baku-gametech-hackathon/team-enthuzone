@@ -19,4 +19,8 @@ const environmentSchema = z.object({
 });
 
 const parsed = environmentSchema.parse(process.env);
-
+
+const env = Object.freeze({
+  nodeEnv: parsed.NODE_ENV,
+  isTest: parsed.NODE_ENV === 'test',
+  port: parsed.PORT,
