@@ -73,3 +73,9 @@ function createApp(options = {}) {
     }
     next();
   });
+  if (!env.isTest) app.use(morgan('combined'));
+
+  app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+  app.use('/api/auth', container.auth.router);
+  app.use('/api/session', createSessionRouter(container.auth.service));
+  app.use('/api/platform', createPlatformRouter(container.auth.authenticate, options.verifyGameUrl));
