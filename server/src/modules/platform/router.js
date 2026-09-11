@@ -298,3 +298,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
               })
               .strict(),
           )
+          .min(1)
+          .max(100),
+      })
+      .strict()
+      .parse(req.body);
+    const result = await Event.bulkWrite(
+      input.events.map((e) => ({
+        updateOne: {
+          filter: { connectionId: c.id, eventId: e.eventId },
+          update: {
+            $setOnInsert: {
+              ...e,
+              workspaceId: c.workspaceId,
