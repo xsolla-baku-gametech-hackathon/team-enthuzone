@@ -169,3 +169,28 @@ export function BotLivePlaytestModal({
       attempts++;
     } while (collision && attempts < 100);
     return newFood;
+  }, []);
+
+  // Reset Game
+  const resetGame = useCallback(() => {
+    const initialSnake: Point[] = [
+      { x: 10, y: 10 },
+      { x: 9, y: 10 },
+      { x: 8, y: 10 },
+    ];
+    setSnake(initialSnake);
+    setDirection("RIGHT");
+    initLevelObstacles(level);
+    const newFood = spawnFood(initialSnake, obstaclesRef.current);
+    setFood(newFood);
+    setScore(0);
+    setMovesCount(0);
+    setIsGameOver(false);
+    setIsPlaying(true);
+    addLog("game", "🎮 New AI Playtest session launched. Grid initialized.");
+  }, [addLog, initLevelObstacles, level, spawnFood]);
+
+  // Handle Level Switch
+  const handleLevelChange = (newLevel: 1 | 3 | 5) => {
+    setLevel(newLevel);
+    initLevelObstacles(newLevel);
