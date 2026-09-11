@@ -466,3 +466,25 @@ export function WorkspaceDashboard({
                                 </div>
                                 {i.aiVerification.confidence && (
                                   <span className="text-[11px] opacity-80">
+                                    Confidence: {Math.round(i.aiVerification.confidence * 100)}%
+                                  </span>
+                                )}
+                              </div>
+                              <p className="mt-1.5 leading-relaxed text-[11px] opacity-90">
+                                {i.aiVerification.summary}
+                              </p>
+                            </div>
+                          )}
+                          <details className="mt-4 border-t border-line pt-3">
+                            <summary className="cursor-pointer text-sm text-accent">
+                              Player evidence ({i.count})
+                            </summary>
+                            {i.samples.map((f) => (
+                              <blockquote
+                                key={f.id}
+                                className="mt-3 rounded-lg bg-surface-sunken p-3 text-sm"
+                              >
+                                <p>{f.text}</p>
+                                <footer className="mt-2 text-xs text-muted">
+                                  {f.author} · {f.candidate?.authenticity}
+                                </footer>
