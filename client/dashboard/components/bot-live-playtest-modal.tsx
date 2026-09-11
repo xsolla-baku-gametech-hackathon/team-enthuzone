@@ -268,3 +268,27 @@ export function BotLivePlaytestModal({
             const cy = ny + check.dy;
             if (cx >= 0 && cx < GRID_SIZE && cy >= 0 && cy < GRID_SIZE && !blocked.has(`${cx},${cy}`)) {
               space++;
+            }
+          }
+          if (space > maxSpace) {
+            maxSpace = space;
+            bestDir = m.dir;
+          }
+        }
+      }
+
+      return bestDir;
+    },
+    []
+  );
+
+  // Trigger Visible AI Cursor Movement and Physical Click on Snake/Controls
+  const triggerAiCursorAction = useCallback(
+    (targetDir: Direction, head: Point) => {
+      if (!gameAreaRef.current) return;
+      const rect = gameAreaRef.current.getBoundingClientRect();
+      const cellW = rect.width / GRID_SIZE;
+      const cellH = rect.height / GRID_SIZE;
+
+      // 1. Position of the Snake Head on screen
+      const headScreenX = head.x * cellW + cellW / 2;
