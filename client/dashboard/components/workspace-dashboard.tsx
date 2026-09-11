@@ -1113,3 +1113,25 @@ Body:
                         }}
                       >
                         <Copy size={15} />
+                        Copy ID
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="rounded-xl bg-surface-sunken/70 border border-line/60 p-4 text-xs space-y-2">
+                    <span className="font-semibold text-text">Paste these directly into your discord-bot/.env:</span>
+                    <pre className="font-mono text-[11px] text-accent/90 overflow-x-auto p-2.5 bg-surface rounded-lg border border-line/40 select-all">
+{`DISCORD_SOURCE_ID=${secret.id}
+DISCORD_WEBHOOK_TOKEN=${secret.key}`}
+                    </pre>
+                  </div>
+                </>
+              ) : (
+                /* GENERIC / BOT UI */
+                <div>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-muted mb-1.5 block">
+                    API Key
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <code className="flex-1 font-mono text-xs bg-surface-sunken border border-line rounded-lg p-3 break-all text-accent select-all">
+                      {secret.key}
