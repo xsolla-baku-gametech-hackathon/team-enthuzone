@@ -365,3 +365,28 @@ export function BotLivePlaytestModal({
         addLog("alert", `💥 Game Over! AI collided with obstacle at Level ${level}. Telemetry registered difficulty drop-off.`);
         return;
       }
+
+      // Collision with Snake Tail
+      if (currentSnake.slice(0, -1).some((s) => s.x === nextX && s.y === nextY)) {
+        setIsGameOver(true);
+        setIsPlaying(false);
+        addLog("alert", `💥 Game Over! Tail self-collision. Safe navigation route exhausted.`);
+        return;
+      }
+
+      // Move Forward
+      const newHead: Point = { x: nextX, y: nextY };
+      const newSnake = [newHead, ...currentSnake];
+
+      // Check if Food Consumed
+      if (nextX === currentFood.x && nextY === currentFood.y) {
+        const newScore = score + 10;
+        setScore(newScore);
+        if (newScore > highScore) setHighScore(newScore);
+
+        const nextFood = spawnFood(newSnake, currentObs);
+        setFood(nextFood);
+        addLog("game", `🍎 Food consumed! Score: ${newScore}. Length: ${newSnake.length}. Telemetry: 'target_reached'.`);
+      } else {
+        newSnake.pop(); // Remove tail
+      }
