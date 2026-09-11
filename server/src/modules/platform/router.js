@@ -148,3 +148,16 @@ async function rankIssues(feedback, clusters, metrics) {
     issues.push({
       ...c,
       count: members.length,
+      affectedUsers,
+      authenticity: members.some(
+        (f) => f.candidate?.authenticity === "Needs Review",
+      )
+        ? "Needs Review"
+        : c.authenticity,
+      samples: members.slice(0, 5),
+      correlation,
+      priority: score,
+      revenueImpactAvailable: false,
+    });
+  }
+  return issues.sort((a, b) => b.priority.score - a.priority.score);
