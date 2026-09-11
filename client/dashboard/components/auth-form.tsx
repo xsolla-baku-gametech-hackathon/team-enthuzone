@@ -131,3 +131,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
 
     // Live validation if this field currently has an error displayed
     if (fieldErrors[key]) {
+      const err = validateField(key, value, updated);
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        if (!err) delete next[key];
+        else next[key] = err;
+        return next;
+      });
+      if (!err && error === fieldErrors[key]) {
+        setError("");
+      }
+    }
+
+    // If typing password, re-check confirm live if confirm has an error
+    if (key === "password" && data.confirm && fieldErrors.confirm) {
+      if (value === data.confirm) {
+        setFieldErrors((prev) => {
+          const next = { ...prev };
+          delete next.confirm;
+          return next;
+        });
+      }
+    }
