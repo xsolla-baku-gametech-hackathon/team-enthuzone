@@ -79,3 +79,11 @@ const Event = model(
     duration: Number,
     build: String,
   },
+  [[{ connectionId: 1, eventId: 1 }, { unique: true }]],
+);
+const Evidence = model("BehaviorEvidence", {
+  workspaceId: { type: String, unique: true },
+  metrics: mongoose.Schema.Types.Mixed,
+});
+const Session = model(
+  "RefreshSession",
