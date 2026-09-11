@@ -119,3 +119,4 @@ async function recommend(issue, evidence) {
     .object({ recommendations: z.array(z.string().max(1000)).max(3) })
     .parse(result).recommendations;
 }
+module.exports = { analyze, recommend };
