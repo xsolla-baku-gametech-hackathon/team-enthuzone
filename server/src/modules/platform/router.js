@@ -750,3 +750,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
           },
         })),
       );
+
+      const failureRate = Math.round((botDeaths / testRuns) * 100);
+      const approved = failureRate >= 40;
+
+      const aiVerification = {
+        status: approved ? "APPROVED" : "REJECTED",
+        confidence: approved ? 0.94 : 0.89,
+        failureRate,
+        testRuns,
+        summary: approved
+          ? `AI Bot conducted ${testRuns} automated playthroughs on "${issue.target}": Experienced ${botDeaths}/${testRuns} failure events (${failureRate}% fail rate) reproducing reported difficulty/bugs. Issue confirmed.`
+          : `AI Bot conducted ${testRuns} automated playthroughs on "${issue.target}": Completed ${botCompleted}/${testRuns} runs smoothly. Could not reproduce the issue under standard test conditions.`,
