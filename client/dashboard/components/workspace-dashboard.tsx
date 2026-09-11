@@ -845,3 +845,25 @@ export function WorkspaceDashboard({
                               >
                                 Open game ↗
                               </a>
+                            </div>
+                            <p className="mt-3 text-xs text-muted">
+                              Click "Test at" to launch the autonomous AI playtester modal. The AI will physically steer and click to play live on screen.
+                            </p>
+                          </div>
+                          <iframe
+                            title={`${c.name} game preview`}
+                            src={c.gameUrl}
+                            loading="lazy"
+                            sandbox="allow-scripts allow-pointer-lock"
+                            referrerPolicy="no-referrer"
+                            className="h-64 w-full border-0 bg-surface-sunken"
+                          />
+                        </article>
+                      ))
+                  )}
+                </>
+              )}
+              {tab === "compare" && (
+                <>
+                  <h2 className="text-xl font-semibold">Build comparison</h2>
+                  {!detail.builds.length && (
