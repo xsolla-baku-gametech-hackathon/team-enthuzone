@@ -5,4 +5,7 @@ class FeedbackService {
     this.feedbackRepository = feedbackRepository;
   }
 
-  async ingest(input) {
+  async ingest(input) {
+    return this.feedbackRepository.save(toFeedback(input));
+  }
+
