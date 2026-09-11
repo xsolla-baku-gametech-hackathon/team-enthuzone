@@ -36,3 +36,21 @@ test("aggregation counts sessions once and distinguishes target evidence", () =>
   });
   const m = aggregate([
     event("start"),
+    event("attempt"),
+    event("attempt"),
+    event("quit"),
+    event("start", "level 6", "s2"),
+    event("complete", "level 6", "s2"),
+  ]);
+  assert.equal(m.uniquePlayers, 1);
+  assert.equal(m.targets["level 5"].sessions, 1);
+  assert.equal(m.targets["level 5"].dropoff, 100);
+  assert.equal(m.targets["level 5"].avg_attempts, 2);
+  assert.equal(m.targets["level 6"].completion_rate, 100);
+  assert.equal(m.targets["level 6"].avg_session, 2);
+  assert.deepEqual(aggregate([]), {
+    targets: {},
+    uniquePlayers: 0,
+    eventCount: 0,
+  });
+});
