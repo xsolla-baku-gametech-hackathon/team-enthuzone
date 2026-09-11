@@ -15,4 +15,11 @@ const { createSessionRouter } = require('./modules/platform/session');
 function createContainer(options = {}) {
   const organizationRepository = options.organizationRepository || new MemoryOrganizationRepository();
   const userRepository = options.userRepository || new MemoryUserRepository();
-  const transactionManager = options.transactionManager
+  const transactionManager = options.transactionManager
+    || new MemoryTransactionManager([organizationRepository, userRepository]);
+  const auth = createAuthModule({
+    organizationRepository,
+    userRepository,
+    transactionManager,
+    config: options.authConfig || env,
+  });
