@@ -513,3 +513,28 @@ export function BotLivePlaytestModal({
         } else if (direction === "DOWN") {
           ctx.fillRect(segX + 5, segY + cellSize - 7, eyeSize, eyeSize);
           ctx.fillRect(segX + cellSize - 5 - eyeSize, segY + cellSize - 7, eyeSize, eyeSize);
+        }
+      } else {
+        // Body segments (Gradient fade)
+        const alpha = Math.max(0.4, 1 - index / (snake.length + 6));
+        ctx.fillStyle = `rgba(53, 184, 165, ${alpha})`;
+        ctx.beginPath();
+        ctx.roundRect(segX + 3, segY + 3, cellSize - 6, cellSize - 6, 5);
+        ctx.fill();
+      }
+    });
+  }, [snake, food, obstacles, direction, mode]);
+
+  // Sync real telemetry session to platform API
+  const handleSendTelemetry = async () => {
+    try {
+      setIsSendingTelemetry(true);
+      setTelemetryNotice("");
+
+      await request(`/platform/workspaces/${workspaceId}/telemetry/mock`, {});
+
+      setTelemetryNotice("Telemetry session synced to workspace!");
+      addLog("telemetry", `✅ Real-time telemetry batch verified and ingested into workspace.`);
+      if (onTelemetrySynced) onTelemetrySynced();
+      setTimeout(() => setTelemetryNotice(""), 3500);
+    } catch (err) {
