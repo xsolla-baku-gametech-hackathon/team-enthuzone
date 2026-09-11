@@ -103,3 +103,11 @@ const Profile = model("OrganizationProfile", {
 });
 module.exports = {
   Workspace,
+  Connection,
+  Feedback,
+  Cluster,
+  Event,
+  Evidence,
+  Session,
+  Profile,
+};
