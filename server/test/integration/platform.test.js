@@ -34,3 +34,21 @@ test(
           summary: "Level 5 is too hard",
           severity: 0.8,
           confidence: 0.9,
+          authenticity: "AI Approved",
+          sentiment: "Negative",
+        }),
+      );
+      ai.post("/internal/ai/correlate", (req, res) =>
+        res.json({ supported: true, score: 1, reason: ["High abandonment"] }),
+      );
+      ai.post("/internal/ai/recommend", (req, res) =>
+        res.json({ recommendations: ["Review Level 5 checkpoints."] }),
+      );
+      const listener = ai.listen(0);
+      await new Promise((r) => listener.once("listening", r));
+      t.after(() => new Promise((r) => listener.close(r)));
+      process.env.AI_SERVICE_URL = `http://127.0.0.1:${listener.address().port}`;
+      process.env.AI_INTERNAL_TOKEN = "test-internal-token-that-is-long-enough";
+    }
+    const app = createApp({
+      organizationRepository: new MongoOrganizationRepository(),
