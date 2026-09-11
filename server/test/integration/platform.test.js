@@ -198,3 +198,21 @@ test(
 
     await client
       .post(
+        `/api/platform/workspaces/${w.id}/issues/${d.issues[0].id}/recommend`,
+      )
+      .send({})
+      .expect(200);
+    await client
+      .patch(`/api/platform/workspaces/${w.id}/issues/${d.issues[0].id}`)
+      .send({ status: "RESOLVED" })
+      .expect(200);
+    const aiUrl = process.env.AI_SERVICE_URL;
+    process.env.AI_SERVICE_URL = "http://127.0.0.1:1";
+    const failed = await client
+      .post(`/api/platform/workspaces/${w.id}/feedback`)
+      .send({ author: "player2", text: "Level V is too difficult." })
+      .expect(201);
+    assert.equal(failed.body.analysisStatus, "failed");
+    process.env.AI_SERVICE_URL = aiUrl;
+    const retried = await client
+      .post(`/api/platform/workspaces/${w.id}/feedback/${failed.body.id}/retry`)
