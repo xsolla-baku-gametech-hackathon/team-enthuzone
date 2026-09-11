@@ -161,3 +161,4 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
   console.error(`   Reason: ${err.message}`);
   if (err.message.includes("disallowed intents")) {
     console.error("\n⚠️  [ÇOX VACİB / REQUIRED ACTION]:");
+    console.error("   Discord bu bot üçün 'Message Content Intent' icazəsini tələb edir.");
