@@ -178,3 +178,4 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
 for (const signal of ["SIGTERM", "SIGINT"]) {
   process.on(signal, () => {
     console.log(`\n[Shutdown] Received ${signal}. Closing Discord bot connection...`);
+    bot.destroy();
