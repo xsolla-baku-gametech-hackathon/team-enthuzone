@@ -87,3 +87,11 @@ const Evidence = model("BehaviorEvidence", {
 });
 const Session = model(
   "RefreshSession",
+  {
+    tokenHash: { type: String, unique: true },
+    userId: String,
+    expiresAt: Date,
+  },
+  [[{ expiresAt: 1 }, { expireAfterSeconds: 0 }]],
+);
+const Profile = model("OrganizationProfile", {
