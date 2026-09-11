@@ -101,6 +101,20 @@ const Profile = model("OrganizationProfile", {
   businessDescription: String,
   theme: String,
 });
+const AuditLog = model(
+  "AuditLog",
+  {
+    orgId: { type: String, index: true },
+    actorUserId: { type: String, index: true },
+    actorEmail: String,
+    action: { type: String, required: true, index: true },
+    resourceType: String,
+    resourceId: String,
+    metadata: mongoose.Schema.Types.Mixed,
+    ip: String,
+  },
+  [[{ createdAt: -1 }, {}]],
+);
 module.exports = {
   Workspace,
   Connection,
@@ -110,4 +124,5 @@ module.exports = {
   Evidence,
   Session,
   Profile,
+  AuditLog,
 };

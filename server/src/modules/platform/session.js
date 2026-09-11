@@ -7,6 +7,7 @@ const {
   loginSchema,
 } = require("../auth/presentation/http/auth.schema");
 const { AppError } = require("../../shared/errors/app-error");
+const { recordAuditLog, AUDIT_ACTIONS } = require("./audit-log");
 const { z } = require("zod");
 function cookies(req) {
   return Object.fromEntries(
@@ -39,16 +40,43 @@ function createSessionRouter(service) {
     });
     res.json({ user: result.user, organization: result.organization });
   }
-  router.post("/register", async (req, res) =>
-    issue(res, await service.register(registerSchema.parse(req.body))),
-  );
+  router.post("/register", async (req, res) => {
+    const result = await service.register(registerSchema.parse(req.body));
+    await recordAuditLog({
+      orgId: result.organization.id,
+      actorUserId: result.user.id,
+      actorEmail: result.user.email,
+      action: AUDIT_ACTIONS.AUTH_REGISTER,
+      resourceType: "user",
+      resourceId: result.user.id,
+      ip: req.ip,
+    });
+    return issue(res, result);
+  });
   router.post("/login", async (req, res) => {
-    const { remember, ...input } = req.body;
-    return issue(
-      res,
-      await service.login(loginSchema.parse(input)),
-      remember !== false,
-    );
+    const { remember, ...input } = req.body || {};
+    try {
+      const result = await service.login(loginSchema.parse(input));
+      await recordAuditLog({
+        orgId: result.organization.id,
+        actorUserId: result.user.id,
+        actorEmail: result.user.email,
+        action: AUDIT_ACTIONS.AUTH_LOGIN_SUCCESS,
+        resourceType: "user",
+        resourceId: result.user.id,
+        ip: req.ip,
+      });
+      return issue(res, result, remember !== false);
+    } catch (error) {
+      await recordAuditLog({
+        action: AUDIT_ACTIONS.AUTH_LOGIN_FAILED,
+        metadata: {
+          email: typeof input.email === "string" ? input.email : undefined,
+        },
+        ip: req.ip,
+      });
+      throw error;
+    }
   });
   router.post("/refresh", async (req, res) => {
     const token = cookies(req).refresh_token;

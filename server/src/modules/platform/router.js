@@ -14,6 +14,13 @@ const { priority, aggregate } = require("./engines");
 const { aiCall } = require("./ai-client");
 const { checkPublicUrl } = require("./public-url");
 const { AppError } = require("../../shared/errors/app-error");
+const { recordAuditLog, listAuditLogs, AUDIT_ACTIONS } = require("./audit-log");
+const {
+  requireSuperAdmin,
+} = require("../auth/presentation/http/authorize-role.middleware");
+const {
+  OrganizationMongoModel: Organization,
+} = require("../organization/infrastructure/persistence/mongo/organization.mongo.model");
 const hash = (value) => createHash("sha256").update(value).digest("hex");
 const name = z.string().trim().min(2).max(120);
 const gameUrl = z
@@ -390,32 +397,61 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       .strict()
       .parse(req.body);
     await verifyGameUrl(input.webglUrl);
-    res
-      .status(201)
-      .json(
-        await Workspace.create({ ...input, orgId: req.auth.organizationId }),
-      );
+    const workspace = await Workspace.create({
+      ...input,
+      orgId: req.auth.organizationId,
+    });
+    await recordAuditLog({
+      orgId: req.auth.organizationId,
+      actorUserId: req.auth.userId,
+      action: AUDIT_ACTIONS.WORKSPACE_CREATED,
+      resourceType: "workspace",
+      resourceId: workspace.id,
+      metadata: { name: workspace.name },
+      ip: req.ip,
+    });
+    res.status(201).json(workspace);
   });
   router.patch("/workspaces/:id", async (req, res) => {
-    await owned(req);
+    const before = await owned(req);
     const input = z
       .object({ name: name.optional(), webglUrl: gameUrl.optional() })
       .strict()
       .parse(req.body);
     if (input.webglUrl) await verifyGameUrl(input.webglUrl);
-    res.json(
-      await Workspace.findOneAndUpdate(
-        { id: req.params.id },
-        { $set: input },
-        { returnDocument: "after" },
-      ),
+    const workspace = await Workspace.findOneAndUpdate(
+      { id: req.params.id },
+      { $set: input },
+      { returnDocument: "after" },
     );
+    await recordAuditLog({
+      orgId: req.auth.organizationId,
+      actorUserId: req.auth.userId,
+      action: AUDIT_ACTIONS.WORKSPACE_UPDATED,
+      resourceType: "workspace",
+      resourceId: req.params.id,
+      metadata: {
+        before: typeof before.toObject === "function" ? before.toObject() : before,
+        after: input,
+      },
+      ip: req.ip,
+    });
+    res.json(workspace);
   });
   router.delete("/workspaces/:id", async (req, res) => {
-    await owned(req);
+    const before = await owned(req);
     for (const model of [Connection, Feedback, Cluster, Event, Evidence])
       await model.deleteMany({ workspaceId: req.params.id });
     await Workspace.deleteOne({ id: req.params.id });
+    await recordAuditLog({
+      orgId: req.auth.organizationId,
+      actorUserId: req.auth.userId,
+      action: AUDIT_ACTIONS.WORKSPACE_DELETED,
+      resourceType: "workspace",
+      resourceId: req.params.id,
+      metadata: { name: before.name },
+      ip: req.ip,
+    });
     res.status(204).end();
   });
   router.post("/workspaces/:id/connections", async (req, res) => {
@@ -438,6 +474,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       workspaceId: req.params.id,
       ...(key ? { keyHash: hash(key) } : {}),
     });
+    await recordAuditLog({
+      orgId: req.auth.organizationId,
+      actorUserId: req.auth.userId,
+      action: AUDIT_ACTIONS.CONNECTION_CREATED,
+      resourceType: "connection",
+      resourceId: c.id,
+      metadata: { workspaceId: req.params.id, type: c.type, name: c.name },
+      ip: req.ip,
+    });
     res
       .status(201)
       .json({ id: c.id, name: c.name, type: c.type, status: c.status || "active", gameUrl: c.gameUrl, key });
@@ -451,8 +496,18 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
         workspaceId: req.params.id,
       });
       if (!c) throw new AppError("Connection not found", 404);
+      const previousStatus = c.status;
       c.status = c.status === "paused" ? "active" : "paused";
       await c.save();
+      await recordAuditLog({
+        orgId: req.auth.organizationId,
+        actorUserId: req.auth.userId,
+        action: AUDIT_ACTIONS.CONNECTION_TOGGLED,
+        resourceType: "connection",
+        resourceId: c.id,
+        metadata: { from: previousStatus, to: c.status },
+        ip: req.ip,
+      });
       res.json({ id: c.id, name: c.name, type: c.type, status: c.status });
     },
   );
@@ -463,6 +518,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       await Connection.deleteOne({
         id: req.params.connectionId,
         workspaceId: req.params.id,
+      });
+      await recordAuditLog({
+        orgId: req.auth.organizationId,
+        actorUserId: req.auth.userId,
+        action: AUDIT_ACTIONS.CONNECTION_DELETED,
+        resourceType: "connection",
+        resourceId: req.params.connectionId,
+        metadata: { workspaceId: req.params.id },
+        ip: req.ip,
       });
       res.status(204).end();
     },
@@ -616,12 +680,25 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       .object({ status: z.enum(["OPEN", "INVESTIGATING", "RESOLVED"]) })
       .strict()
       .parse(req.body);
+    const before = await Cluster.findOne({
+      id: req.params.issueId,
+      workspaceId: req.params.id,
+    }).lean();
     const c = await Cluster.findOneAndUpdate(
       { id: req.params.issueId, workspaceId: req.params.id },
       { $set: input },
       { returnDocument: "after" },
     );
     if (!c) throw new AppError("Issue not found", 404);
+    await recordAuditLog({
+      orgId: req.auth.organizationId,
+      actorUserId: req.auth.userId,
+      action: AUDIT_ACTIONS.ISSUE_STATUS_CHANGED,
+      resourceType: "issue",
+      resourceId: c.id,
+      metadata: { from: before?.status, to: input.status },
+      ip: req.ip,
+    });
     res.json(c);
   });
   router.post("/workspaces/:id/issues/:issueId/recommend", async (req, res) => {
@@ -799,6 +876,35 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
         ...aggregate(events.filter((e) => e.build === build)),
       })),
     });
+  });
+  router.get("/admin/organizations", requireSuperAdmin, async (_req, res) => {
+    const organizations = await Organization.find({})
+      .select("id name slug status createdAt")
+      .sort({ createdAt: -1 })
+      .limit(500)
+      .lean();
+    res.json({ organizations });
+  });
+  router.get("/admin/logs", requireSuperAdmin, async (req, res) => {
+    const query = z
+      .object({
+        orgId: z.string().optional(),
+        action: z.string().optional(),
+        actorUserId: z.string().optional(),
+        from: z.string().optional(),
+        to: z.string().optional(),
+        page: z.coerce.number().int().min(1).optional(),
+        pageSize: z.coerce.number().int().min(1).max(200).optional(),
+      })
+      .parse(req.query);
+    const result = await listAuditLogs(query);
+    await recordAuditLog({
+      actorUserId: req.auth.userId,
+      action: AUDIT_ACTIONS.ADMIN_LOGS_VIEWED,
+      metadata: { filters: query },
+      ip: req.ip,
+    });
+    res.json(result);
   });
   router.use((error, req, res, next) => {
     if (error instanceof z.ZodError)
