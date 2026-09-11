@@ -136,3 +136,6 @@ button:disabled {
   animation: orbit 18s ease-in-out infinite alternate;
 }
 @keyframes orbit {
+  to {
+    transform: translate(30%, 5%) scale(1.1);
+  }
