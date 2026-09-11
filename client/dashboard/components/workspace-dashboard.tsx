@@ -711,3 +711,26 @@ export function WorkspaceDashboard({
                     <summary className="cursor-pointer text-accent">
                       Developer integration contract
                     </summary>
+                    <p className="mt-3 text-sm text-muted">
+                      POST /api/platform/ingest/telemetry with the x-api-key
+                      header. Reuse eventId when retrying. duration is
+                      cumulative session duration in seconds. Use a consistent
+                      target such as level 5.
+                    </p>
+                    <pre className="mt-3 overflow-auto rounded-lg bg-surface-sunken p-4 text-xs">
+                      {JSON.stringify(
+                        {
+                          events: [
+                            {
+                              eventId: "unique-event-id",
+                              playerId: "player-id",
+                              sessionId: "session-id",
+                              target: "level 5",
+                              eventType: "attempt",
+                              duration: 60,
+                              build: "your-build",
+                            },
+                          ],
+                        },
+                        null,
+                        2,
