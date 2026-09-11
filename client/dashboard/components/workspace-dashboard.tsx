@@ -109,3 +109,25 @@ export function WorkspaceDashboard({
           setResolvedUrl(data.embedUrl);
         } else {
           setResolvedUrl(previewWorkspace.webglUrl);
+        }
+      })
+      .catch(() => {
+        if (active) setResolvedUrl(previewWorkspace.webglUrl);
+      })
+      .finally(() => {
+        if (active) setResolving(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [previewWorkspace]);
+
+  useEffect(() => {
+    if (!previewWorkspace) return;
+    const el = previewContainerRef.current;
+    if (!el) return;
+    const updateSize = () => {
+      const rect = el.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        setContainerSize({ width: rect.width, height: rect.height });
+      }
