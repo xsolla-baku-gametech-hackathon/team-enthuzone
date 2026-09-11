@@ -650,3 +650,14 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
     } catch {
       throw new AppError("AI recommendations unavailable. Please retry.", 503);
     }
+  });
+  router.post(
+    "/workspaces/:id/issues/:issueId/verify-bot",
+    async (req, res) => {
+      await owned(req);
+      const workspaceId = req.params.id;
+      const issue = await Cluster.findOne({
+        id: req.params.issueId,
+        workspaceId,
+      });
+      if (!issue) throw new AppError("Issue not found", 404);
