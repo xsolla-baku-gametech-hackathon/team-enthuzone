@@ -52,4 +52,31 @@ test('telemetry retains generic nested properties and can be read back', async (
     playerId: 'player_123',
     sessionId: 'session_456',
     eventType: 'custom',
-    eventName: 'Vehicle_Overheated',
+    eventName: 'Vehicle_Overheated',
+    buildVersion: '1.8.0',
+    timestamp: '2026-09-10T12:31:00Z',
+    properties: { vehicle: { class: 'rover', heat: 98 }, experimentalFlag: true },
+  };
+
+  const created = await request(app).post('/api/telemetry').send(payload).expect(202);
+  assert.match(created.body.telemetry.id, /^tel_/);
+  assert.equal(created.body.telemetry.eventType, 'CUSTOM');
+  assert.deepEqual(created.body.telemetry.properties, payload.properties);
+  assert.ok(created.body.telemetry.receivedAt);
+
+  const listed = await request(app)
+    .get('/api/telemetry?gameId=darkfront&playerId=player_123&eventName=vehicle_overheated')
+    .expect(200);
+  assert.equal(listed.body.count, 1);
+  assert.deepEqual(listed.body.telemetry[0].properties, payload.properties);
+});
+
+test('telemetry validation rejects malformed events', async () => {
+  const response = await request(createApp())
+    .post('/api/telemetry')
+    .send({ gameId: 'darkfront', properties: {} })
+    .expect(400);
+
+  assert.equal(response.body.error.code, 'VALIDATION_ERROR');
+  assert.ok(response.body.error.details.fieldErrors.playerId);
+});
