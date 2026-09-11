@@ -47,4 +47,10 @@ class ForbiddenError extends AppError {
 
 module.exports = {
   AppError,
-  ValidationError,
+  ValidationError,
+  NotFoundError,
+  ConflictError,
+  UnauthorizedError,
+  InvalidCredentialsError,
+  ForbiddenError,
+};
