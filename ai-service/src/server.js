@@ -50,3 +50,4 @@ function createApp() {
             ? e.message
             : "INVALID_AI_OUTPUT",
         }),
+      );
