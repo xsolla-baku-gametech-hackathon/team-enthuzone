@@ -15,4 +15,9 @@ async function bootstrap() {
     organizationRepository: new MongoOrganizationRepository(),
     userRepository: new MongoUserRepository(),
     transactionManager: new MongoTransactionManager(),
-  };
+  };
+
+  const app = createApp(repositoryOptions);
+  const server = app.listen(env.port, () => {
+    console.log(`Player Data Ingestion API listening on port ${env.port} (mongodb)`);
+  });
