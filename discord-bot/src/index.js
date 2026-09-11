@@ -60,3 +60,4 @@ async function relay(message) {
         body: JSON.stringify({
           id: message.id,
           author: message.author.tag || message.author.username || message.author.id,
+          content: message.content.slice(0, 6000),
