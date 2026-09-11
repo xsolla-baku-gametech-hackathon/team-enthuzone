@@ -45,3 +45,6 @@ npm run dev
    - `bot` seçimini işarələyin.
    - Aşağıda icazələrdən: `Read Messages/View Channels`, `Send Messages`, `Add Reactions` seçin.
    - Yaranan linki brauzerdə açıb botu öz Discord serverinizə əlavə edin.
+
+### 2. Discord Channel ID
+1. Discord-un özündə **Settings** ➔ **Advanced** ➔ **Developer Mode** aktiv edin.
