@@ -2,7 +2,7 @@
 
 ## 1. Executive Summary
 
-**Player Issue Intelligence (Enthuzone)** is an enterprise-grade gametech platform that converges qualitative player sentiment with quantitative in-game telemetry. It bridges the gap between what players *say* (in Discord, Steam, Reddit, and in-game feedback) and what players *experience* (crashes, frame drops, high abandonment rates, spike in retries, low completion rates).
+**GoBuster** is an enterprise-grade gametech platform that converges qualitative player sentiment with quantitative in-game telemetry. It bridges the gap between what players *say* (in Discord, Steam, Reddit, and in-game feedback) and what players *experience* (crashes, frame drops, high abandonment rates, spike in retries, low completion rates).
 
 By coupling **Google Gemini 2.5 Flash** with deterministic mathematical correlation engines, the system transforms raw unorganized noise into actionable, prioritized issues with inspectable evidence.
 

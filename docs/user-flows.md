@@ -1,6 +1,6 @@
 # 🔄 End-to-End User Flows & Journeys
 
-This document outlines the complete behavioral flows, state transitions, and step-by-step user journeys across the **Player Issue Intelligence (Enthuzone)** platform.
+This document outlines the complete behavioral flows, state transitions, and step-by-step user journeys across the **GoBuster** platform.
 
 ---
 
