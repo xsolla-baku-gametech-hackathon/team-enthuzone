@@ -912,3 +912,25 @@ export function WorkspaceDashboard({
                     <RadioTower size={22} />
                   ) : (
                     <Check size={22} />
+                  )}
+                </div>
+                <div>
+                  <h2 id="secret-modal-title" className="text-xl font-semibold">
+                    {secret.type === "telemetry"
+                      ? "Telemetry API Connection Created!"
+                      : secret.type === "discord"
+                      ? "Discord Source Created!"
+                      : "API Key Generated!"}
+                  </h2>
+                  <p className="text-xs text-muted mt-0.5">
+                    {secret.type === "telemetry"
+                      ? "Give these credentials and endpoint to your Game Developer to integrate gameplay tracking."
+                      : "Save these credentials now. The secret key is only displayed once."}
+                  </p>
+                </div>
+              </div>
+              <button
+                aria-label="Close dialog"
+                className="rounded-lg p-1.5 text-muted hover:bg-surface-raised hover:text-text transition"
+                onClick={() => setSecret(null)}
+              >
