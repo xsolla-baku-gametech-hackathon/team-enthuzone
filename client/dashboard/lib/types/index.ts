@@ -25,4 +25,6 @@ export interface Issue {
   retryRateChange: number;
   quitRateChange: number;
   affectedBuild: string;
-  affectedSegment: string;
+  affectedSegment: string;
+  sparkline: number[];
+}
