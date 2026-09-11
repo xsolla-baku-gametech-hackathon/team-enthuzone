@@ -660,3 +660,28 @@ export function BotLivePlaytestModal({
                 ref={gameAreaRef}
                 className="relative aspect-square w-full max-w-[480px] rounded-2xl border-2 border-line/80 bg-surface-sunken shadow-2xl overflow-hidden select-none"
               >
+                {/* 2D Canvas */}
+                <canvas
+                  ref={canvasRef}
+                  width={480}
+                  height={480}
+                  className="h-full w-full block cursor-crosshair"
+                />
+
+                {/* VISIBLE AI CURSOR WITH REAL-TIME CLICK RIPPLE */}
+                {isAiActive && (
+                  <div
+                    className="pointer-events-none absolute transition-all duration-180 ease-out z-30"
+                    style={{
+                      left: `${cursorPos.x}px`,
+                      top: `${cursorPos.y}px`,
+                      transform: "translate(-6px, -6px)",
+                    }}
+                  >
+                    {/* Ripple animation on click */}
+                    {cursorClicking && (
+                      <span className="absolute -inset-4 rounded-full border-2 border-accent animate-ping pointer-events-none opacity-90" />
+                    )}
+
+                    {/* Cyber Neon Cursor SVG Pointer */}
+                    <div className={`transition-transform duration-100 ${cursorClicking ? "scale-90" : "scale-100"}`}>
