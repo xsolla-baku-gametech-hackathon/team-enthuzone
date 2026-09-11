@@ -5,3 +5,5 @@ RUN npm ci
 COPY . .
 ARG CORE_API_URL=http://core:4000
 ENV CORE_API_URL=$CORE_API_URL
+RUN npm run build
+USER node
