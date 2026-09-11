@@ -32,3 +32,4 @@ function createApp() {
         text: z.string().min(1).max(6000),
         existing: z
           .array(z.object({ type: z.string(), target: z.string() }))
+          .max(100)
