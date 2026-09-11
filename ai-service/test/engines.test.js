@@ -11,3 +11,4 @@ test("normalization unifies aliases, roman numerals and whitespace", () => {
     target: "main menu",
   });
 });
+test("correlation uses only matching target and category", () => {
