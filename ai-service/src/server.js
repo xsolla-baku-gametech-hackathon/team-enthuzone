@@ -13,3 +13,4 @@ function createApp() {
   app.get("/health", (_req, res) => res.json({ status: "ok" }));
   app.use("/internal", (req, res, next) => {
     const actual = Buffer.from(req.get("authorization") || "");
+    const expected = Buffer.from(`Bearer ${process.env.AI_INTERNAL_TOKEN}`);
