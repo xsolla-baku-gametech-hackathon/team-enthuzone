@@ -41,3 +41,4 @@ function createApp() {
       res.json({
         ...result,
         normalized: normalize(result.type, result.target),
+      });
