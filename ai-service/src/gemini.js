@@ -30,3 +30,4 @@ const schema = {
     "target",
     "sentiment",
     "confidence",
+    "summary",
