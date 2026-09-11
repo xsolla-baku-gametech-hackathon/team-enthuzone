@@ -81,3 +81,4 @@ async function relay(message) {
         );
         return;
       }
+    } catch (e) {
