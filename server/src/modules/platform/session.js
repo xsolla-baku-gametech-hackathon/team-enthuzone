@@ -53,3 +53,14 @@ function createSessionRouter(service) {
   router.post("/refresh", async (req, res) => {
     const token = cookies(req).refresh_token;
     if (!token) throw new AppError("Session expired. Please sign in.", 401);
+    const session = await Session.findOneAndDelete({
+      tokenHash: hash(token),
+      expiresAt: { $gt: new Date() },
+    });
+    if (!session) throw new AppError("Session expired. Please sign in.", 401);
+    const user = await service.userService.findById(session.userId);
+    const organization =
+      user && (await service.organizationService.findById(user.organizationId));
+    if (!user || user.status !== "ACTIVE" || organization?.status !== "ACTIVE")
+      throw new AppError("Session expired", 401);
+    return issue(res, {
