@@ -1537,3 +1537,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                   <ArrowUpRight size={12} />
                 </a>
               </div>
+            </section>
+          </div>
+        );
+      })()}
+      {activeBotTest && (
+        <BotLivePlaytestModal
+          botName={activeBotTest.botName}
+          gameUrl={activeBotTest.gameUrl}
+          workspaceId={selected}
+          onClose={() => setActiveBotTest(null)}
+          onTelemetrySynced={() => reload()}
+        />
+      )}
+    </div>
+  );
+  function Connections({ type }: { type: string }) {
+    return (
+      <div className="grid gap-3 sm:grid-cols-2">
+        {detail?.connections
+          .filter((c) => c.type === type)
+          .map((c) => (
+            <div
