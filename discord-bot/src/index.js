@@ -22,3 +22,4 @@ const configSchema = z.object({
 let config;
 try {
   config = configSchema.parse(process.env);
+} catch (err) {
