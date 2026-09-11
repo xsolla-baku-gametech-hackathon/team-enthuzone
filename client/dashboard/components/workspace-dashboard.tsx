@@ -1001,3 +1001,26 @@ export function WorkspaceDashboard({
                     <div className="flex items-center justify-between">
                       <span className="font-semibold text-text">
                         Game Developer Integration Snippet:
+                      </span>
+                      <button
+                        type="button"
+                        className="text-xs text-accent hover:underline flex items-center gap-1"
+                        onClick={() => {
+                          const endpoint =
+                            typeof window !== "undefined"
+                              ? `${window.location.origin}/api/platform/ingest/telemetry`
+                              : "http://127.0.0.1:4000/api/platform/ingest/telemetry";
+                          const snippet = `// Endpoint: POST ${endpoint}
+// Headers:
+//   Content-Type: application/json
+//   x-api-key: ${secret.key}
+
+{
+  "events": [
+    {
+      "eventId": "unique-event-id-001",
+      "playerId": "player_123",
+      "sessionId": "session_456",
+      "target": "level 1",
+      "eventType": "attempt",
+      "duration": 45,
