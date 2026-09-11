@@ -243,3 +243,25 @@ export function WorkspaceDashboard({
       {loading ? (
         <div className="glass rounded-xl p-12 text-muted">
           Loading your organization…
+        </div>
+      ) : !workspaces.length ? (
+        <section className="glass grid min-h-96 place-content-center rounded-2xl p-8 text-center">
+          <Layers3 size={54} className="mx-auto mb-6 text-accent" />
+          <h2 className="text-2xl font-semibold">There is no workspace yet</h2>
+          <p className="mx-auto mt-3 max-w-md text-muted">
+            Give your game a home. Connect feedback and gameplay to discover
+            what your players need.
+          </p>
+          <button
+            className="primary mx-auto mt-7"
+            onClick={() => setModal("workspace")}
+          >
+            <Plus size={17} />
+            Create your first workspace
+          </button>
+        </section>
+      ) : (
+        <>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {workspaces.map((w) => {
+              const hostname = (() => {
