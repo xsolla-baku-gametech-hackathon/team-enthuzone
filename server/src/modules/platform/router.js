@@ -248,3 +248,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       .strict()
       .parse(req.body);
     let feedback;
+    try {
+      feedback = await Feedback.create({
+        workspaceId: c.workspaceId,
+        sourceId: c.id,
+        externalId: input.id,
+        author: input.author,
+        text: input.content,
+      });
+    } catch (e) {
+      if (e.code === 11000) return res.json({ duplicate: true });
+      throw e;
+    }
+    await analyzeFeedback(feedback);
