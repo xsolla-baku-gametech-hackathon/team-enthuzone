@@ -192,3 +192,7 @@ body {
 :focus-visible {
   outline: 2px solid var(--accent-strong);
   outline-offset: 2px;
+}
+* {
+  scrollbar-color: var(--line-strong) var(--surface-sunken);
+  scrollbar-width: thin;
