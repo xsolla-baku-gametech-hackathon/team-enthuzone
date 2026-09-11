@@ -67,4 +67,11 @@ class AuthService {
     return this.#authResponse(user, organization);
   }
 
-  async authenticate(token) {
+  async authenticate(token) {
+    const payload = this.tokenService.verify(token);
+    const user = await this.userService.findById(payload.sub);
+    if (!user || user.status !== 'ACTIVE' || user.organizationId !== payload.organizationId) {
+      throw new UnauthorizedError('Invalid or expired access token');
+    }
+    const organization = await this.organizationService.findById(user.organizationId);
+    if (!organization || organization.status !== 'ACTIVE') {
