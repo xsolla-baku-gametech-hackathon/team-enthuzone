@@ -6,3 +6,11 @@ function model(name, fields, indexes = []) {
       id: { type: String, default: () => randomUUID(), unique: true },
       ...fields,
     },
+    { timestamps: true, versionKey: false },
+  );
+  for (const [fields, options] of indexes) schema.index(fields, options);
+  return mongoose.models[name] || mongoose.model(name, schema);
+}
+const Workspace = model("Workspace", {
+  orgId: { type: String, index: true, required: true },
+  name: String,
