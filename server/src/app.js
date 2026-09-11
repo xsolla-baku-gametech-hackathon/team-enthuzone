@@ -40,4 +40,11 @@ function createContainer(options = {}) {
       telemetryService: telemetry.service,
     },
   };
-}
+}
+
+function createApp(options = {}) {
+  const app = express();
+  const container = createContainer(options);
+
+  app.disable('x-powered-by');
+  app.use(helmet());
