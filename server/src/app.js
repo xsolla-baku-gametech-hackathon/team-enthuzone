@@ -66,3 +66,10 @@ function createApp(options = {}) {
           req.get('host')?.includes(originUrl.hostname)
         ) {
           return next();
+        }
+      } catch {}
+
+      return res.status(403).json({ error: { message: 'Origin not allowed' } });
+    }
+    next();
+  });
