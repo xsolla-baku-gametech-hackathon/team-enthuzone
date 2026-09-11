@@ -7,3 +7,5 @@ Standalone Discord bot microservice that listens to feedback/bug report channels
 ## 🚀 Setup & Run (Qurulum və İşə Salma)
 
 ### 1. Install Dependencies
+```bash
+cd discord-bot
