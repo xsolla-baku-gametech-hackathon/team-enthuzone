@@ -65,3 +65,4 @@ function createApp() {
     }
   });
   app.post("/internal/ai/correlate", (req, res) => {
+    const input = z
