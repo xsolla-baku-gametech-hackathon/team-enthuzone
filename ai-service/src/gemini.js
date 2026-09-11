@@ -111,3 +111,5 @@ async function recommend(issue, evidence) {
           items: { type: "string" },
           maxItems: 3,
         },
+      },
+      required: ["recommendations"],
