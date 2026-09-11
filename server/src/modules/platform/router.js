@@ -161,3 +161,15 @@ async function rankIssues(feedback, clusters, metrics) {
     });
   }
   return issues.sort((a, b) => b.priority.score - a.priority.score);
+}
+async function refreshRecommendations(workspaceId) {
+  try {
+    const filter = { workspaceId };
+    const [feedback, clusters, events] = await Promise.all([
+      Feedback.find(filter).lean(),
+      Cluster.find(filter).lean(),
+      Event.find(filter).lean(),
+    ]);
+    const metrics = aggregate(events);
+    await Evidence.updateOne(filter, { $set: { metrics } }, { upsert: true });
+    const ranked = await rankIssues(feedback, clusters, metrics);
