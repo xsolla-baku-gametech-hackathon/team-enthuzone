@@ -265,3 +265,25 @@ export function WorkspaceDashboard({
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {workspaces.map((w) => {
               const hostname = (() => {
+                try {
+                  return new URL(w.webglUrl).hostname;
+                } catch {
+                  return w.webglUrl;
+                }
+              })();
+              return (
+                <div
+                  key={w.id}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => choose(w.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") choose(w.id);
+                  }}
+                  className={`glass group relative flex flex-col justify-between rounded-xl p-5 text-left transition hover:-translate-y-0.5 cursor-pointer ${selected === w.id ? "ring-1 ring-accent" : ""}`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <Gamepad2 className="text-accent" />
+                      <button
+                        type="button"
