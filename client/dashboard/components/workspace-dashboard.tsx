@@ -756,3 +756,25 @@ export function WorkspaceDashboard({
                     </div>
                     <div className="flex items-center gap-2">
                       <button
+                        type="button"
+                        className="secondary text-xs flex items-center gap-1.5"
+                        onClick={() =>
+                          setActiveBotTest({
+                            botName: "Cyber Snake AI Autonomous Testbed",
+                            gameUrl: "",
+                          })
+                        }
+                      >
+                        <Sparkles size={15} className="text-accent" />
+                        Quick Snake AI Test
+                      </button>
+                      <button className="primary text-xs" onClick={() => setModal("bot")}>
+                        <Plus size={16} />
+                        Add AI Player Bot
+                      </button>
+                    </div>
+                  </div>
+
+                  {detail.connections.filter((c) => c.type === "bot").length === 0 ? (
+                    <div className="rounded-2xl border border-dashed border-line p-8 sm:p-10 text-center bg-surface-sunken/40">
+                      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/15 text-accent ring-1 ring-accent/30">
