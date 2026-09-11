@@ -30,3 +30,4 @@ function createApp() {
     const { text, existing } = z
       .object({
         text: z.string().min(1).max(6000),
+        existing: z
