@@ -46,3 +46,19 @@ async function checkPublicUrl(value, redirects = 0) {
         res.destroy();
         resolve(result);
       },
+    );
+    req.setTimeout(6000, () => req.destroy(new Error("TIMEOUT")));
+    req.on("error", () =>
+      reject(new AppError("Game URL is not reachable", 400)),
+    );
+    req.end();
+  });
+  if (result.status >= 300 && result.status < 400 && result.location) {
+    if (redirects >= 3) throw new AppError("Too many game URL redirects", 400);
+    return checkPublicUrl(new URL(result.location, url).href, redirects + 1);
+  }
+  if (result.status < 200 || result.status >= 400)
+    throw new AppError(`Game host returned HTTP ${result.status}`, 400);
+  return value;
+}
+module.exports = { checkPublicUrl };
