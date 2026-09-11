@@ -67,3 +67,4 @@ async function relay(message) {
       if (response.ok) {
         console.log(
           `[Relay OK] Message ${message.id} from @${message.author.username} sent to Core API.`
+        );
