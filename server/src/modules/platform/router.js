@@ -173,3 +173,16 @@ async function refreshRecommendations(workspaceId) {
     const metrics = aggregate(events);
     await Evidence.updateOne(filter, { $set: { metrics } }, { upsert: true });
     const ranked = await rankIssues(feedback, clusters, metrics);
+    for (const issue of ranked
+      .filter((i) => i.status !== "RESOLVED")
+      .slice(0, 3)) {
+      if (issue.recommendations?.length) continue;
+      const claimed = await Cluster.findOneAndUpdate(
+        {
+          id: issue.id,
+          recommendationStatus: { $nin: ["processing", "complete"] },
+        },
+        { $set: { recommendationStatus: "processing" } },
+        { returnDocument: "after" },
+      );
+      if (!claimed) continue;
