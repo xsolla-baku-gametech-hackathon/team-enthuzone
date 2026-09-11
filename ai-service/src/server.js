@@ -83,3 +83,4 @@ function createApp() {
       JSON.stringify({
         event: "request_failed",
         path: req.path,
+        code: err instanceof z.ZodError ? "VALIDATION" : "AI_UNAVAILABLE",
