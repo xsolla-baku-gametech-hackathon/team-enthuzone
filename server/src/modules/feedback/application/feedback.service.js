@@ -20,4 +20,6 @@ class FeedbackService {
     };
     return this.feedbackRepository.findAll(normalizedFilters);
   }
-}
+}
+
+module.exports = { FeedbackService };
