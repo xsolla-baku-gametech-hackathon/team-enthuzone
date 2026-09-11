@@ -133,3 +133,5 @@ bot.once("clientReady", async () => {
   } else {
     console.log(`🏠 [Joined Servers]: ${guilds.join(", ")}`);
   }
+
+  try {
