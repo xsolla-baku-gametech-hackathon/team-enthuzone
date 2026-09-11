@@ -143,3 +143,21 @@ test(
     const { body: toggledActive } = await client
       .patch(`/api/platform/workspaces/${w.id}/connections/${c.id}/toggle`)
       .expect(200);
+    assert.equal(toggledActive.status, "active");
+
+    // 4. Test Ingest Resumed
+    await request(app)
+      .post("/api/platform/ingest/telemetry")
+      .set("x-api-key", c.key)
+      .send({ events: [{ ...event, eventId: "e-active-resumed" }] })
+      .expect(202);
+
+    const { body: source } = await client
+      .post(`/api/platform/workspaces/${w.id}/connections`)
+      .send({ name: "Discord players", type: "discord" })
+      .expect(201);
+    const feedback = {
+      id: "discord-message-1",
+      author: "player1",
+      content: "Level 5 is far too difficult; I quit after ten attempts.",
+    };
