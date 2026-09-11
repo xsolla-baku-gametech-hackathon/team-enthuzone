@@ -537,3 +537,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
     }
 
     // Scenario 2: Level 1 (Smooth Onboarding, ~5% Dropoff, 95% Completion, 1-2 attempts)
+    for (let i = 1; i <= 25; i++) {
+      const pid = `player_l1_${i}`;
+      const sid = `sess_l1_${i}`;
+      const completed = i <= 24;
+      const quit = !completed;
+      const attempts = completed ? (i % 3 === 0 ? 2 : 1) : 3;
+      const duration = Math.floor(100 + Math.random() * 40);
+      addSession("level 1", pid, sid, attempts, completed, quit, duration);
+    }
+
+    // Scenario 3: Level 2 (Boss Encounter, 25% Dropoff, 65% Completion)
+    for (let i = 1; i <= 20; i++) {
