@@ -375,3 +375,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                         className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] ${
                           data.password.length >= 12
                             ? "bg-accent/20 text-accent"
+                            : "bg-surface text-muted"
+                        }`}
+                      >
+                        {data.password.length >= 12 ? <Check size={11} /> : "•"}
+                      </span>
+                      <span
+                        className={
+                          data.password.length >= 12
+                            ? "text-text font-medium"
+                            : "text-muted"
+                        }
+                      >
+                        At least 12 characters ({data.password.length}/12)
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] ${
+                          data.confirm && data.confirm === data.password
+                            ? "bg-accent/20 text-accent"
+                            : "bg-surface text-muted"
