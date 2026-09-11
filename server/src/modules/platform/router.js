@@ -23,3 +23,15 @@ const gameUrl = z
   .refine((v) => {
     const u = new URL(v);
     return u.protocol === "https:" && !u.username && !u.password;
+  }, "Use a public HTTPS game URL");
+function rateLimit(max = 120) {
+  const clients = new Map();
+  return (req, res, next) => {
+    const now = Date.now();
+    if (clients.size > 10000)
+      for (const [k, v] of clients) if (v.until < now) clients.delete(k);
+    const key = req.ip;
+    const entry = clients.get(key);
+    const state =
+      entry && entry.until > now ? entry : { count: 0, until: now + 60000 };
+    state.count++;
