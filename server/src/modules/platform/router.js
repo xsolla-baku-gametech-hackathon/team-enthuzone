@@ -524,3 +524,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
         });
       }
     };
+
+    // Scenario 1: Level 5 (High Dropoff ~41%, High Attempts ~6.8, Low Completion ~23%)
+    for (let i = 1; i <= 35; i++) {
+      const pid = `player_l5_${i}`;
+      const sid = `sess_l5_${i}`;
+      const completed = i <= 8;
+      const quit = !completed && i <= 22;
+      const attempts = completed ? Math.floor(Math.random() * 3) + 5 : Math.floor(Math.random() * 4) + 6;
+      const duration = Math.floor(400 + Math.random() * 150);
+      addSession("level 5", pid, sid, attempts, completed, quit, duration);
+    }
+
+    // Scenario 2: Level 1 (Smooth Onboarding, ~5% Dropoff, 95% Completion, 1-2 attempts)
