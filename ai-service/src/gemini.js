@@ -97,3 +97,5 @@ async function analyze(text, existing = []) {
   );
 }
 async function recommend(issue, evidence) {
+  const result = await generate(
+    JSON.stringify({
