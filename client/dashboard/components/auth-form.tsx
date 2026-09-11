@@ -574,3 +574,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
               role="alert"
               className="flex items-center gap-2 rounded-lg bg-critical-surface p-3 text-sm text-critical border border-critical/30"
             >
+              <AlertCircle size={16} className="shrink-0" />
+              <span>{error}</span>
+            </p>
+          )}
+
+          <div className="flex gap-3">
+            {register && step > 0 && (
+              <button
+                type="button"
+                className="secondary"
+                onClick={() => {
+                  setStep(step - 1);
+                  setError("");
+                }}
+              >
+                Back
+              </button>
+            )}
+            <button disabled={busy} className="primary flex-1">
+              {busy
+                ? "Please wait…"
+                : register
