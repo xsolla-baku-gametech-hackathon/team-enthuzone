@@ -52,3 +52,21 @@ test(
     }
     const app = createApp({
       organizationRepository: new MongoOrganizationRepository(),
+      userRepository: new MongoUserRepository(),
+      transactionManager: new MongoTransactionManager(),
+      verifyGameUrl: async () => {},
+      authConfig: {
+        jwtSecret: "test-secret-that-is-at-least-32-characters",
+        jwtExpiresIn: "15m",
+        passwordHashRounds: 10,
+      },
+    });
+    const client = request.agent(app);
+    const other = request.agent(app);
+    await client
+      .post("/api/session/register")
+      .send({
+        organizationName: "Studio One",
+        name: "Owner One",
+        email: "one@example.test",
+        password: "secure-password-123",
