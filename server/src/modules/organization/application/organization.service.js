@@ -21,4 +21,8 @@ class OrganizationService {
   }
 
   findById(id, transaction) {
-    return this.organizationRepository.findById(id, transaction);
+    return this.organizationRepository.findById(id, transaction);
+  }
+}
+
+module.exports = { OrganizationService };
