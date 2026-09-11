@@ -538,3 +538,27 @@ export function BotLivePlaytestModal({
       if (onTelemetrySynced) onTelemetrySynced();
       setTimeout(() => setTelemetryNotice(""), 3500);
     } catch (err) {
+      setTelemetryNotice("Failed to sync telemetry.");
+      addLog("alert", `❌ Telemetry sync error: ${(err as Error).message}`);
+    } finally {
+      setIsSendingTelemetry(false);
+    }
+  };
+
+  // Keyboard navigation when user takes over
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (mode !== "snake") return;
+      if (["ArrowUp", "KeyW"].includes(e.code) && direction !== "DOWN") {
+        setDirection("UP");
+        setIsAiActive(false);
+      } else if (["ArrowDown", "KeyS"].includes(e.code) && direction !== "UP") {
+        setDirection("DOWN");
+        setIsAiActive(false);
+      } else if (["ArrowLeft", "KeyA"].includes(e.code) && direction !== "RIGHT") {
+        setDirection("LEFT");
+        setIsAiActive(false);
+      } else if (["ArrowRight", "KeyD"].includes(e.code) && direction !== "LEFT") {
+        setDirection("RIGHT");
+        setIsAiActive(false);
+      } else if (e.code === "Space") {
