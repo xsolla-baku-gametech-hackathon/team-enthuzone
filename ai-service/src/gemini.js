@@ -77,3 +77,5 @@ async function generate(prompt, responseJsonSchema) {
         body.candidates?.[0]?.content?.parts
           ?.map((p) => p.text || "")
           .join("") || "",
+      );
+    } catch (e) {
