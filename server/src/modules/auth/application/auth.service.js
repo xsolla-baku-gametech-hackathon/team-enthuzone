@@ -87,4 +87,10 @@ class AuthService {
       throw new UnauthorizedError('Invalid or expired access token');
     }
     return { user: publicUser(user), organization: publicOrganization(organization) };
-  }
+  }
+
+  #authResponse(user, organization) {
+    return {
+      user: publicUser(user),
+      organization: publicOrganization(organization),
+      accessToken: this.tokenService.sign(user),
