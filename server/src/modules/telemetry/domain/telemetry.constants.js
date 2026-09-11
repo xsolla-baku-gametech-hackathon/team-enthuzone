@@ -4,4 +4,7 @@ const EVENT_TYPES = Object.freeze([
   'PERFORMANCE',
   'ECONOMY',
   'SESSION',
-  'CUSTOM',
+  'CUSTOM',
+]);
+
+module.exports = { EVENT_TYPES };
