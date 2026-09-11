@@ -79,3 +79,9 @@ function createApp(options = {}) {
   app.use('/api/auth', container.auth.router);
   app.use('/api/session', createSessionRouter(container.auth.service));
   app.use('/api/platform', createPlatformRouter(container.auth.authenticate, options.verifyGameUrl));
+  if (env.isTest || process.env.ENABLE_LEGACY_INGESTION === 'true') {
+    app.use('/api/feedback', container.feedback.router);
+    app.use('/api/telemetry', container.telemetry.router);
+  }
+
+  app.use(notFoundHandler);
