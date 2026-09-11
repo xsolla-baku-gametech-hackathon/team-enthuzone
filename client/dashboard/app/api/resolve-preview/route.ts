@@ -39,3 +39,13 @@ export async function GET(request: NextRequest) {
       embedUrl: url,
       originalUrl: url,
       isItchZone: false,
+      embeddable: !parsed.hostname.endsWith("itch.io"),
+    });
+  } catch {
+    return NextResponse.json({
+      embedUrl: url,
+      originalUrl: url,
+      embeddable: false,
+    });
+  }
+}
