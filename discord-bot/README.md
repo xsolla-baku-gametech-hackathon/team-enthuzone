@@ -52,3 +52,4 @@ npm run dev
 
 ### 3. Dashboard Source ID və Webhook Token
 1. Platformada Dashboard-a daxil olun (`http://localhost:3000`).
+2. **Feedback** bölməsinə keçin ➔ **+ Add source** ➔ **Discord** seçin.
