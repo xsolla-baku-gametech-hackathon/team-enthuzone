@@ -40,3 +40,4 @@ function createApp() {
       const result = await analyze(text, existing);
       res.json({
         ...result,
+        normalized: normalize(result.type, result.target),
