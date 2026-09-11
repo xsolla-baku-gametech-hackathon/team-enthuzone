@@ -63,3 +63,19 @@ export type Issue = {
   id: string;
   type: string;
   target: string;
+  summary: string;
+  count: number;
+  affectedUsers: number;
+  authenticity: string;
+  samples: Feedback[];
+  priority: { score: number; label: string };
+  correlation: {
+    score: number;
+    reason: string[];
+    supported: boolean;
+    available: boolean;
+  };
+  aiVerification?: {
+    status: "APPROVED" | "REJECTED" | "PENDING";
+    confidence?: number;
+    summary?: string;
