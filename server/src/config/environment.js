@@ -12,4 +12,8 @@ const environmentSchema = z.object({
   JWT_SECRET: z.string().min(32).optional(),
   JWT_EXPIRES_IN: z.string().min(1).default('15m'),
   PASSWORD_HASH_ROUNDS: z.coerce.number().int().min(10).max(15).default(12),
-}).superRefine((value, context) => {
+}).superRefine((value, context) => {
+  if (value.NODE_ENV === 'production' && !value.JWT_SECRET) {
+    context.addIssue({ code: z.ZodIssueCode.custom, path: ['JWT_SECRET'], message: 'JWT_SECRET is required in production' });
+  }
+});
