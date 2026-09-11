@@ -341,3 +341,27 @@ export function BotLivePlaytestModal({
         }
         setDirection(nextDir);
       }
+
+      // Next Head Coordinates
+      let nextX = head.x;
+      let nextY = head.y;
+      if (nextDir === "UP") nextY -= 1;
+      else if (nextDir === "DOWN") nextY += 1;
+      else if (nextDir === "LEFT") nextX -= 1;
+      else if (nextDir === "RIGHT") nextX += 1;
+
+      // Collision with Boundary Walls
+      if (nextX < 0 || nextX >= GRID_SIZE || nextY < 0 || nextY >= GRID_SIZE) {
+        setIsGameOver(true);
+        setIsPlaying(false);
+        addLog("alert", `💥 Game Over! Collision with perimeter barrier at (${nextX}, ${nextY}). Final Score: ${score}`);
+        return;
+      }
+
+      // Collision with Obstacles
+      if (currentObs.some((o) => o.x === nextX && o.y === nextY)) {
+        setIsGameOver(true);
+        setIsPlaying(false);
+        addLog("alert", `💥 Game Over! AI collided with obstacle at Level ${level}. Telemetry registered difficulty drop-off.`);
+        return;
+      }
