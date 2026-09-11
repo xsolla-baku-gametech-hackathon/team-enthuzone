@@ -10,3 +10,4 @@ const configSchema = z.object({
   DISCORD_CHANNEL_ID: z
     .string({ required_error: "DISCORD_CHANNEL_ID is required in .env" })
     .min(1, "DISCORD_CHANNEL_ID cannot be empty"),
+  DISCORD_SOURCE_ID: z
