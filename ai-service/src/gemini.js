@@ -74,3 +74,5 @@ async function generate(prompt, responseJsonSchema) {
       }
       const body = await response.json();
       return JSON.parse(
+        body.candidates?.[0]?.content?.parts
+          ?.map((p) => p.text || "")
