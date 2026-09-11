@@ -1581,3 +1581,26 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                           "PATCH",
                         );
                         setNotice(
+                          c.status === "paused"
+                            ? "Telemetry ingestion resumed (Token unchanged)."
+                            : "Telemetry ingestion paused (Token preserved).",
+                        );
+                        setTimeout(() => setNotice(""), 3500);
+                        await reload();
+                      })
+                    }
+                    className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold transition border cursor-pointer ${
+                      c.status === "paused"
+                        ? "bg-amber-500/15 border-amber-500/30 text-amber-400 hover:bg-amber-500/25"
+                        : "bg-emerald-500/15 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/25"
+                    }`}
+                  >
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full ${
+                        c.status === "paused"
+                          ? "bg-amber-400"
+                          : "bg-emerald-400 animate-pulse"
+                      }`}
+                    />
+                    {c.status === "paused"
+                      ? "Paused (Click to On)"
