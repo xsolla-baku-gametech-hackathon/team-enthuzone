@@ -45,4 +45,7 @@ export interface TopicCluster {
   growth: number;
   sentimentScore: number;
   sources: FeedbackSource[];
-}
+}
+
+export interface TelemetryEvent {
+  event: string;
