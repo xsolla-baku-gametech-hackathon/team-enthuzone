@@ -17,4 +17,6 @@ export interface Issue {
   priority: Priority;
   status: IssueStatus;
   priorityScore: number;
-  gameplayImpact: number;
+  gameplayImpact: number;
+  feedbackMentions: number;
+  feedbackGrowth: number;
