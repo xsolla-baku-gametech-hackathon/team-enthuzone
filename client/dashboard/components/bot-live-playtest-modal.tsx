@@ -1004,3 +1004,27 @@ export function BotLivePlaytestModal({
               {/* Sync Telemetry to Platform Button */}
               <div className="border-t border-line p-2.5 bg-surface/70 flex items-center justify-between gap-2">
                 <button
+                  type="button"
+                  disabled={isSendingTelemetry}
+                  onClick={handleSendTelemetry}
+                  className="primary text-xs py-2 px-3 flex-1 flex items-center justify-center gap-1.5"
+                >
+                  <Send size={13} />
+                  {isSendingTelemetry ? "Ingesting to Platform..." : "Sync AI Telemetry to Workspace"}
+                </button>
+              </div>
+            </div>
+
+            {/* Sync Notice */}
+            {telemetryNotice && (
+              <div className="rounded-lg bg-accent/15 border border-accent/40 p-2.5 text-xs text-accent font-semibold flex items-center gap-2">
+                <CheckCircle2 size={16} />
+                {telemetryNotice}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
