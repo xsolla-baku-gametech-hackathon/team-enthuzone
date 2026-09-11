@@ -22,3 +22,11 @@ const Connection = model(
     workspaceId: { type: String, index: true },
     name: String,
     type: { type: String, enum: ["discord", "telemetry", "bot"] },
+    status: { type: String, enum: ["active", "paused"], default: "active" },
+    keyHash: { type: String, select: false },
+    gameUrl: String,
+  },
+  [[{ keyHash: 1 }, { unique: true, sparse: true }]],
+);
+const Feedback = model(
+  "PlatformFeedback",
