@@ -399,3 +399,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
   router.patch("/workspaces/:id", async (req, res) => {
     await owned(req);
     const input = z
+      .object({ name: name.optional(), webglUrl: gameUrl.optional() })
+      .strict()
+      .parse(req.body);
+    if (input.webglUrl) await verifyGameUrl(input.webglUrl);
+    res.json(
+      await Workspace.findOneAndUpdate(
+        { id: req.params.id },
+        { $set: input },
+        { returnDocument: "after" },
+      ),
+    );
+  });
