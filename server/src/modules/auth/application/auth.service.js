@@ -48,4 +48,10 @@ class AuthService {
         throw error;
       }
     }
-
+
+    return this.#authResponse(created.user, created.organization);
+  }
+
+  async login({ email, password }) {
+    const user = await this.userService.findByEmail(normalizeEmail(email));
+    const validPassword = user?.passwordHash
