@@ -27,4 +27,7 @@ export interface Issue {
   affectedBuild: string;
   affectedSegment: string;
   sparkline: number[];
-}
+}
+
+export interface FeedbackItem {
+  id: string;
