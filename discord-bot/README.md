@@ -32,3 +32,5 @@ npm run dev
 ```
 
 ---
+
+## 📋 How to get credentials (Məlumatları necə əldə etməli?)
