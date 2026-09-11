@@ -1,4 +1,8 @@
-# 🎮 Player Issue Intelligence (Enthuzone)
+<p align="center">
+  <img src="./docs/assets/logo.png" alt="GoBuster Mascot Logo" width="160" />
+</p>
+
+# 🐶 GoBuster
 ### AI-Powered Game Analytics & Telemetry Correlation Platform
 
 [![Next.js](https://img.shields.io/badge/Frontend-Next.js%2016-black?style=flat-square&logo=next.js)](https://nextjs.org/)
@@ -19,7 +23,7 @@ In modern game development, studios suffer from two disconnected silos of player
 1. **Qualitative Noise**: Chaotic player chatter across Discord, Steam reviews, and bug reports that are difficult to categorize, deduplicate, and prioritize.
 2. **Quantitative Blindness**: Massive telemetry logs tracking player deaths and quits without explaining *why* players are frustrated.
 
-**Player Issue Intelligence (Enthuzone)** bridges this gap. By coupling **Google Gemini 2.5 Flash** with deterministic mathematical correlation engines, the platform ingests live community feedback from Discord alongside real-time gameplay telemetry from Unity 3D, correlates player complaints with empirical dropoff anomalies, and delivers prioritized, evidence-backed issues and actionable patch advice to Game Designers, Product Managers, and QA Leads.
+**GoBuster** bridges this gap. By coupling **Google Gemini 2.5 Flash** with deterministic mathematical correlation engines, the platform ingests live community feedback from Discord alongside real-time gameplay telemetry from Unity 3D, correlates player complaints with empirical dropoff anomalies, and delivers prioritized, evidence-backed issues and actionable patch advice to Game Designers, Product Managers, and QA Leads.
 
 ---
 

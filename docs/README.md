@@ -1,6 +1,10 @@
-# 📚 Player Issue Intelligence — Documentation Hub
+# 📚 GoBuster — Documentation Hub
 
-Welcome to the comprehensive documentation suite for **Player Issue Intelligence (Enthuzone)**, an end-to-end game intelligence platform developed for the **Xsolla Baku GameTech Hackathon**.
+<p align="center">
+  <img src="./assets/logo.png" alt="GoBuster Mascot Logo" width="140" />
+</p>
+
+Welcome to the comprehensive documentation suite for **GoBuster** (Player Issue Intelligence), an end-to-end game intelligence platform developed for the **Xsolla Baku GameTech Hackathon** by **Team Enthuzone**.
 
 The platform merges qualitative player sentiment (from Discord, Steam, In-game feedback) with quantitative gameplay telemetry (from Unity 3D game clients), utilizes **Google Gemini 2.5 Flash** and mathematical anomaly engines to detect, classify, correlate, and prioritize game issues, and empowers Game Studios, Product Managers, and QA Leads through an evidence-based operational dashboard.
 
