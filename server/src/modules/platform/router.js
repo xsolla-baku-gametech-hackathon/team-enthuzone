@@ -562,3 +562,14 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       mockEvents.map((e) => ({
         updateOne: {
           filter: { workspaceId, eventId: e.eventId },
+          update: { $set: e },
+          upsert: true,
+        },
+      })),
+    );
+
+    const allEvents = await Event.find({ workspaceId }).lean();
+    const metrics = aggregate(allEvents);
+    await Evidence.updateOne({ workspaceId }, { $set: { metrics } }, { upsert: true });
+
+    await refreshRecommendations(workspaceId);
