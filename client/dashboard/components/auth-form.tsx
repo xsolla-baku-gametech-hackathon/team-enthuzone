@@ -86,3 +86,24 @@ export function AuthForm({ register = false }: { register?: boolean }) {
     }
 
     if (key === "name") {
+      if (!trimmed) return "First name is required";
+      if (trimmed.length < 2) return "First name must contain at least 2 characters";
+      if (trimmed.length > limits.max) {
+        return `First name must contain at most ${limits.max} characters`;
+      }
+    }
+
+    if (key === "surname") {
+      if (!trimmed) return "Surname is required";
+      if (trimmed.length > limits.max) {
+        return `Surname must contain at most ${limits.max} characters`;
+      }
+    }
+
+    if (key === "organizationName") {
+      if (!trimmed) return "Organization name is required";
+      if (trimmed.length < 2) return "Organization name must contain at least 2 characters";
+      if (trimmed.length > limits.max) {
+        return `Organization name must contain at most ${limits.max} characters`;
+      }
+    }
