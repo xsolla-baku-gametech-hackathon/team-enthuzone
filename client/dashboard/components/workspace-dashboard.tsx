@@ -533,3 +533,25 @@ export function WorkspaceDashboard({
                             <button
                               disabled={busy}
                               className="secondary"
+                              onClick={() =>
+                                action(async () => {
+                                  await request(
+                                    `/platform/workspaces/${selected}/issues/${i.id}/recommend`,
+                                    {},
+                                  );
+                                  await reload();
+                                })
+                              }
+                            >
+                              Generate recommendations
+                            </button>
+                            <select
+                              aria-label={`Status for ${i.target}`}
+                              className="field w-auto"
+                              value={i.status}
+                              disabled={busy}
+                              onChange={(e) =>
+                                action(async () => {
+                                  await request(
+                                    `/platform/workspaces/${selected}/issues/${i.id}`,
+                                    { status: e.target.value },
