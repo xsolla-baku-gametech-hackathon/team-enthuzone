@@ -40,3 +40,4 @@ const bot = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
   ],
+});
