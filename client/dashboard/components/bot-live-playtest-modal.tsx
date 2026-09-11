@@ -463,3 +463,28 @@ export function BotLivePlaytestModal({
     const foodX = food.x * cellSize + cellSize / 2;
     const foodY = food.y * cellSize + cellSize / 2;
     const foodRadius = cellSize * 0.38;
+
+    ctx.save();
+    ctx.shadowColor = "#e0bd4f";
+    ctx.shadowBlur = 14;
+    const grad = ctx.createRadialGradient(foodX, foodY, 2, foodX, foodY, foodRadius);
+    grad.addColorStop(0, "#fff5cc");
+    grad.addColorStop(0.4, "#e0bd4f");
+    grad.addColorStop(1, "#ed9840");
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(foodX, foodY, foodRadius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Subtle outer ring
+    ctx.strokeStyle = "rgba(255, 230, 100, 0.7)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+
+    // Draw Snake
+    snake.forEach((seg, index) => {
+      const segX = seg.x * cellSize;
+      const segY = seg.y * cellSize;
+
+      if (index === 0) {
