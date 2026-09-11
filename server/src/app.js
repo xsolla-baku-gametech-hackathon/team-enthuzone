@@ -10,3 +10,9 @@ const { MemoryUserRepository } = require('./modules/user');
 const { createAuthModule, MemoryTransactionManager } = require('./modules/auth');
 const { notFoundHandler, errorHandler } = require('./shared/http/middleware/error-handler');
 const { createPlatformRouter } = require('./modules/platform/router');
+const { createSessionRouter } = require('./modules/platform/session');
+
+function createContainer(options = {}) {
+  const organizationRepository = options.organizationRepository || new MemoryOrganizationRepository();
+  const userRepository = options.userRepository || new MemoryUserRepository();
+  const transactionManager = options.transactionManager
