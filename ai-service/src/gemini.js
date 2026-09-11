@@ -17,3 +17,5 @@ const schema = {
     },
     target: { type: "string" },
     sentiment: { type: "string", enum: ["Positive", "Neutral", "Negative"] },
+    confidence: { type: "number" },
+    summary: { type: "string" },
