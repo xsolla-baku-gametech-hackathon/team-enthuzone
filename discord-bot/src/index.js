@@ -153,3 +153,4 @@ bot.once("clientReady", async () => {
 
 bot.on("error", (err) => {
   console.error("[Discord Gateway Error]:", err.message);
+});
