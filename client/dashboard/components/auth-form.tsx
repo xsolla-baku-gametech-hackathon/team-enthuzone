@@ -330,3 +330,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
         {register && (
           <div className="my-6 flex gap-2" aria-label={`Step ${step + 1} of 5`}>
             {titles.map((t, i) => (
+              <span
+                key={t}
+                className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
+                  i <= step ? "bg-accent" : "bg-line"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+
+        <form onSubmit={submit} className="mt-7 grid gap-5" noValidate>
+          {(!register || step === 0) && (
+            <>
+              {field("email", "Organization email", "email")}
+              <div className="relative">
+                {field("password", "Password", visible ? "text" : "password")}
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  className="absolute right-3 top-9 text-muted hover:text-text transition-colors"
+                  aria-label={visible ? "Hide password" : "Show password"}
+                  onClick={() => setVisible(!visible)}
