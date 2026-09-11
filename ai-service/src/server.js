@@ -49,3 +49,4 @@ function createApp() {
           code: e.message?.startsWith("GEMINI_")
             ? e.message
             : "INVALID_AI_OUTPUT",
+        }),
