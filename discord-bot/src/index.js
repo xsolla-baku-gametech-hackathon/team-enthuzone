@@ -163,3 +163,4 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
     console.error("\n⚠️  [ÇOX VACİB / REQUIRED ACTION]:");
     console.error("   Discord bu bot üçün 'Message Content Intent' icazəsini tələb edir.");
     console.error("   Addımlar:");
+    console.error("   1. https://discord.com/developers/applications saytına daxil olun.");
