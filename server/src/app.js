@@ -54,3 +54,9 @@ function createApp(options = {}) {
     if (!['GET','HEAD','OPTIONS'].includes(req.method) && req.get('cookie') && req.get('origin')) {
       const corsEnv = process.env.CORS_ORIGINS || '*';
       if (corsEnv === '*') return next();
+      const allowed = corsEnv.split(',').map(v => v.trim());
+      if (allowed.includes('*') || allowed.includes(req.get('origin'))) return next();
+
+      try {
+        const originUrl = new URL(req.get('origin'));
+        if (
