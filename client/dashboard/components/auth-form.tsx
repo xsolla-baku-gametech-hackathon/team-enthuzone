@@ -175,3 +175,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
         const nameErr = validateField("name", data.name);
         const surnameErr = validateField("surname", data.surname);
         const orgErr = validateField("organizationName", data.organizationName);
+        if (nameErr) stepErrors.name = nameErr;
+        if (surnameErr) stepErrors.surname = surnameErr;
+        if (orgErr) stepErrors.organizationName = orgErr;
+      } else if (currentStep === 2) {
+        const locErr = validateField("location", data.location);
+        if (locErr) stepErrors.location = locErr;
+      } else if (currentStep === 3) {
+        const descErr = validateField("businessDescription", data.businessDescription);
+        if (descErr) stepErrors.businessDescription = descErr;
+      }
+    }
+
+    setFieldErrors((prev) => ({ ...prev, ...stepErrors }));
+
+    const errorKeys = Object.keys(stepErrors);
+    if (errorKeys.length > 0) {
+      setError(stepErrors[errorKeys[0]]);
+      return false;
+    }
+
+    setError("");
+    return true;
