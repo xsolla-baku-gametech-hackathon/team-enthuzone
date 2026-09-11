@@ -48,4 +48,6 @@ export interface TopicCluster {
 }
 
 export interface TelemetryEvent {
-  event: string;
+  event: string;
+  current: number;
+  change: number;
