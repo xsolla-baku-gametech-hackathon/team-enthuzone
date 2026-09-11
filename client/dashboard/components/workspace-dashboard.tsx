@@ -488,3 +488,26 @@ export function WorkspaceDashboard({
                                 <footer className="mt-2 text-xs text-muted">
                                   {f.author} · {f.candidate?.authenticity}
                                 </footer>
+                              </blockquote>
+                            ))}
+                            {i.count > 5 && (
+                              <p className="mt-2 text-xs text-muted">
+                                +{i.count - 5} more reviews in Feedback
+                              </p>
+                            )}
+                          </details>
+                          {i.recommendations?.length > 0 && (
+                            <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-accent">
+                              {i.recommendations.map((r) => (
+                                <li key={r}>{r}</li>
+                              ))}
+                            </ul>
+                          )}
+                          <div className="mt-5 flex flex-wrap gap-2">
+                            <button
+                              disabled={busy}
+                              className="secondary flex items-center gap-1.5"
+                              onClick={() =>
+                                action(async () => {
+                                  const res = await request<{
+                                    success: boolean;
