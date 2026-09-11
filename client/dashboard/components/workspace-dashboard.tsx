@@ -221,3 +221,25 @@ export function WorkspaceDashboard({
           role="alert"
           className="flex items-center justify-between rounded-xl bg-critical-surface p-4 text-critical"
         >
+          <p>{error}</p>
+          <button
+            onClick={() =>
+              action(async () => {
+                const rows = await request<Workspace[]>("/platform/workspaces");
+                setWorkspaces(rows);
+                await reload();
+              })
+            }
+          >
+            Retry
+          </button>
+        </div>
+      )}
+      {notice && (
+        <p role="status" className="text-accent">
+          {notice}
+        </p>
+      )}
+      {loading ? (
+        <div className="glass rounded-xl p-12 text-muted">
+          Loading your organization…
