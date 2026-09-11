@@ -38,4 +38,8 @@ async function bootstrap() {
 if (require.main === module) {
   bootstrap().catch((error) => {
     console.error('Failed to start API', error);
-    process.exitCode = 1;
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { bootstrap };
