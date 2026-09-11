@@ -6,4 +6,6 @@ async function connectMongo(uri) {
   await mongoose.connect(uri, {
     serverSelectionTimeoutMS: 5000,
     maxPoolSize: 20,
-    minPoolSize: 1,
+    minPoolSize: 1,
+  });
+  return mongoose.connection;
