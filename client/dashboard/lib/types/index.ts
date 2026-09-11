@@ -50,4 +50,7 @@ export interface TopicCluster {
 export interface TelemetryEvent {
   event: string;
   current: number;
-  change: number;
+  change: number;
+  unit: string;
+  points: TrendPoint[];
+}
