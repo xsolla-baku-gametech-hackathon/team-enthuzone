@@ -170,3 +170,4 @@ bot.login(config.DISCORD_BOT_TOKEN).catch((err) => {
     console.error("   4. 'Save Changes' düyməsinə basıb yadda saxlayın və botu yenidən başladın.\n");
   } else {
     console.error("   Please verify DISCORD_BOT_TOKEN in your discord-bot/.env file.\n");
+  }
