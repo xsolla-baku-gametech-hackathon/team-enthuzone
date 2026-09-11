@@ -577,3 +577,26 @@ export function WorkspaceDashboard({
                 <>
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
+                      <h2 className="text-xl font-semibold">Player voices</h2>
+                      <p className="mt-0.5 text-xs text-muted">
+                        Stream reviews, feedback, and community sentiment across platforms
+                      </p>
+                    </div>
+                    <button
+                      className="primary"
+                      onClick={() => setModal("source-picker")}
+                    >
+                      <Plus size={16} />
+                      Add source
+                    </button>
+                  </div>
+                  <Connections type="discord" />
+                  <form
+                    className="glass grid gap-3 rounded-xl p-5"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const form = e.currentTarget;
+                      const f = new FormData(form);
+                      action(async () => {
+                        await request(
+                          `/platform/workspaces/${selected}/feedback`,
