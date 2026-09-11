@@ -7,4 +7,6 @@ class AuthController {
     this.login = async (req, res) => {
       const result = await authService.login(req.body);
       res.json(result);
-    };
+    };
+    this.me = async (req, res) => {
+      res.json(await authService.getCurrentUser(req.auth));
