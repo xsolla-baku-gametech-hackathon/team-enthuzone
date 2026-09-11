@@ -28,4 +28,10 @@ function createContainer(options = {}) {
   });
   const telemetry = createTelemetryModule({
     repository: options.telemetryRepository || new MemoryTelemetryRepository(),
-  });
+  });
+
+  return {
+    auth,
+    feedback,
+    telemetry,
+    services: {
