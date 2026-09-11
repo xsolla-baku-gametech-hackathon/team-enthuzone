@@ -3,3 +3,4 @@ function normalize(type, target) {
     hard: "difficulty",
     balance: "difficulty",
     gameplay_balance: "difficulty",
+    crash: "bug",
