@@ -108,3 +108,4 @@ bot.on("messageCreate", (message) => {
     !message.content.trim()
   ) {
     return;
+  }
