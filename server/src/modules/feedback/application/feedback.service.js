@@ -8,4 +8,7 @@ class FeedbackService {
   async ingest(input) {
     return this.feedbackRepository.save(toFeedback(input));
   }
-
+
+  async ingestMany(inputs) {
+    return this.feedbackRepository.saveMany(inputs.map(toFeedback));
+  }
