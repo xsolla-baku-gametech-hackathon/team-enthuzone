@@ -7,4 +7,6 @@ export interface TrendPoint {
   feedback: number;
   telemetry: number;
   build?: string;
-}
+}
+
+export interface Issue {
