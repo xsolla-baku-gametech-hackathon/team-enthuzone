@@ -782,3 +782,29 @@ export function BotLivePlaytestModal({
                 </div>
               </div>
             )}
+
+            {/* In-Game Interactive Quick D-Pad & Actuator Controls */}
+            {mode === "snake" && (
+              <div className="flex items-center gap-6">
+                {/* Virtual D-Pad */}
+                <div className="grid grid-cols-3 gap-1.5 p-2 rounded-xl bg-surface border border-line/60">
+                  <div />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDirection("UP");
+                      triggerAiCursorAction("UP", snake[0]);
+                    }}
+                    className={`h-9 w-9 rounded-lg flex items-center justify-center transition ${
+                      direction === "UP" ? "bg-accent text-canvas font-bold shadow" : "bg-surface-sunken text-muted hover:text-text"
+                    }`}
+                    title="Move Up"
+                  >
+                    <ChevronUp size={18} />
+                  </button>
+                  <div />
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDirection("LEFT");
