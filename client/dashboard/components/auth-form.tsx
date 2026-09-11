@@ -197,3 +197,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
 
     setError("");
     return true;
+  }
+
+  function field(
+    key: keyof typeof data,
+    label: string,
+    type = "text",
+    showCount = false
+  ) {
+    const limits = getLimits(key);
+    const fieldError = fieldErrors[key];
+    const val = String(data[key]);
+
+    return (
+      <label className="grid gap-2 text-sm font-medium" key={key}>
+        <div className="flex items-center justify-between">
+          <span>{label}</span>
+          {showCount && limits.max && (
+            <span
+              className={`text-xs ${
+                val.length > limits.max
+                  ? "text-critical font-bold"
+                  : val.length >= limits.max * 0.9
