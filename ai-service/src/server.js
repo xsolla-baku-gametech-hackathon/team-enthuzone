@@ -28,3 +28,4 @@ function createApp() {
   });
   app.post("/internal/ai/analyze-feedback", async (req, res) => {
     const { text, existing } = z
+      .object({
