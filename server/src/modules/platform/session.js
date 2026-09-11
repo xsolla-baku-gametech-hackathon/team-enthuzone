@@ -31,3 +31,14 @@ function createSessionRouter(service) {
     });
     res.cookie("access_token", result.accessToken, {
       ...opts,
+      maxAge: 15 * 60000,
+    });
+    res.cookie("refresh_token", refresh, {
+      ...opts,
+      ...(remember ? { maxAge: 30 * 86400000 } : {}),
+    });
+    res.json({ user: result.user, organization: result.organization });
+  }
+  router.post("/register", async (req, res) =>
+    issue(res, await service.register(registerSchema.parse(req.body))),
+  );
