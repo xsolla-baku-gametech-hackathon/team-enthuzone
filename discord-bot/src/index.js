@@ -47,3 +47,5 @@ async function relay(message) {
   const targetUrl = `${config.CORE_API_URL}/api/platform/ingest/discord/${encodeURIComponent(
     config.DISCORD_SOURCE_ID
   )}`;
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
