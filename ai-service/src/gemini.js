@@ -16,3 +16,4 @@ const schema = {
       enum: ["Difficulty", "Bug", "UX", "Performance", "Economy", "Other"],
     },
     target: { type: "string" },
+    sentiment: { type: "string", enum: ["Positive", "Neutral", "Negative"] },
