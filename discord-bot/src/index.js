@@ -112,3 +112,4 @@ bot.on("messageCreate", (message) => {
 
   console.log(
     `[Incoming Feedback] From @${message.author.username}: "${message.content.slice(0, 60)}..."`
+  );
