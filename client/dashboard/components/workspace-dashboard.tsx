@@ -801,3 +801,25 @@ export function WorkspaceDashboard({
                           🤖 Test at (Canlı AI Snake Oynasın)
                         </button>
                         <button
+                          type="button"
+                          className="secondary text-xs py-2.5 px-4 flex items-center gap-1.5"
+                          onClick={() => setModal("bot")}
+                        >
+                          <Plus size={15} />
+                          Add AI Player Bot
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    detail.connections
+                      .filter((c) => c.type === "bot")
+                      .map((c) => (
+                        <article
+                          key={c.id}
+                          className="glass grid overflow-hidden rounded-xl md:grid-cols-[1fr_2fr]"
+                        >
+                          <div className="p-6">
+                            <Gamepad2 className="text-accent" />
+                            <h3 className="mt-4 text-xl font-semibold">
+                              {c.name}
+                            </h3>
