@@ -60,4 +60,7 @@ export interface BuildMetric {
   buildA: number;
   buildB: number;
   unit: string;
-  delta: number;
+  delta: number;
+  favorable: "up" | "down";
+}
+
