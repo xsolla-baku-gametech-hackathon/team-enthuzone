@@ -65,3 +65,4 @@ async function relay(message) {
       });
 
       if (response.ok) {
+        console.log(
