@@ -86,4 +86,26 @@ Login and use the returned access token:
 ```bash
 curl -X POST "http://localhost:3000/api/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"email":"john@darkfront.com","password":"StrongPassword123!"}'
+  -d '{"email":"john@darkfront.com","password":"StrongPassword123!"}'
+
+curl "http://localhost:3000/api/auth/me" \
+  -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+JWT identity contains only `sub`, `organizationId`, and `role`. Protected tenant-aware features must take `organizationId` from `req.auth.organizationId`, never from a client body. The reusable `requireAnyRole(['OWNER', 'ADMIN'])` middleware provides the role-authorization foundation. Existing feedback and telemetry routes remain unchanged in this step.
+
+Collections added:
+
+- `organizations`: unique logical ID and slug, plus `ACTIVE`/`SUSPENDED` status.
+- `users`: globally unique email, required organization ID, bcrypt password hash, organization role, and `ACTIVE`/`DISABLED` status.
+
+## Feedback
+
+Create one feedback record:
+
+```bash
+curl -X POST "http://localhost:3000/api/feedback" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "gameId":"darkfront",
+    "source":"STEAM",
