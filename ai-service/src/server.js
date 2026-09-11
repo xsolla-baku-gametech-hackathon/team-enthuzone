@@ -70,3 +70,5 @@ function createApp() {
         issue: z.object({ type: z.string(), target: z.string() }),
         metrics: z.object({ targets: z.record(z.any()).optional() }),
       })
+      .parse(req.body);
+    res.json(correlate(input.issue, input.metrics));
