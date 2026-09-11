@@ -39,6 +39,11 @@ Thumbs.db
 **/.data/
 server/.data/
 
+# Environment files
+**/.env
+**/.env.*
+!**/.env.example
+
 # Temp root scripts
 /all_350_commits.json
 /client_commits_list.md
@@ -57,3 +62,7 @@ server/.data/
 /server_commits_list.md
 /generate_server_commits.js
 /apply_server_progressive_commits.js
+/ai_*.json
+/ai_commits_list.md
+/generate_ai_commits.js
+/apply_ai_progressive_commits.js
