@@ -234,3 +234,21 @@ test(
         .post("/api/session/refresh")
         .set("Cookie", `refresh_token=${oldRefresh.value}`)
         .send({})
+        .expect(401);
+    await client
+      .delete(`/api/platform/workspaces/${w.id}/connections/${c.id}`)
+      .expect(204);
+    await request(app)
+      .post("/api/platform/ingest/telemetry")
+      .set("x-api-key", c.key)
+      .send({ events: [event] })
+      .expect(401);
+    await client.delete(`/api/platform/workspaces/${w.id}`).expect(204);
+    assert.equal(
+      await models.Feedback.countDocuments({ workspaceId: w.id }),
+      0,
+    );
+    await client.post("/api/session/logout").send({}).expect(204);
+    await client.get("/api/platform/workspaces").expect(401);
+  },
+);
