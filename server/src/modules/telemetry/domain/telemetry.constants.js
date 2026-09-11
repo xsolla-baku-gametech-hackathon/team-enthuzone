@@ -1,3 +1,7 @@
 const EVENT_TYPES = Object.freeze([
   'GAMEPLAY',
-  'PROGRESSION',
+  'PROGRESSION',
+  'PERFORMANCE',
+  'ECONOMY',
+  'SESSION',
+  'CUSTOM',
