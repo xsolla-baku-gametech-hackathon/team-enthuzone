@@ -84,3 +84,4 @@ function createApp() {
         event: "request_failed",
         path: req.path,
         code: err instanceof z.ZodError ? "VALIDATION" : "AI_UNAVAILABLE",
+      }),
