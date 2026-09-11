@@ -120,3 +120,28 @@ export function BotLivePlaytestModal({
     const timeStr = `${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}.${String(Math.floor(now.getMilliseconds() / 100))}`;
     setLogs((prev) => [
       ...prev.slice(-30),
+      { id: `${Date.now()}-${Math.random()}`, time: timeStr, type, text },
+    ]);
+  }, []);
+
+  // Auto-scroll logs
+  useEffect(() => {
+    if (logBoxRef.current) {
+      logBoxRef.current.scrollTop = logBoxRef.current.scrollHeight;
+    }
+  }, [logs]);
+
+  // Generate obstacles based on Level
+  const initLevelObstacles = useCallback((lvl: 1 | 3 | 5) => {
+    if (lvl === 1) {
+      setObstacles([]);
+      return;
+    }
+    const obs: Point[] = [];
+    if (lvl === 3) {
+      // Small hazard blocks in 4 quadrants
+      for (let i = 4; i <= 6; i++) {
+        obs.push({ x: i, y: 5 });
+        obs.push({ x: 19 - i, y: 14 });
+      }
+    } else if (lvl === 5) {
