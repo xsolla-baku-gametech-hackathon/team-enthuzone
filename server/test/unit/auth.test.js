@@ -33,4 +33,15 @@ test('registration transaction rolls organization back when user creation fails'
   assert.equal((await organizationRepository.findAll()).length, 0);
   assert.equal(await userRepository.findByEmail('owner@rollback.test'), null);
 });
-
+
+test('role middleware allows configured roles and rejects insufficient roles', () => {
+  const middleware = requireAnyRole(['OWNER', 'ADMIN']);
+  let ownerError;
+  middleware({ auth: { role: 'OWNER' } }, {}, (error) => { ownerError = error; });
+  assert.equal(ownerError, undefined);
+
+  let memberError;
+  middleware({ auth: { role: 'MEMBER' } }, {}, (error) => { memberError = error; });
+  assert.equal(memberError.statusCode, 403);
+  assert.equal(memberError.code, 'FORBIDDEN');
+});
