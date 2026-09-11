@@ -9,4 +9,16 @@ test('MongoDB models compile with the intended collection names', () => {
   assert.equal(FeedbackMongoModel.collection.collectionName, 'feedbacks');
   assert.equal(TelemetryMongoModel.collection.collectionName, 'telemetry_events');
   assert.equal(OrganizationMongoModel.collection.collectionName, 'organizations');
-  assert.equal(UserMongoModel.collection.collectionName, 'users');
+  assert.equal(UserMongoModel.collection.collectionName, 'users');
+  assert.ok(OrganizationMongoModel.schema.indexes().some(([keys, options]) => keys.slug === 1 && options.unique));
+  assert.ok(UserMongoModel.schema.indexes().some(([keys, options]) => keys.email === 1 && options.unique));
+});
+
+test('telemetry MongoDB model retains arbitrary nested properties', async () => {
+  const document = new TelemetryMongoModel({
+    id: 'tel_model_test',
+    gameId: 'darkfront',
+    playerId: 'player_1',
+    sessionId: 'session_1',
+    eventType: 'CUSTOM',
+    eventName: 'custom_event',
