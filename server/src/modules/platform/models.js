@@ -46,3 +46,12 @@ const Feedback = model(
       {
         unique: true,
         partialFilterExpression: { externalId: { $type: "string" } },
+      },
+    ],
+  ],
+);
+const Cluster = model(
+  "IssueCluster",
+  {
+    workspaceId: { type: String, index: true },
+    type: String,
