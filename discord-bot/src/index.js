@@ -150,3 +150,5 @@ bot.once("clientReady", async () => {
   console.log("Listening for new player feedback messages in real-time...");
   console.log("=======================================================\n");
 });
+
+bot.on("error", (err) => {
