@@ -61,3 +61,4 @@ async function generate(prompt, responseJsonSchema) {
               responseMimeType: "application/json",
               responseJsonSchema,
               maxOutputTokens: 1200,
+              thinkingConfig: { thinkingBudget: 0 },
