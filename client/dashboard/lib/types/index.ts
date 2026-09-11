@@ -14,4 +14,7 @@ export interface Issue {
   title: string;
   summary: string;
   category: string;
-  priority: Priority;
+  priority: Priority;
+  status: IssueStatus;
+  priorityScore: number;
+  gameplayImpact: number;
