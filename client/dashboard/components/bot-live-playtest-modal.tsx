@@ -71,3 +71,28 @@ export function BotLivePlaytestModal({
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
   // AI Cursor Simulation states
+  const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 250, y: 250 });
+  const [cursorClicking, setCursorClicking] = useState<boolean>(false);
+  const [cursorAction, setCursorAction] = useState<string>("Scanning...");
+  const [lastActionDir, setLastActionDir] = useState<Direction | null>(null);
+
+  // Telemetry & Neural Logs
+  const [logs, setLogs] = useState<Array<{ id: string; time: string; type: "ai" | "telemetry" | "game" | "alert"; text: string }>>([
+    {
+      id: "1",
+      time: "00:00",
+      type: "ai",
+      text: `Autonomous AI Playtest Bot initialized for: ${botName}`,
+    },
+    {
+      id: "2",
+      time: "00:01",
+      type: "telemetry",
+      text: `Telemetry channel engaged. Tracking player metrics & drop-offs.`,
+    },
+  ]);
+  const [isSendingTelemetry, setIsSendingTelemetry] = useState(false);
+  const [telemetryNotice, setTelemetryNotice] = useState("");
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const gameAreaRef = useRef<HTMLDivElement | null>(null);
