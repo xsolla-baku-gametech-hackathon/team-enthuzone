@@ -93,4 +93,10 @@ class AuthService {
     return {
       user: publicUser(user),
       organization: publicOrganization(organization),
-      accessToken: this.tokenService.sign(user),
+      accessToken: this.tokenService.sign(user),
+      tokenType: 'Bearer',
+    };
+  }
+}
+
+module.exports = { AuthService, publicUser, publicOrganization, INVALID_CREDENTIALS };
