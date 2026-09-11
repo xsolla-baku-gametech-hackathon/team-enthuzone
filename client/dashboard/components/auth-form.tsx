@@ -352,3 +352,26 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                   className="absolute right-3 top-9 text-muted hover:text-text transition-colors"
                   aria-label={visible ? "Hide password" : "Show password"}
                   onClick={() => setVisible(!visible)}
+                >
+                  {visible ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+
+              {register && (
+                <>
+                  {field(
+                    "confirm",
+                    "Confirm password",
+                    visible ? "text" : "password"
+                  )}
+
+                  {/* Real-time Password Requirements Checklist */}
+                  <div className="grid gap-1.5 rounded-lg bg-surface-sunken/60 border border-line/40 p-3 text-xs">
+                    <span className="font-semibold text-text-muted mb-0.5">
+                      Password requirements:
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] ${
+                          data.password.length >= 12
+                            ? "bg-accent/20 text-accent"
