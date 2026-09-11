@@ -13,4 +13,8 @@ class TelemetryService {
     return this.telemetryRepository.saveMany(inputs.map(toTelemetryEvent));
   }
 
-  async list(filters = {}) {
+  async list(filters = {}) {
+    return this.telemetryRepository.findAll({
+      ...filters,
+      gameId: filters.gameId?.toLowerCase(),
+      eventName: filters.eventName?.toLowerCase(),
