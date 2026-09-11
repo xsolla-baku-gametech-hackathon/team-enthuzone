@@ -23,3 +23,4 @@ let config;
 try {
   config = configSchema.parse(process.env);
 } catch (err) {
+  console.error("\n❌ [Discord Bot Config Error]: Missing or invalid configuration in .env");
