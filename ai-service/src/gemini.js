@@ -4,3 +4,4 @@ const candidate = z.object({
   target: z.string().min(1).max(150),
   sentiment: z.enum(["Positive", "Neutral", "Negative"]),
   confidence: z.number().min(0).max(1),
+  summary: z.string().max(500),
