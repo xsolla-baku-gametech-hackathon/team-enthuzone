@@ -78,3 +78,4 @@ function createApp() {
       recommendations: await recommend(req.body.issue, req.body.evidence),
     });
   });
+  app.use((err, req, res, next) => {
