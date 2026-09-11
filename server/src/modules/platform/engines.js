@@ -10,3 +10,15 @@ function priority({
   const score = Math.round(
     100 *
       (0.35 * correlation + 0.3 * affected + 0.2 * revenue + 0.15 * severity),
+  );
+  return {
+    score,
+    label:
+      score >= 90
+        ? "Critical"
+        : score >= 70
+          ? "High"
+          : score >= 40
+            ? "Medium"
+            : "Low",
+  };
