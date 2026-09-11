@@ -91,3 +91,4 @@ function createApp() {
       .json({ error: "AI request failed" });
   });
   return app;
+}
