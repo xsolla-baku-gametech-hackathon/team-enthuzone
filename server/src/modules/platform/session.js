@@ -75,3 +75,14 @@ function createSessionRouter(service) {
     });
   });
   router.post("/logout", async (req, res) => {
+    const token = cookies(req).refresh_token;
+    if (token) await Session.deleteOne({ tokenHash: hash(token) });
+    res.clearCookie("access_token", opts);
+    res.clearCookie("refresh_token", opts);
+    res.status(204).end();
+  });
+  router.post("/forgot-password", (_req, res) =>
+    res
+      .status(503)
+      .json({
+        error: {
