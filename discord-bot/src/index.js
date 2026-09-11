@@ -115,3 +115,4 @@ bot.on("messageCreate", (message) => {
   );
 
   queue = queue
+    .then(() => relay(message))
