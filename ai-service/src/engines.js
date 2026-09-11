@@ -21,3 +21,4 @@ function normalize(type, target) {
     iii: 3,
     iv: 4,
     v: 5,
+    vi: 6,
