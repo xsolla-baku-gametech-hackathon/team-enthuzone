@@ -176,3 +176,25 @@ export function WorkspaceDashboard({
         setSelected(w.id);
         localStorage.setItem("workspace", w.id);
         await reload(w.id);
+      } else {
+        const c = await request<{ key?: string; id: string; type: string }>(
+          `/platform/workspaces/${selected}/connections`,
+          {
+            name: data.get("name"),
+            type: modal,
+            ...(modal === "bot" ? { gameUrl: data.get("url") } : {}),
+          },
+        );
+        if (c.key) setSecret({ key: c.key, id: c.id, type: c.type });
+        await reload();
+      }
+      setModal(null);
+    });
+  }
+  const tabs = [
+    "overview",
+    "issues",
+    "feedback",
+    "telemetry",
+    "bots",
+    "compare",
