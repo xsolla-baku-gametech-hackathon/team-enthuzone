@@ -832,3 +832,28 @@ export function BotLivePlaytestModal({
                       triggerAiCursorAction("RIGHT", snake[0]);
                     }}
                     className={`h-9 w-9 rounded-lg flex items-center justify-center transition ${
+                      direction === "RIGHT" ? "bg-accent text-canvas font-bold shadow" : "bg-surface-sunken text-muted hover:text-text"
+                    }`}
+                    title="Move Right"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+
+                  <div />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDirection("DOWN");
+                      triggerAiCursorAction("DOWN", snake[0]);
+                    }}
+                    className={`h-9 w-9 rounded-lg flex items-center justify-center transition ${
+                      direction === "DOWN" ? "bg-accent text-canvas font-bold shadow" : "bg-surface-sunken text-muted hover:text-text"
+                    }`}
+                    title="Move Down"
+                  >
+                    <ChevronDown size={18} />
+                  </button>
+                  <div />
+                </div>
+
+                {/* Primary Actions & Autopilot Switch */}
