@@ -287,3 +287,26 @@ export function WorkspaceDashboard({
                       <Gamepad2 className="text-accent" />
                       <button
                         type="button"
+                        title="Preview game build"
+                        aria-label="Preview game build"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPreviewWorkspace(w);
+                        }}
+                        className="flex items-center gap-1 rounded-lg p-1.5 text-muted transition hover:bg-surface-raised hover:text-accent"
+                      >
+                        <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                          Preview
+                        </span>
+                        <ArrowUpRight size={17} />
+                      </button>
+                    </div>
+                    <h2 className="mt-4 font-semibold text-lg">{w.name}</h2>
+                    <p className="mt-1 truncate text-xs text-muted">
+                      {hostname}
+                    </p>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between border-t border-line/40 pt-3 text-xs">
+                    <span className="text-faint">
+                      Created {new Date(w.createdAt).toLocaleDateString()}
+                    </span>
