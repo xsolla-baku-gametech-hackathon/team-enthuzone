@@ -74,3 +74,5 @@ async function relay(message) {
         } catch {}
         return;
       }
+
+      if (response.status < 500 && response.status !== 429) {
