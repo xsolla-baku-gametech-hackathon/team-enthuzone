@@ -27,3 +27,4 @@ test("correlation uses only matching target and category", () => {
     1,
   );
   assert.equal(
+    correlate({ type: "Difficulty", target: "Level 6" }, metrics).score,
