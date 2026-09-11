@@ -823,3 +823,25 @@ export function WorkspaceDashboard({
                             <h3 className="mt-4 text-xl font-semibold">
                               {c.name}
                             </h3>
+                            <div className="mt-4 flex flex-wrap items-center gap-2">
+                              <button
+                                type="button"
+                                className="primary text-xs py-2 px-3.5 flex items-center gap-1.5 shadow"
+                                onClick={() =>
+                                  setActiveBotTest({
+                                    botName: c.name,
+                                    gameUrl: c.gameUrl,
+                                  })
+                                }
+                              >
+                                <Bot size={15} />
+                                🤖 Test at (Canlı AI Oynasın)
+                              </button>
+                              <a
+                                href={c.gameUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="secondary text-xs py-2 px-3 inline-block"
+                              >
+                                Open game ↗
+                              </a>
