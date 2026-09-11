@@ -117,4 +117,15 @@ test('/me accepts a valid token and never exposes passwordHash', async () => {
 });
 
 test('authentication rejects missing, malformed, and expired tokens', async () => {
-  const context = testContext();
+  const context = testContext();
+  await request(context.app).get('/api/auth/me').expect(401);
+  await request(context.app).get('/api/auth/me').set('Authorization', 'Token nope').expect(401);
+  await request(context.app).get('/api/auth/me').set('Authorization', 'Bearer malformed').expect(401);
+
+  const created = await register(context);
+  const expired = jwt.sign({
+    organizationId: created.body.organization.id,
+    role: 'OWNER',
+  }, secret, { subject: created.body.user.id, expiresIn: -1 });
+  await request(context.app).get('/api/auth/me').set('Authorization', `Bearer ${expired}`).expect(401);
+});
