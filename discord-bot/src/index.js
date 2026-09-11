@@ -105,3 +105,4 @@ bot.on("messageCreate", (message) => {
   if (
     message.author.bot ||
     message.channelId !== config.DISCORD_CHANNEL_ID ||
+    !message.content.trim()
