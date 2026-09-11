@@ -14,3 +14,5 @@ const schema = {
     type: {
       type: "string",
       enum: ["Difficulty", "Bug", "UX", "Performance", "Economy", "Other"],
+    },
+    target: { type: "string" },
