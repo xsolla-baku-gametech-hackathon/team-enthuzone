@@ -59,3 +59,4 @@ function createApp() {
         summary: text.slice(0, 300),
         authenticity: "Needs Review",
         severity: 0,
+        normalized: normalize("Uncategorized", "Unclassified"),
