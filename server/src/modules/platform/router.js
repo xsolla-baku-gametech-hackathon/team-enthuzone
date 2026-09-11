@@ -110,3 +110,16 @@ async function analyzeFeedback(feedback) {
         feedbackId: feedback.id,
         code: "AI_UNAVAILABLE",
       }),
+    );
+  }
+  await refreshRecommendations(feedback.workspaceId);
+}
+async function rankIssues(feedback, clusters, metrics) {
+  const allAuthors = new Set(feedback.map((f) => f.author));
+  const issues = [];
+  for (const c of clusters) {
+    const members = feedback.filter((f) => f.clusterId === c.id);
+    const affectedUsers = new Set(members.map((f) => f.author)).size;
+    let correlation = {
+      supported: false,
+      score: 0,
