@@ -1224,3 +1224,26 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                         Discord Community
                       </h3>
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-0.5 text-[11px] font-semibold text-accent border border-accent/30">
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                        Active
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs text-muted leading-relaxed">
+                      Connect a Discord bot relay to listen to feedback and bug report channels in real time.
+                    </p>
+                  </div>
+                </button>
+
+                {/* 2. Steam Reviews - Coming soon */}
+                <div className="glass flex items-start gap-4 rounded-xl p-4 text-left opacity-70 bg-surface-sunken/40 border-dashed border-line">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-surface-raised text-muted">
+                    <Gamepad2 size={22} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-semibold text-muted">Steam Store Reviews</h3>
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-raised px-2.5 py-0.5 text-[11px] font-medium text-faint border border-line">
+                        <Clock size={12} className="text-muted" />
+                        Coming soon
+                      </span>
+                    </div>
