@@ -19,3 +19,4 @@ function createApp() {
     next();
   });
   let active = 0;
+  app.use("/internal", (_req, res, next) => {
