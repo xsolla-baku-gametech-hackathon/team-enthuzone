@@ -11,3 +11,5 @@ Standalone Discord bot microservice that listens to feedback/bug report channels
 cd discord-bot
 npm install
 ```
+
+### 2. Configure Environment (`.env`)
