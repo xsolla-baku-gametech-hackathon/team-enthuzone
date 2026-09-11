@@ -69,4 +69,16 @@ test('registration rejects duplicate email and invalid requests', async () => {
 test('login succeeds and unknown email and wrong password share a generic error', async () => {
   const context = testContext();
   await register(context);
-  const loggedIn = await request(context.app).post('/api/auth/login').send({
+  const loggedIn = await request(context.app).post('/api/auth/login').send({
+    email: registration.email,
+    password: registration.password,
+  }).expect(200);
+  assert.ok(loggedIn.body.accessToken);
+
+  for (const credentials of [
+    { email: registration.email, password: 'WrongPassword123!' },
+    { email: 'unknown@example.com', password: 'WrongPassword123!' },
+  ]) {
+    const failed = await request(context.app).post('/api/auth/login').send(credentials).expect(401);
+    assert.equal(failed.body.error.code, 'INVALID_CREDENTIALS');
+    assert.equal(failed.body.error.message, 'Invalid email or password');
