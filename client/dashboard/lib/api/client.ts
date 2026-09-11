@@ -1,1 +1,2 @@
-const API_URL = process.env.DASHBOARD_API_URL ?? "http://localhost:3000";
+const API_URL = process.env.DASHBOARD_API_URL ?? "http://localhost:3000";
+
