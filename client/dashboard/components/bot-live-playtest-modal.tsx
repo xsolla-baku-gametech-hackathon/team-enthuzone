@@ -685,3 +685,27 @@ export function BotLivePlaytestModal({
 
                     {/* Cyber Neon Cursor SVG Pointer */}
                     <div className={`transition-transform duration-100 ${cursorClicking ? "scale-90" : "scale-100"}`}>
+                      <svg
+                        width="28"
+                        height="28"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="drop-shadow-[0_0_8px_rgba(53,184,165,0.9)]"
+                      >
+                        <path
+                          d="M4 3L11 20L14 13L21 10L4 3Z"
+                          fill="#35b8a5"
+                          stroke="#ffffff"
+                          strokeWidth="1.5"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+
+                    {/* AI Label Tag beside cursor */}
+                    <div className="absolute left-6 top-3 flex items-center gap-1 whitespace-nowrap rounded-md bg-canvas/90 px-2 py-0.5 text-[10px] font-mono font-bold text-accent shadow-lg border border-accent/40 backdrop-blur-sm">
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+                      🤖 {cursorAction}
+                    </div>
+                  </div>
