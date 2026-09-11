@@ -14,4 +14,7 @@ const statusTone: Record<IssueStatus, string> = {
   RESOLVED: "bg-low-surface text-low",
 };
 
-export function PriorityBadge({ priority }: { priority: Priority }) {
+export function PriorityBadge({ priority }: { priority: Priority }) {
+  return <span className={`inline-flex rounded-full px-2 py-1 text-xs font-bold tracking-wide ${priorityTone[priority]}`}>{priority}</span>;
+}
+
