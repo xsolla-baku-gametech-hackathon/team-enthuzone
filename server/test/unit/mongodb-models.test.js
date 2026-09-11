@@ -21,4 +21,15 @@ test('telemetry MongoDB model retains arbitrary nested properties', async () => 
     playerId: 'player_1',
     sessionId: 'session_1',
     eventType: 'CUSTOM',
-    eventName: 'custom_event',
+    eventName: 'custom_event',
+    buildVersion: '1.8.0',
+    timestamp: '2026-09-10T12:00:00Z',
+    receivedAt: '2026-09-10T12:00:01Z',
+    properties: { nested: { arbitrary: ['a', 2, true] } },
+  });
+
+  await document.validate();
+  assert.deepEqual(document.properties, { nested: { arbitrary: ['a', 2, true] } });
+  const indexes = TelemetryMongoModel.schema.indexes().map(([keys]) => keys);
+  assert.ok(indexes.some((keys) => keys['properties.$**'] === 1));
+});
