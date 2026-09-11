@@ -218,3 +218,28 @@ export function BotLivePlaytestModal({
 
       // Disallow 180-degree instant reversal
       const validMoves = dirs.filter((d) => d.opposite !== currentDir);
+
+      // BFS to find shortest path to Food
+      type QueueNode = { pt: Point; firstDir: Direction };
+      const queue: QueueNode[] = [];
+      const visited = new Set<string>();
+      visited.add(`${head.x},${head.y}`);
+
+      for (const m of validMoves) {
+        const nx = head.x + m.dx;
+        const ny = head.y + m.dy;
+        const key = `${nx},${ny}`;
+        if (nx >= 0 && nx < GRID_SIZE && ny >= 0 && ny < GRID_SIZE && !blocked.has(key)) {
+          visited.add(key);
+          queue.push({ pt: { x: nx, y: ny }, firstDir: m.dir });
+        }
+      }
+
+      while (queue.length > 0) {
+        const curr = queue.shift()!;
+        if (curr.pt.x === currentFood.x && curr.pt.y === currentFood.y) {
+          return curr.firstDir;
+        }
+
+        for (const d of dirs) {
+          const nx = curr.pt.x + d.dx;
