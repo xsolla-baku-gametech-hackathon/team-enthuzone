@@ -20,4 +20,8 @@ async function bootstrap() {
   const app = createApp(repositoryOptions);
   const server = app.listen(env.port, () => {
     console.log(`Player Data Ingestion API listening on port ${env.port} (mongodb)`);
-  });
+  });
+
+  const shutdown = (signal) => {
+    console.log(`${signal} received; closing HTTP server`);
+    server.close(async () => {
