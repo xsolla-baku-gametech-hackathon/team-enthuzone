@@ -8,3 +8,13 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: "Player Issue Intelligence",
+    template: "%s · Player Issue Intelligence",
+  },
+  description:
+    "Correlated player feedback and gameplay telemetry for issue triage.",
+};
