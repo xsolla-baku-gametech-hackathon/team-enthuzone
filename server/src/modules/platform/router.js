@@ -85,3 +85,16 @@ async function analyzeFeedback(feedback) {
       if (e.code !== 11000) throw e;
       cluster = await Cluster.findOne({
         workspaceId: feedback.workspaceId,
+        type,
+        target,
+      });
+    }
+    await Feedback.updateOne(
+      { id: feedback.id },
+      {
+        $set: {
+          candidate: result,
+          clusterId: cluster.id,
+          analysisStatus: "complete",
+        },
+      },
