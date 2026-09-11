@@ -94,3 +94,5 @@ async function analyze(text, existing = []) {
       }),
       schema,
     ),
+  );
+}
