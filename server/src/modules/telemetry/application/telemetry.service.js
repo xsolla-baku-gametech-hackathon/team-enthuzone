@@ -20,4 +20,7 @@ class TelemetryService {
       eventName: filters.eventName?.toLowerCase(),
     });
   }
-
+
+}
+
+module.exports = { TelemetryService };
