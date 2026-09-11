@@ -122,3 +122,4 @@ bot.on("messageCreate", (message) => {
 });
 
 // 5. Bot Lifecycle Events
+bot.once("clientReady", async () => {
