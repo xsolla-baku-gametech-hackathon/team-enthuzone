@@ -15,3 +15,4 @@ const configSchema = z.object({
     .min(1, "DISCORD_SOURCE_ID cannot be empty"),
   DISCORD_WEBHOOK_TOKEN: z
     .string({ required_error: "DISCORD_WEBHOOK_TOKEN is required in .env" })
+    .min(1, "DISCORD_WEBHOOK_TOKEN cannot be empty"),
