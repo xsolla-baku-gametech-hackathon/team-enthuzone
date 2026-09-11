@@ -1314,3 +1314,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
               <div className="flex justify-between">
                 <div>
                   {modal === "discord" && (
+                    <button
+                      type="button"
+                      className="text-xs text-accent hover:underline mb-1 flex items-center gap-1"
+                      onClick={() => setModal("source-picker")}
+                    >
+                      ← Back to sources
+                    </button>
+                  )}
+                  <h2 id="modal-title" className="text-xl font-semibold">
+                    {modal === "workspace"
+                      ? "Create workspace"
+                      : `Add ${modal} connection`}
+                  </h2>
+                </div>
+                <button aria-label="Close dialog" onClick={() => setModal(null)}>
+                  <X size={19} />
+                </button>
+              </div>
+              <form className="mt-6 grid gap-4" onSubmit={create}>
+                <label className="grid gap-2 text-sm">
+                  Name
+                  <input
