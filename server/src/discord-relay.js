@@ -66,3 +66,20 @@ bot.on("messageCreate", (message) => {
     .then(() => relay(message))
     .catch(() =>
       console.error(JSON.stringify({ event: "discord_queue_failed" })),
+    );
+});
+bot.once("clientReady", () =>
+  console.log(JSON.stringify({ event: "discord_connected" })),
+);
+bot.on("error", () =>
+  console.error(JSON.stringify({ event: "discord_gateway_error" })),
+);
+bot.login(config.DISCORD_BOT_TOKEN).catch(() => {
+  console.error("Discord login failed");
+  process.exitCode = 1;
+});
+for (const signal of ["SIGTERM", "SIGINT"])
+  process.on(signal, () => {
+    bot.destroy();
+    process.exit(0);
+  });
