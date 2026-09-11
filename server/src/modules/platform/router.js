@@ -374,3 +374,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
         embeddable: !parsed.hostname.endsWith("itch.io"),
       });
     } catch {
+      return res.json({ embedUrl: rawUrl, originalUrl: rawUrl, embeddable: false });
+    }
+  });
+  router.get("/workspaces", async (req, res) =>
+    res.json(
+      await Workspace.find({ orgId: req.auth.organizationId })
+        .sort({ createdAt: -1 })
+        .lean(),
+    ),
+  );
+  router.post("/workspaces", async (req, res) => {
+    const input = z
