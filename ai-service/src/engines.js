@@ -35,3 +35,4 @@ function normalize(type, target) {
     ),
   };
 }
+function correlate(issue, metrics) {
