@@ -12,4 +12,6 @@ class AuthController {
       res.json(await authService.getCurrentUser(req.auth));
     };
   }
-}
+}
+
+module.exports = { AuthController };
