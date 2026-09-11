@@ -131,3 +131,4 @@ bot.once("clientReady", async () => {
     console.warn("⚠️  [Server Check]: Bot hələ heç bir serverə əlavə olunmayıb!");
     console.warn(`   Dəvət linki: https://discord.com/oauth2/authorize?client_id=${bot.user.id}&permissions=68672&scope=bot`);
   } else {
+    console.log(`🏠 [Joined Servers]: ${guilds.join(", ")}`);
