@@ -6,3 +6,4 @@ const { z } = require("zod");
 const configSchema = z.object({
   DISCORD_BOT_TOKEN: z
     .string({ required_error: "DISCORD_BOT_TOKEN is required in .env" })
+    .min(1, "DISCORD_BOT_TOKEN cannot be empty"),
