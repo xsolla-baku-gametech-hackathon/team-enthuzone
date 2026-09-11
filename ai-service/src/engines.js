@@ -7,3 +7,4 @@ function normalize(type, target) {
     lag: "performance",
     usability: "ux",
   };
+  const clean = (s) =>
