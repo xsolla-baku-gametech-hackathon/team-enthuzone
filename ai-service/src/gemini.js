@@ -45,3 +45,5 @@ async function generate(prompt, responseJsonSchema) {
           method: "POST",
           signal: AbortSignal.timeout(25000),
           headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": process.env.GEMINI_API_KEY,
