@@ -85,3 +85,18 @@ export function Sidebar() {
           {nav.map(({ href, label, icon: Icon }) => {
             const active =
               href === "/" ? pathname === "/" : pathname.startsWith(href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`flex items-center gap-3 rounded-control px-3.5 py-2.5 text-sm font-semibold transition-all ${
+                  active
+                    ? "bg-surface-raised text-ink shadow-sm ring-1 ring-line/50"
+                    : "text-muted hover:bg-surface hover:text-ink"
+                }`}
+              >
+                <Icon
+                  size={18}
+                  className={active ? "text-accent" : "text-muted"}
+                  aria-hidden="true"
+                />
