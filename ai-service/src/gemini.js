@@ -47,3 +47,4 @@ async function generate(prompt, responseJsonSchema) {
           headers: {
             "Content-Type": "application/json",
             "x-goog-api-key": process.env.GEMINI_API_KEY,
+          },
