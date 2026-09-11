@@ -261,3 +261,15 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
       throw e;
     }
     await analyzeFeedback(feedback);
+    res.status(201).json({ id: feedback.id });
+  });
+  router.post("/ingest/telemetry", async (req, res) => {
+    const c = await Connection.findOne({
+      keyHash: hash(req.get("x-api-key") || ""),
+      type: "telemetry",
+    });
+    if (!c) throw new AppError("Invalid API key", 401, "UNAUTHORIZED");
+    if (c.status === "paused") {
+      return res.status(200).json({
+        accepted: 0,
+        paused: true,
