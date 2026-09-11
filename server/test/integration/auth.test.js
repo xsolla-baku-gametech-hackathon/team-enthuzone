@@ -105,4 +105,16 @@ test('disabled users and suspended organizations cannot login or reuse JWTs', as
 });
 
 test('/me accepts a valid token and never exposes passwordHash', async () => {
+  const context = testContext();
+  const created = await register(context);
+  const response = await request(context.app)
+    .get('/api/auth/me')
+    .set('Authorization', `Bearer ${created.body.accessToken}`)
+    .expect(200);
+  assert.deepEqual(response.body.user, created.body.user);
+  assert.deepEqual(response.body.organization, created.body.organization);
+  assert.equal(JSON.stringify(response.body).includes('passwordHash'), false);
+});
+
+test('authentication rejects missing, malformed, and expired tokens', async () => {
   const context = testContext();
