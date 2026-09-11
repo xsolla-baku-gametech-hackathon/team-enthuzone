@@ -21,4 +21,16 @@ test('registration transaction rolls organization back when user creation fails'
       jwtSecret: process.env.JWT_SECRET,
       jwtExpiresIn: '15m',
       passwordHashRounds: 4,
-    },
+    },
+  });
+
+  await assert.rejects(() => auth.service.register({
+    organizationName: 'Rollback Studio',
+    name: 'Owner User',
+    email: 'owner@rollback.test',
+    password: 'StrongPassword123!',
+  }), /simulated user write failure/);
+  assert.equal((await organizationRepository.findAll()).length, 0);
+  assert.equal(await userRepository.findByEmail('owner@rollback.test'), null);
+});
+
