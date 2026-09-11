@@ -78,3 +78,4 @@ async function relay(message) {
       if (response.status < 500 && response.status !== 429) {
         console.error(
           `[Relay Rejected] Status ${response.status} from Core API for message ${message.id}.`
+        );
