@@ -152,4 +152,26 @@ Batch collection accepts up to 1000 events:
 ```text
 POST /api/telemetry/batch
 { "events": [...] }
-```
+```
+
+Read stored telemetry:
+
+```text
+GET /api/telemetry?gameId=darkfront&playerId=player_123&eventName=boss_failed&buildVersion=1.8.0&limit=50&offset=0
+```
+
+Telemetry `properties` is stored as a generic MongoDB document and has a wildcard index. No game-specific event fields are imposed by the ingestion layer.
+
+## Storage
+
+- `feedbacks`: unique ID and indexes for game, source, event time, and receive time.
+- `telemetry_events`: unique ID and indexes for game, build, event, player, session, event time, receive time, and generic properties.
+- Client-supplied `createdAt`/`timestamp` is preserved.
+- Server-generated `receivedAt` records when the backend received the data.
+- Reusing the same client-supplied `id` updates that record, making retries idempotent.
+
+## Test
+
+```bash
+npm test
+```
