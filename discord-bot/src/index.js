@@ -132,3 +132,4 @@ bot.once("clientReady", async () => {
     console.warn(`   Dəvət linki: https://discord.com/oauth2/authorize?client_id=${bot.user.id}&permissions=68672&scope=bot`);
   } else {
     console.log(`🏠 [Joined Servers]: ${guilds.join(", ")}`);
+  }
