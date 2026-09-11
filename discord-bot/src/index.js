@@ -68,3 +68,4 @@ async function relay(message) {
         console.log(
           `[Relay OK] Message ${message.id} from @${message.author.username} sent to Core API.`
         );
+        try {
