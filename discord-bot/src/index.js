@@ -86,3 +86,5 @@ async function relay(message) {
         `[Relay Warning] Attempt ${attempt}/3 failed to reach Core API: ${e.message}`
       );
     }
+
+    if (attempt < 3) {
