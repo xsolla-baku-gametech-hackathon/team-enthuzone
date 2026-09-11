@@ -390,3 +390,28 @@ export function BotLivePlaytestModal({
       } else {
         newSnake.pop(); // Remove tail
       }
+
+      setSnake(newSnake);
+      setMovesCount((m) => m + 1);
+
+      // Random telemetry pulse log periodically
+      if (Math.random() < 0.08) {
+        addLog("telemetry", `📡 Ingesting event: 'attempt', duration: ${Math.floor(movesCount * 0.2)}s, score: ${score}`);
+      }
+    }, intervalMs);
+
+    return () => clearInterval(interval);
+  }, [
+    isPlaying,
+    isGameOver,
+    mode,
+    speed,
+    score,
+    highScore,
+    level,
+    movesCount,
+    findAiNextDirection,
+    triggerAiCursorAction,
+    spawnFood,
+    addLog,
+  ]);
