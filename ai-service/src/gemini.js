@@ -67,3 +67,4 @@ async function generate(prompt, responseJsonSchema) {
           }),
         },
       );
+      if (!response.ok) {
