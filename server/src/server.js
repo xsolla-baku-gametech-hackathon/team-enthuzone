@@ -10,4 +10,9 @@ const { MongoTransactionManager } = require('./modules/auth');
 async function bootstrap() {
   await connectMongo(env.mongodbUri);
   const repositoryOptions = {
-    feedbackRepository: new MongoFeedbackRepository(),
+    feedbackRepository: new MongoFeedbackRepository(),
+    telemetryRepository: new MongoTelemetryRepository(),
+    organizationRepository: new MongoOrganizationRepository(),
+    userRepository: new MongoUserRepository(),
+    transactionManager: new MongoTransactionManager(),
+  };
