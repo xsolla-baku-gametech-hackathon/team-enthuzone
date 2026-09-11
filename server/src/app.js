@@ -34,4 +34,10 @@ function createContainer(options = {}) {
     auth,
     feedback,
     telemetry,
-    services: {
+    services: {
+      authService: auth.service,
+      feedbackService: feedback.service,
+      telemetryService: telemetry.service,
+    },
+  };
+}
