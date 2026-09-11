@@ -55,3 +55,11 @@ const Cluster = model(
   {
     workspaceId: { type: String, index: true },
     type: String,
+    target: String,
+    summary: String,
+    severity: Number,
+    authenticity: String,
+    status: { type: String, default: "OPEN" },
+    aiVerification: mongoose.Schema.Types.Mixed,
+    recommendations: [String],
+    recommendationStatus: String,
