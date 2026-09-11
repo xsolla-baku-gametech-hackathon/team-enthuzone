@@ -488,3 +488,28 @@ export function BotLivePlaytestModal({
       const segY = seg.y * cellSize;
 
       if (index === 0) {
+        // Head
+        ctx.save();
+        ctx.shadowColor = "#35b8a5";
+        ctx.shadowBlur = 12;
+        ctx.fillStyle = "#55d1bf";
+        ctx.beginPath();
+        ctx.roundRect(segX + 2, segY + 2, cellSize - 4, cellSize - 4, 7);
+        ctx.fill();
+        ctx.restore();
+
+        // Glowing visor / eyes based on direction
+        ctx.fillStyle = "#090c10";
+        const eyeSize = cellSize * 0.18;
+        if (direction === "RIGHT") {
+          ctx.fillRect(segX + cellSize - 7, segY + 5, eyeSize, eyeSize);
+          ctx.fillRect(segX + cellSize - 7, segY + cellSize - 5 - eyeSize, eyeSize, eyeSize);
+        } else if (direction === "LEFT") {
+          ctx.fillRect(segX + 4, segY + 5, eyeSize, eyeSize);
+          ctx.fillRect(segX + 4, segY + cellSize - 5 - eyeSize, eyeSize, eyeSize);
+        } else if (direction === "UP") {
+          ctx.fillRect(segX + 5, segY + 4, eyeSize, eyeSize);
+          ctx.fillRect(segX + cellSize - 5 - eyeSize, segY + 4, eyeSize, eyeSize);
+        } else if (direction === "DOWN") {
+          ctx.fillRect(segX + 5, segY + cellSize - 7, eyeSize, eyeSize);
+          ctx.fillRect(segX + cellSize - 5 - eyeSize, segY + cellSize - 7, eyeSize, eyeSize);
