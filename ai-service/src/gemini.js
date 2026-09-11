@@ -34,3 +34,5 @@ const schema = {
     "authenticity",
     "severity",
   ],
+};
+async function generate(prompt, responseJsonSchema) {
