@@ -64,3 +64,4 @@ async function generate(prompt, responseJsonSchema) {
               thinkingConfig: { thinkingBudget: 0 },
               temperature: 0.1,
             },
+          }),
