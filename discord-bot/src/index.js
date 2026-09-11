@@ -26,3 +26,4 @@ try {
   console.error("\n❌ [Discord Bot Config Error]: Missing or invalid configuration in .env");
   if (err instanceof z.ZodError) {
     err.issues.forEach((issue) => {
+      console.error(`   👉 ${issue.path.join(".")}: ${issue.message}`);
