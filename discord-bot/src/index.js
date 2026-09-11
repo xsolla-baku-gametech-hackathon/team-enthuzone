@@ -109,3 +109,5 @@ bot.on("messageCreate", (message) => {
   ) {
     return;
   }
+
+  console.log(
