@@ -808,3 +808,27 @@ export function BotLivePlaytestModal({
                     type="button"
                     onClick={() => {
                       setDirection("LEFT");
+                      triggerAiCursorAction("LEFT", snake[0]);
+                    }}
+                    className={`h-9 w-9 rounded-lg flex items-center justify-center transition ${
+                      direction === "LEFT" ? "bg-accent text-canvas font-bold shadow" : "bg-surface-sunken text-muted hover:text-text"
+                    }`}
+                    title="Move Left"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsPlaying((p) => !p)}
+                    className="h-9 w-9 rounded-lg bg-surface-raised flex items-center justify-center text-text hover:bg-line/40 transition"
+                    title={isPlaying ? "Pause" : "Play"}
+                  >
+                    {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDirection("RIGHT");
+                      triggerAiCursorAction("RIGHT", snake[0]);
+                    }}
+                    className={`h-9 w-9 rounded-lg flex items-center justify-center transition ${
