@@ -354,3 +354,26 @@ export function WorkspaceDashboard({
               {(tab === "overview" || tab === "issues") && (
                 <>
                   <div className="grid gap-4 sm:grid-cols-3">
+                    {[
+                      ["Player feedback", detail.feedbackTotal],
+                      ["Behavior events", detail.metrics.eventCount],
+                      [
+                        "Issues to investigate",
+                        detail.issues.filter((i) => i.status !== "RESOLVED")
+                          .length,
+                      ],
+                    ].map(([label, value]) => (
+                      <section key={label} className="glass rounded-xl p-5">
+                        <p className="text-xs text-muted">{label}</p>
+                        <p className="mt-3 font-mono text-3xl">{value}</p>
+                      </section>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <h2 className="text-lg font-semibold">Priority queue</h2>
+                    <input
+                      className="field max-w-64"
+                      aria-label="Filter issues"
+                      placeholder="Search issues…"
+                      value={filter}
+                      onChange={(e) => setFilter(e.target.value)}
