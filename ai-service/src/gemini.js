@@ -82,3 +82,5 @@ async function generate(prompt, responseJsonSchema) {
       if (attempt === 1 || e.retryable === false) throw e;
       await new Promise((r) => setTimeout(r, 700 * (attempt + 1)));
     }
+  }
+}
