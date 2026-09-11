@@ -59,3 +59,4 @@ async function relay(message) {
         },
         body: JSON.stringify({
           id: message.id,
+          author: message.author.tag || message.author.username || message.author.id,
