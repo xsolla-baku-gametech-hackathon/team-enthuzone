@@ -33,4 +33,9 @@ async function bootstrap() {
   process.on('SIGTERM', () => shutdown('SIGTERM'));
   process.on('SIGINT', () => shutdown('SIGINT'));
   return { app, server };
-}
+}
+
+if (require.main === module) {
+  bootstrap().catch((error) => {
+    console.error('Failed to start API', error);
+    process.exitCode = 1;
