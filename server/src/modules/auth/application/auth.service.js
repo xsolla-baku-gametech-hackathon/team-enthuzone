@@ -35,4 +35,11 @@ class AuthService {
             organizationId: organization.id,
             name: input.name,
             email,
-            passwordHash,
+            passwordHash,
+          }, transaction);
+          return { organization, user };
+        });
+        break;
+      } catch (error) {
+        if (error?.code === 'DUPLICATE_SLUG' && attempt < 2) continue;
+        if (error?.code === 'DUPLICATE_EMAIL') {
