@@ -19,4 +19,7 @@ export interface Issue {
   priorityScore: number;
   gameplayImpact: number;
   feedbackMentions: number;
-  feedbackGrowth: number;
+  feedbackGrowth: number;
+  correlationConfidence: number;
+  deathRateChange: number;
+  retryRateChange: number;
