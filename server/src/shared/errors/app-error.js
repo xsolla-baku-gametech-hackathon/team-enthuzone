@@ -16,4 +16,10 @@ class ValidationError extends AppError {
 }
 
 class NotFoundError extends AppError {
-  constructor(message = 'Resource not found') {
+  constructor(message = 'Resource not found') {
+    super(message, 404, 'NOT_FOUND');
+  }
+}
+
+class ConflictError extends AppError {
+  constructor(message = 'Resource already exists') {
