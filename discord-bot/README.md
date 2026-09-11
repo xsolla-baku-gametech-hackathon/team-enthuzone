@@ -13,3 +13,4 @@ npm install
 ```
 
 ### 2. Configure Environment (`.env`)
+Faylı redaktə edin: `discord-bot/.env`
