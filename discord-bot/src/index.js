@@ -34,3 +34,4 @@ try {
 }
 
 // 2. Initialize Discord Client
+const bot = new Client({
