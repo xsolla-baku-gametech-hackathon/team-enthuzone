@@ -136,3 +136,4 @@ bot.once("clientReady", async () => {
 
   try {
     const channel = await bot.channels.fetch(config.DISCORD_CHANNEL_ID);
+    if (channel) {
