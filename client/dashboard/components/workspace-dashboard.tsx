@@ -444,3 +444,25 @@ export function WorkspaceDashboard({
                           </p>
                           <p className="mt-1 text-xs text-faint">
                             Priority uses reviewer share. Revenue impact is
+                            unavailable and contributes 0.
+                          </p>
+                          {/* AI Bot Playthrough Report Box */}
+                          {i.aiVerification && (
+                            <div
+                              className={`mt-4 rounded-xl border p-3.5 text-xs ${
+                                i.aiVerification.status === "APPROVED"
+                                  ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
+                                  : "border-line bg-surface-sunken text-muted"
+                              }`}
+                            >
+                              <div className="flex items-center justify-between font-semibold">
+                                <div className="flex items-center gap-2">
+                                  <Bot size={15} />
+                                  <span>
+                                    {i.aiVerification.status === "APPROVED"
+                                      ? "AI Player Bot Verification: Issue Confirmed"
+                                      : "AI Player Bot Verification: Could Not Reproduce"}
+                                  </span>
+                                </div>
+                                {i.aiVerification.confidence && (
+                                  <span className="text-[11px] opacity-80">
