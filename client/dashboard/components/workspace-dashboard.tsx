@@ -1336,3 +1336,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                 <label className="grid gap-2 text-sm">
                   Name
                   <input
+                    autoFocus
+                    className="field"
+                    name="name"
+                    required
+                    minLength={2}
+                    maxLength={120}
+                    placeholder={modal === "discord" ? "e.g. #feedback-channel" : undefined}
+                  />
+                </label>
+                {(modal === "workspace" || modal === "bot") && (
+                  <label className="grid gap-2 text-sm">
+                    Public WebGL build URL
+                    <input
+                      className="field"
+                      type="url"
+                      name="url"
+                      required
+                      placeholder="https://…"
+                    />
+                  </label>
+                )}
+                {error && (
