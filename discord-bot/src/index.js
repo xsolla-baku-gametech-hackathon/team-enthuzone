@@ -3,3 +3,4 @@ const { Client, GatewayIntentBits } = require("discord.js");
 const { z } = require("zod");
 
 // 1. Environment validation schema
+const configSchema = z.object({
