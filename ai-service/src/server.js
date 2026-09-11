@@ -77,3 +77,4 @@ function createApp() {
     res.json({
       recommendations: await recommend(req.body.issue, req.body.evidence),
     });
+  });
