@@ -53,3 +53,4 @@ function correlate(issue, metrics) {
   const score = reason.length / 3;
   return { supported: score >= 2 / 3, score, reason };
 }
+module.exports = { normalize, correlate };
