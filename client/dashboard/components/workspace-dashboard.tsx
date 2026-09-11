@@ -1514,3 +1514,26 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                 {resolvedUrl && resolvedUrl !== previewWorkspace.webglUrl ? (
                   <div className="flex items-center gap-2 text-accent font-medium">
                     <span className="inline-block h-2 w-2 rounded-full bg-accent animate-pulse" />
+                    <span>Auto-scaled to fit ({scaledW}×{scaledH}) — zero scrollbars</span>
+                  </div>
+                ) : (
+                  <span>
+                    If your host restricts iframe embedding, click the link to play in a new tab.
+                  </span>
+                )}
+                <a
+                  href={previewWorkspace.webglUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-medium text-accent hover:underline flex items-center gap-1 shrink-0 ml-auto"
+                >
+                  Open on {(() => {
+                    try {
+                      return new URL(previewWorkspace.webglUrl).hostname;
+                    } catch {
+                      return "site";
+                    }
+                  })()}
+                  <ArrowUpRight size={12} />
+                </a>
+              </div>
