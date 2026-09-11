@@ -95,3 +95,4 @@ async function relay(message) {
   console.error(
     `[Relay Failed] Could not deliver message ${message.id} after 3 attempts.`
   );
+}
