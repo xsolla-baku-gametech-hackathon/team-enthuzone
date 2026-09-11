@@ -1,0 +1,26 @@
+{
+  "name": "player-intelligence-discord-bot",
+  "version": "1.0.0",
+  "description": "Standalone Discord bot relay for streaming player feedback into Player Issue Intelligence platform",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "feedback",
+    "telemetry",
+    "game-intelligence"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "discord.js": "^14.27.0",
+    "dotenv": "^17.4.2",
+    "zod": "^3.25.76"
+  }
+}
