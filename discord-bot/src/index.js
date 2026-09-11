@@ -45,3 +45,4 @@ const bot = new Client({
 // 3. Relay message to Core Platform API with exponential backoff retry
 async function relay(message) {
   const targetUrl = `${config.CORE_API_URL}/api/platform/ingest/discord/${encodeURIComponent(
+    config.DISCORD_SOURCE_ID
