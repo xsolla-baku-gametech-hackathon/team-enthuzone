@@ -906,3 +906,27 @@ export function BotLivePlaytestModal({
                 <div className="text-xl font-bold text-low mt-0.5">99.4%</div>
                 <div className="text-[10px] text-muted">Path Solved</div>
               </div>
+            </div>
+
+            {/* Test Configuration Panel */}
+            <div className="glass rounded-xl p-4 border border-line space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-text flex items-center gap-1.5">
+                  <Sliders size={14} className="text-accent" />
+                  Playtest Parameters
+                </span>
+                <span className="text-[10px] font-mono text-muted">AGENT_ID: #BOT-01</span>
+              </div>
+
+              {/* Speed Multiplier */}
+              <div>
+                <label className="text-[11px] font-semibold text-muted block mb-1">
+                  Simulation Speed: <span className="text-accent font-bold">{speed}x</span>
+                </label>
+                <div className="grid grid-cols-4 gap-1.5">
+                  {[0.5, 1, 2, 4].map((s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => {
+                        setSpeed(s);
