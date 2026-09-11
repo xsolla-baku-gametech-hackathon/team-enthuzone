@@ -20,3 +20,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
     surname: "",
     organizationName: "",
     location: "",
+    businessDescription: "",
+    remember: true,
+  });
+
+  const titles = [
+    "Your organization starts here",
+    "A little about you",
+    "Where are you based?",
+    "Tell us about your studio",
+    "Ready to build better games?",
+  ];
+
+  function getLimits(key: string): { min?: number; max: number } {
+    switch (key) {
+      case "name":
+        return { min: 2, max: 120 };
+      case "surname":
+        return { min: 1, max: 120 };
+      case "organizationName":
+        return { min: 2, max: 120 };
+      case "password":
+        return { min: register ? 12 : 1, max: 128 };
