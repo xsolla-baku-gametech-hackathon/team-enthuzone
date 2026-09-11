@@ -1425,3 +1425,25 @@ DISCORD_WEBHOOK_TOKEN=${secret.key}`}
                     href={previewWorkspace.webglUrl}
                     target="_blank"
                     rel="noreferrer"
+                    className="secondary flex items-center gap-1.5 py-1.5 px-3 text-xs"
+                    title="Open original game in new tab"
+                  >
+                    Open in new tab
+                    <ArrowUpRight size={14} />
+                  </a>
+                  <button
+                    type="button"
+                    title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+                    aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+                    className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-surface-raised hover:text-text transition"
+                    onClick={() => setIsFullscreen(!isFullscreen)}
+                  >
+                    {isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Close preview"
+                    className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:bg-surface-raised hover:text-text transition"
+                    onClick={() => {
+                      setIsFullscreen(false);
+                      setPreviewWorkspace(null);
