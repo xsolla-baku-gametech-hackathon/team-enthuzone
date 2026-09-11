@@ -10,3 +10,4 @@ test("normalization unifies aliases, roman numerals and whitespace", () => {
     type: "performance",
     target: "main menu",
   });
+});
