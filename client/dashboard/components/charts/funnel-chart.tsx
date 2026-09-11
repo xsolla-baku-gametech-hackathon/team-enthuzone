@@ -1,0 +1,1 @@
+export function FunnelChart({ stages }: { stages: { label: string; value: number; change: number }[] }) {
