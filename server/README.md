@@ -41,4 +41,26 @@ src/
 │   ├── feedback/
 │   │   ├── domain/                 # feedback rules and factories
 │   │   ├── application/            # use-case orchestration
-│   │   ├── infrastructure/
+│   │   ├── infrastructure/
+│   │   │   └── persistence/
+│   │   │       ├── memory/         # isolated test adapter
+│   │   │       └── mongo/          # production adapter and model
+│   │   ├── presentation/http/      # controller, routes, request schemas
+│   │   ├── feedback.module.js      # feature composition
+│   │   └── index.js                # feature public API
+│   ├── telemetry/                  # same vertical-slice layout
+│   ├── organization/               # tenant aggregate and persistence
+│   ├── user/                       # organization user and persistence
+│   └── auth/                       # registration, login, JWT and authorization
+├── shared/
+│   ├── errors/
+│   ├── http/middleware/
+│   └── utils/
+├── app.js                          # HTTP composition root
+└── server.js                       # process and database bootstrap
+
+test/
+├── integration/                    # HTTP behavior
+└── unit/                           # isolated model/domain behavior
+```
+
