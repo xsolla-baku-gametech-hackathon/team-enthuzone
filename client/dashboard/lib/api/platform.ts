@@ -47,3 +47,19 @@ export type Metrics = {
       sessions: number;
       dropoff: number;
       avg_attempts: number;
+      completion_rate: number;
+      avg_session: number;
+    }
+  >;
+};
+export type Connection = {
+  id: string;
+  name: string;
+  type: "discord" | "telemetry" | "bot";
+  status?: "active" | "paused";
+  gameUrl?: string;
+};
+export type Issue = {
+  id: string;
+  type: string;
+  target: string;
