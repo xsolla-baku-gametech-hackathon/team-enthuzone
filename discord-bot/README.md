@@ -20,3 +20,4 @@ DISCORD_CHANNEL_ID=your_discord_channel_id_here
 DISCORD_SOURCE_ID=your_source_id_here
 DISCORD_WEBHOOK_TOKEN=your_webhook_token_here
 CORE_API_URL=http://127.0.0.1:4000
+```
