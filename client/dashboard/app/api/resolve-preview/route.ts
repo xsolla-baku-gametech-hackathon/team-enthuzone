@@ -29,3 +29,13 @@ export async function GET(request: NextRequest) {
             isItchZone: true,
             embeddable: true,
           });
+        }
+      } catch (err) {
+        console.error("Failed to scrape itch.zone embed:", err);
+      }
+    }
+
+    return NextResponse.json({
+      embedUrl: url,
+      originalUrl: url,
+      isItchZone: false,
