@@ -139,3 +139,4 @@ bot.once("clientReady", async () => {
     if (channel) {
       console.log(`✅ [Target Channel Found]: #${channel.name} (Server: "${channel.guild?.name}")`);
     }
+  } catch (err) {
