@@ -5,3 +5,4 @@ const { z } = require("zod");
 // 1. Environment validation schema
 const configSchema = z.object({
   DISCORD_BOT_TOKEN: z
+    .string({ required_error: "DISCORD_BOT_TOKEN is required in .env" })
