@@ -35,3 +35,16 @@ function rateLimit(max = 120) {
     const state =
       entry && entry.until > now ? entry : { count: 0, until: now + 60000 };
     state.count++;
+    clients.set(key, state);
+    if (state.count > max)
+      return res
+        .status(429)
+        .set("Retry-After", "60")
+        .json({ error: { message: "Rate limit exceeded" } });
+    next();
+  };
+}
+async function analyzeFeedback(feedback) {
+  const claimed = await Feedback.findOneAndUpdate(
+    { id: feedback.id, analysisStatus: { $in: ["pending", "failed"] } },
+    { $set: { analysisStatus: "processing" } },
