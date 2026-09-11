@@ -56,3 +56,4 @@ function createApp() {
         target: "Unclassified",
         sentiment: "Neutral",
         confidence: 0,
+        summary: text.slice(0, 300),
