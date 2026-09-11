@@ -100,3 +100,17 @@ export function Sidebar() {
                   className={active ? "text-accent" : "text-muted"}
                   aria-hidden="true"
                 />
+                {label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="mt-auto shrink-0 border-t border-line/60 bg-surface-sunken/40 px-5 py-4">
+          <p className="text-xs font-semibold text-muted">Evidence-led decisions</p>
+          <p className="mt-1 text-xs text-faint">Feedback + behavior + AI</p>
+        </div>
+      </aside>
+    </>
+  );
+}
