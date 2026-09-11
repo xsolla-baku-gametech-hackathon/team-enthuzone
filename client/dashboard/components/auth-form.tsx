@@ -308,3 +308,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
       router.push("/");
       router.refresh();
     } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="auth-stage">
+      <div className="auth-orb" aria-hidden="true" />
+      <section className="glass relative mx-auto w-full max-w-xl rounded-2xl p-6 sm:p-10">
+        <Layers3 className="mb-6 text-accent" size={32} />
+        <p className="eyebrow">PLAYER ISSUE INTELLIGENCE</p>
+        <h1 className="mt-3 text-3xl font-semibold tracking-tight">
+          {register ? titles[step] : "Welcome back."}
+        </h1>
+        <p className="mt-3 text-muted">
+          Your players have a story. Turn it into a better game.
+        </p>
+
+        {register && (
+          <div className="my-6 flex gap-2" aria-label={`Step ${step + 1} of 5`}>
+            {titles.map((t, i) => (
