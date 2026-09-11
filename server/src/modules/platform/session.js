@@ -64,3 +64,14 @@ function createSessionRouter(service) {
     if (!user || user.status !== "ACTIVE" || organization?.status !== "ACTIVE")
       throw new AppError("Session expired", 401);
     return issue(res, {
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+      organization: { id: organization.id, name: organization.name },
+      accessToken: service.tokenService.sign(user),
+    });
+  });
+  router.post("/logout", async (req, res) => {
