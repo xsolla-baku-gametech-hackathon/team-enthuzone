@@ -16,4 +16,7 @@ export function TrendChart({ data, compact = false }: { data: TrendPoint[]; comp
         <ReferenceLine x="Sep 07" stroke="var(--high)" strokeDasharray="4 4" label={{ value: "Build 1.8.0", fill: "var(--high)", fontSize: 11, position: "insideTopRight" }} />
         <Line yAxisId="feedback" type="monotone" dataKey="feedback" name="Feedback mentions" stroke="var(--info)" strokeWidth={2} dot={false} activeDot={{ r: 4 }} isAnimationActive={false} />
         <Line yAxisId="telemetry" type="monotone" dataKey="telemetry" name="Death / quit rate" stroke="var(--accent)" strokeWidth={2} dot={false} activeDot={{ r: 4 }} isAnimationActive={false} />
-      </LineChart>
+      </LineChart>
+    </ResponsiveContainer>
+  </div>;
+}
