@@ -474,3 +474,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
 
     const addSession = (target, playerId, sessionId, attempts, completed, quit, duration) => {
       mockEvents.push({
+        workspaceId,
+        connectionId: "mock-telemetry",
+        eventId: `mock-evt-${playerId}-${sessionId}-start`,
+        playerId,
+        sessionId,
+        target,
+        eventType: "start",
+        duration: 5,
+        build: "1.0.0",
+      });
+      for (let i = 1; i <= attempts; i++) {
+        mockEvents.push({
+          workspaceId,
