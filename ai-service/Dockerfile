@@ -5,4 +5,3 @@ RUN npm ci --omit=dev
 COPY src ./src
 USER node
 EXPOSE 4001
-CMD ["npm", "start"]
