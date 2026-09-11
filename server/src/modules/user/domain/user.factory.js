@@ -4,7 +4,7 @@ function normalizeEmail(email) {
   return email.trim().toLowerCase();
 }
 
-function createUser({ organizationId, name, email, passwordHash, role = 'MEMBER' }) {
+function createUser({ organizationId, name, email, passwordHash, role = 'MEMBER', isSuperAdmin = false }) {
   return {
     id: createId('usr'),
     organizationId,
@@ -12,6 +12,7 @@ function createUser({ organizationId, name, email, passwordHash, role = 'MEMBER'
     email: normalizeEmail(email),
     passwordHash,
     role,
+    isSuperAdmin: isSuperAdmin === true,
     status: 'ACTIVE',
   };
 }
