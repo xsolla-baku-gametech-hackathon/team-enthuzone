@@ -80,3 +80,4 @@ function createApp() {
   });
   app.use((err, req, res, next) => {
     console.error(
+      JSON.stringify({
