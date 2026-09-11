@@ -48,3 +48,15 @@ async function analyzeFeedback(feedback) {
   const claimed = await Feedback.findOneAndUpdate(
     { id: feedback.id, analysisStatus: { $in: ["pending", "failed"] } },
     { $set: { analysisStatus: "processing" } },
+    { returnDocument: "after" },
+  );
+  if (!claimed) return;
+  try {
+    const existing = await Cluster.find({ workspaceId: feedback.workspaceId })
+      .select("type target -_id")
+      .limit(100)
+      .lean();
+    const result = await aiCall("analyze-feedback", {
+      text: feedback.text,
+      existing,
+    });
