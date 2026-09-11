@@ -14,3 +14,4 @@ function createApp() {
   app.use("/internal", (req, res, next) => {
     const actual = Buffer.from(req.get("authorization") || "");
     const expected = Buffer.from(`Bearer ${process.env.AI_INTERNAL_TOKEN}`);
+    if (actual.length !== expected.length || !timingSafeEqual(actual, expected))
