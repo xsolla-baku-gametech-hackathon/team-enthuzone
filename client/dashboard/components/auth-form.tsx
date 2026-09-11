@@ -107,3 +107,27 @@ export function AuthForm({ register = false }: { register?: boolean }) {
         return `Organization name must contain at most ${limits.max} characters`;
       }
     }
+
+    if (key === "location") {
+      if (!trimmed) return "Country / city is required";
+      if (trimmed.length > limits.max) {
+        return `Location must contain at most ${limits.max} characters`;
+      }
+    }
+
+    if (key === "businessDescription") {
+      if (!trimmed) return "Business description is required";
+      if (trimmed.length > limits.max) {
+        return `Description must contain at most ${limits.max} characters`;
+      }
+    }
+
+    return "";
+  }
+
+  function handleFieldChange(key: keyof typeof data, value: string) {
+    const updated = { ...data, [key]: value };
+    setData(updated);
+
+    // Live validation if this field currently has an error displayed
+    if (fieldErrors[key]) {
