@@ -12,3 +12,4 @@ function createApp() {
   app.use(express.json({ limit: "256kb" }));
   app.get("/health", (_req, res) => res.json({ status: "ok" }));
   app.use("/internal", (req, res, next) => {
+    const actual = Buffer.from(req.get("authorization") || "");
