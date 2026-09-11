@@ -79,3 +79,4 @@ async function relay(message) {
         console.error(
           `[Relay Rejected] Status ${response.status} from Core API for message ${message.id}.`
         );
+        return;
