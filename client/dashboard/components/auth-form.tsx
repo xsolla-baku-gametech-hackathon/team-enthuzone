@@ -441,3 +441,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
                 className={`field transition-colors ${
                   fieldErrors.location
                     ? "!border-critical ring-1 !ring-critical/40 focus:!border-critical"
+                    : ""
+                }`}
+                maxLength={200}
+                list="locations"
+                value={data.location}
+                onChange={(e) => handleFieldChange("location", e.target.value)}
+                onBlur={() => {
+                  const err = validateField("location", data.location);
+                  setFieldErrors((prev) => {
+                    const next = { ...prev };
+                    if (!err) delete next.location;
+                    else next.location = err;
+                    return next;
+                  });
+                }}
+              />
+              {fieldErrors.location && (
+                <p className="flex items-center gap-1.5 text-xs text-critical font-normal mt-0.5">
+                  <AlertCircle size={13} className="shrink-0" />
+                  <span>{fieldErrors.location}</span>
+                </p>
+              )}
