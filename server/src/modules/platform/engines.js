@@ -34,3 +34,15 @@ function aggregate(events) {
     const s = t.sessions.get(key) || {
       attempts: 0,
       completed: false,
+      quit: false,
+      duration: 0,
+    };
+    s.attempts += e.eventType === "attempt" ? 1 : 0;
+    s.completed ||= e.eventType === "complete";
+    s.quit ||= e.eventType === "quit";
+    s.duration = Math.max(s.duration, e.duration || 0);
+    t.sessions.set(key, s);
+  }
+  for (const [key, t] of Object.entries(targets)) {
+    const sessions = [...t.sessions.values()];
+    const n = sessions.length;
