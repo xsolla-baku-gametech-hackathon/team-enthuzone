@@ -94,3 +94,4 @@ function createApp() {
 }
 if (require.main === module)
   createApp().listen(Number(process.env.PORT || 4001), "0.0.0.0");
+module.exports = { createApp };
