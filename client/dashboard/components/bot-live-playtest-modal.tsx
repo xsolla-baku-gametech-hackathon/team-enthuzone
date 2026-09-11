@@ -415,3 +415,27 @@ export function BotLivePlaytestModal({
     spawnFood,
     addLog,
   ]);
+
+  // Canvas Drawing
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || mode !== "snake") return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const cellSize = width / GRID_SIZE;
+
+    // Background
+    ctx.fillStyle = "#090c10";
+    ctx.fillRect(0, 0, width, height);
+
+    // Subtle Grid lines
+    ctx.strokeStyle = "rgba(52, 60, 70, 0.25)";
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= GRID_SIZE; i++) {
+      ctx.beginPath();
+      ctx.moveTo(i * cellSize, 0);
+      ctx.lineTo(i * cellSize, height);
+      ctx.stroke();
