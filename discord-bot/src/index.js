@@ -99,3 +99,5 @@ async function relay(message) {
 
 // 4. Message Ingestion Queue
 let queue = Promise.resolve();
+
+bot.on("messageCreate", (message) => {
