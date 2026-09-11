@@ -90,3 +90,4 @@ async function analyze(text, existing = []) {
       JSON.stringify({
         task: "Extract issue. Canonicalize synonyms and roman level numbers. Reuse an existing target only when the same issue is clearly described. Authenticity is uncertain unless supported by text. severity 0..1.",
         existing: existing.slice(0, 100),
+        feedback: text,
