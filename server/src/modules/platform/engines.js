@@ -22,3 +22,15 @@ function priority({
             ? "Medium"
             : "Low",
   };
+}
+function aggregate(events) {
+  const targets = {};
+  const users = new Set();
+  for (const e of events) {
+    users.add(e.playerId);
+    const target = e.target.toLowerCase().trim();
+    const t = (targets[target] ||= { sessions: new Map() });
+    const key = `${e.playerId}:${e.sessionId}`;
+    const s = t.sessions.get(key) || {
+      attempts: 0,
+      completed: false,
