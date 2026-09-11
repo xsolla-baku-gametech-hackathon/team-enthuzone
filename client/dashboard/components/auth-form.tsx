@@ -264,3 +264,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
         )}
       </label>
     );
+  }
+
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    // Validate current step before advancing or completing
+    if (!validateCurrentStep(step)) {
+      return;
+    }
+
+    if (register && step < 4) {
+      setStep(step + 1);
+      setError("");
+      return;
+    }
+
+    setBusy(true);
+    try {
+      if (register) {
+        await request("/session/register", {
+          email: data.email.trim(),
+          password: data.password,
