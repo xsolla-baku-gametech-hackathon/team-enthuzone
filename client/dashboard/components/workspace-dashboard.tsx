@@ -667,3 +667,25 @@ export function WorkspaceDashboard({
                 </>
               )}
               {tab === "telemetry" && (
+                <>
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h2 className="text-xl font-semibold">Behavior evidence</h2>
+                      <p className="mt-0.5 text-xs text-muted">
+                        Correlated gameplay dropoff, retry rates, and session completion metrics
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        disabled={busy}
+                        className="secondary flex items-center gap-1.5"
+                        onClick={() =>
+                          action(async () => {
+                            await request(
+                              `/platform/workspaces/${selected}/telemetry/mock`,
+                              {},
+                              "POST",
+                            );
+                            setNotice("Mock telemetry (Level 5 difficulty spike & onboarding) generated!");
+                            setTimeout(() => setNotice(""), 4500);
