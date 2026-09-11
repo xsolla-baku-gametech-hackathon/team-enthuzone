@@ -1091,3 +1091,25 @@ Body:
                       >
                         <Copy size={15} />
                         Copy token
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-semibold uppercase tracking-wider text-muted mb-1.5 block">
+                      Discord Source ID
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <code className="flex-1 font-mono text-xs bg-surface-sunken border border-line rounded-lg p-3 break-all text-text select-all">
+                        {secret.id}
+                      </code>
+                      <button
+                        type="button"
+                        className="secondary shrink-0 px-3 py-2.5 text-xs flex items-center gap-1.5"
+                        onClick={() => {
+                          navigator.clipboard.writeText(secret.id);
+                          setNotice("Source ID copied!");
+                          setTimeout(() => setNotice(""), 3000);
+                        }}
+                      >
+                        <Copy size={15} />
