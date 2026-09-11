@@ -9,4 +9,11 @@ class AppError extends Error {
   }
 }
 
-class ValidationError extends AppError {
+class ValidationError extends AppError {
+  constructor(message, details) {
+    super(message, 400, 'VALIDATION_ERROR', details);
+  }
+}
+
+class NotFoundError extends AppError {
+  constructor(message = 'Resource not found') {
