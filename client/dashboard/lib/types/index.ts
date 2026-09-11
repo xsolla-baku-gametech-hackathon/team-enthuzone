@@ -12,4 +12,6 @@ export interface TrendPoint {
 export interface Issue {
   id: string;
   title: string;
-  summary: string;
+  summary: string;
+  category: string;
+  priority: Priority;
