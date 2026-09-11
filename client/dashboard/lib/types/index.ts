@@ -22,4 +22,7 @@ export interface Issue {
   feedbackGrowth: number;
   correlationConfidence: number;
   deathRateChange: number;
-  retryRateChange: number;
+  retryRateChange: number;
+  quitRateChange: number;
+  affectedBuild: string;
+  affectedSegment: string;
