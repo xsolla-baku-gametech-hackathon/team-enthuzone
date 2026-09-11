@@ -63,3 +63,5 @@ async function relay(message) {
           content: message.content.slice(0, 6000),
         }),
       });
+
+      if (response.ok) {
