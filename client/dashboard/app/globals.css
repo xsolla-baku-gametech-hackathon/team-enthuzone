@@ -107,3 +107,7 @@ html[data-theme="light"] {
 .secondary:hover {
   transform: translateY(-1px);
 }
+button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
