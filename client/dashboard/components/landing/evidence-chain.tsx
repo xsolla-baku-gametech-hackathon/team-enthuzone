@@ -33,7 +33,7 @@ export function EvidenceChain() {
               One evidence chain, from report to release decision.
             </h2>
             <p className="mt-5 max-w-[62ch] text-base leading-7 text-muted">
-              Player Issue Intelligence keeps qualitative context and behavioral proof in the same operational flow. No handoff spreadsheet is needed to explain why an issue matters.
+              GoBuster keeps qualitative context and behavioral proof in the same operational flow. No handoff spreadsheet is needed to explain why an issue matters.
             </p>
           </div>
 
