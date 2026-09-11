@@ -50,3 +50,4 @@ function correlate(issue, metrics) {
     if (m.avg_attempts >= 5) reason.push("High retries");
     if (m.completion_rate <= 35) reason.push("Low completion");
   }
+  const score = reason.length / 3;
