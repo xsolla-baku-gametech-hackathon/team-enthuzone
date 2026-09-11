@@ -16,3 +16,4 @@ const configSchema = z.object({
   DISCORD_WEBHOOK_TOKEN: z
     .string({ required_error: "DISCORD_WEBHOOK_TOKEN is required in .env" })
     .min(1, "DISCORD_WEBHOOK_TOKEN cannot be empty"),
+  CORE_API_URL: z.string().url().default("http://127.0.0.1:4000"),
