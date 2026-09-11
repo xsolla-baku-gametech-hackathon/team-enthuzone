@@ -18,3 +18,4 @@ function createApp() {
       return res.status(401).json({ error: "Unauthorized" });
     next();
   });
+  let active = 0;
