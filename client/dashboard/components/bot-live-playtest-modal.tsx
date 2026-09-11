@@ -930,3 +930,28 @@ export function BotLivePlaytestModal({
                       type="button"
                       onClick={() => {
                         setSpeed(s);
+                        addLog("ai", `⚡ Simulation speed set to ${s}x.`);
+                      }}
+                      className={`py-1 rounded text-xs font-semibold transition ${
+                        speed === s
+                          ? "bg-accent text-canvas"
+                          : "bg-surface-sunken text-muted hover:text-text border border-line/40"
+                      }`}
+                    >
+                      {s}x
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Difficulty Level */}
+              <div>
+                <label className="text-[11px] font-semibold text-muted block mb-1">
+                  Target Level / Environment:
+                </label>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {[
+                    { lvl: 1, label: "Level 1 (Easy)" },
+                    { lvl: 3, label: "Level 3 (Obstacles)" },
+                    { lvl: 5, label: "Level 5 (Drop-off Zone)" },
+                  ].map(({ lvl, label }) => (
