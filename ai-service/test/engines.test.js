@@ -22,3 +22,4 @@ test("correlation uses only matching target and category", () => {
       },
     },
   };
+  assert.equal(
