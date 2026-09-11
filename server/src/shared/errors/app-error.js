@@ -22,4 +22,10 @@ class NotFoundError extends AppError {
 }
 
 class ConflictError extends AppError {
-  constructor(message = 'Resource already exists') {
+  constructor(message = 'Resource already exists') {
+    super(message, 409, 'CONFLICT');
+  }
+}
+
+class UnauthorizedError extends AppError {
+  constructor(message = 'Authentication required', code = 'UNAUTHORIZED') {
