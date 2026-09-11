@@ -361,3 +361,16 @@ function createPlatformRouter(authenticate, verifyGameUrl = checkPublicUrl) {
           headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" },
           signal: AbortSignal.timeout(6000),
         });
+        const html = await response.text();
+        const match = html.match(/https:\/\/[^"'\s]+\.itch\.zone\/[^"'\s]+/);
+        if (match) {
+          const cleanUrl = match[0].replace(/&quot;.*$/, "").replace(/["'\\]+$/, "");
+          return res.json({ embedUrl: cleanUrl, originalUrl: rawUrl, embeddable: true });
+        }
+      }
+      return res.json({
+        embedUrl: rawUrl,
+        originalUrl: rawUrl,
+        embeddable: !parsed.hostname.endsWith("itch.io"),
+      });
+    } catch {
