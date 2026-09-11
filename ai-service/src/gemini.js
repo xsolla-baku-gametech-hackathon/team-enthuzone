@@ -57,3 +57,5 @@ async function generate(prompt, responseJsonSchema) {
               ],
             },
             contents: [{ role: "user", parts: [{ text: prompt }] }],
+            generationConfig: {
+              responseMimeType: "application/json",
