@@ -8,3 +8,5 @@ const candidate = z.object({
   authenticity: z.enum(["AI Approved", "Needs Review", "Likely Spam"]),
   severity: z.number().min(0).max(1),
 });
+const schema = {
+  type: "object",
