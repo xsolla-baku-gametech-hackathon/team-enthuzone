@@ -61,3 +61,4 @@ function createApp() {
         severity: 0,
         normalized: normalize("Uncategorized", "Unclassified"),
         analysisStatus: "failed",
+      });
