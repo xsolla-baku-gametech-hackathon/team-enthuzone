@@ -10,3 +10,9 @@ async function aiCall(action, body) {
         Authorization: `Bearer ${process.env.AI_INTERNAL_TOKEN}`,
       },
       body: JSON.stringify(body),
+    },
+  );
+  if (!response.ok) throw new Error(`AI_SERVICE_${response.status}`);
+  return response.json();
+}
+module.exports = { aiCall };
