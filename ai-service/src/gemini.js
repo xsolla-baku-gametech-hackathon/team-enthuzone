@@ -13,3 +13,4 @@ const schema = {
   properties: {
     type: {
       type: "string",
+      enum: ["Difficulty", "Bug", "UX", "Performance", "Economy", "Other"],
