@@ -180,3 +180,4 @@ for (const signal of ["SIGTERM", "SIGINT"]) {
     console.log(`\n[Shutdown] Received ${signal}. Closing Discord bot connection...`);
     bot.destroy();
     process.exit(0);
+  });
