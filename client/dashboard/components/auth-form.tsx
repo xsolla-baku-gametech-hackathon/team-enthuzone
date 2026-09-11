@@ -42,3 +42,25 @@ export function AuthForm({ register = false }: { register?: boolean }) {
         return { min: 2, max: 120 };
       case "password":
         return { min: register ? 12 : 1, max: 128 };
+      case "confirm":
+        return { min: register ? 12 : 1, max: 128 };
+      case "location":
+        return { min: 1, max: 200 };
+      case "businessDescription":
+        return { min: 1, max: 2000 };
+      case "email":
+      default:
+        return { min: 1, max: 254 };
+    }
+  }
+
+  function validateField(key: string, value: string, currentData = data): string {
+    const trimmed = (value || "").trim();
+    const limits = getLimits(key);
+
+    if (key === "email") {
+      if (!trimmed) return "Email is required";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+        return "Please enter a valid email address";
+      }
+      if (trimmed.length > limits.max) {
