@@ -51,3 +51,4 @@ function correlate(issue, metrics) {
     if (m.completion_rate <= 35) reason.push("Low completion");
   }
   const score = reason.length / 3;
+  return { supported: score >= 2 / 3, score, reason };
