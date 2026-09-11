@@ -20,3 +20,4 @@ const configSchema = z.object({
 });
 
 let config;
+try {
