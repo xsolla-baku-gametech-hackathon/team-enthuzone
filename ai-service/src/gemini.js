@@ -24,3 +24,4 @@ const schema = {
       enum: ["AI Approved", "Needs Review", "Likely Spam"],
     },
     severity: { type: "number" },
+  },
