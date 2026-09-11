@@ -128,3 +128,4 @@ bot.once("clientReady", async () => {
 
   const guilds = bot.guilds.cache.map((g) => `"${g.name}"`);
   if (guilds.length === 0) {
+    console.warn("⚠️  [Server Check]: Bot hələ heç bir serverə əlavə olunmayıb!");
