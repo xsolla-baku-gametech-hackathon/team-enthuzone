@@ -58,3 +58,4 @@ function createApp() {
         confidence: 0,
         summary: text.slice(0, 300),
         authenticity: "Needs Review",
+        severity: 0,
