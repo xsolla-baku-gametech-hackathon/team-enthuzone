@@ -39,3 +39,4 @@ function createApp() {
     try {
       const result = await analyze(text, existing);
       res.json({
+        ...result,
