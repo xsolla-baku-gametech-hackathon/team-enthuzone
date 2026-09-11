@@ -63,4 +63,6 @@ export interface BuildMetric {
   delta: number;
   favorable: "up" | "down";
 }
-
+
+export interface DashboardData {
+  issues: Issue[];
