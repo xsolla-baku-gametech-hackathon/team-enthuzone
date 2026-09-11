@@ -38,3 +38,4 @@ function createApp() {
       .parse(req.body);
     try {
       const result = await analyze(text, existing);
+      res.json({
