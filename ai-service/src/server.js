@@ -17,3 +17,4 @@ function createApp() {
     if (actual.length !== expected.length || !timingSafeEqual(actual, expected))
       return res.status(401).json({ error: "Unauthorized" });
     next();
+  });
