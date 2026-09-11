@@ -185,3 +185,7 @@ body {
   color: var(--text);
   font-family: var(--font-interface), sans-serif;
 }
+::selection {
+  background: var(--accent);
+  color: var(--canvas);
+}
