@@ -9,4 +9,7 @@ export interface TrendPoint {
   build?: string;
 }
 
-export interface Issue {
+export interface Issue {
+  id: string;
+  title: string;
+  summary: string;
